@@ -1,0 +1,45 @@
+<%-include('partials/header_profile_edit.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+        <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+        Waveform
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav> 
+<nav class="side-nav">
+    <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+    <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+    <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+    <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <i class="guest">Guest</i>
+    <a href="/login" class="guest" id="signup">Sign in/signup</a>
+</nav>
+<section class="main container">
+    <a href="/" id="logout-btn">Logout<span class="material-icons" id="logout-logo">logout</span></a>
+    <section id="profile-main">
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <label for="fileToUpload">
+          <img class="profile-pic" src= <%= user.profilePicture %> id="profile-img">
+          </label>
+          <input type="url" name="fileToUpload" id="fileToUpload" class="form-control" placeholder="image url">
+          <button type="button" class="btn btn-primary" id="btn-add">add</button>
+        </form>
+        <section id="edit-name">
+            <form class="form-inline">
+                <h4 id="first-name">First name</h4>
+                <input type="name" id="input-name" class="form-control mr-sm-5 edit-form" placeholder="First name" value=<%=user.name%> required>
+            </form>
+            <form class="form-inline">
+                <h4 id="last-name">Last name</h4>
+                <input type="name" id="input-last-name" class="form-control mr-sm-5 edit-form" placeholder="Last name" value=<%=user.lastName%> required>
+            </form>
+            
+        </section>
+        <button type="submit" class="rounded-pill" id="edit-btn">Submit</button>
+    </section>
+</section>
+
+<%-include('partials/footer.ejs') %>

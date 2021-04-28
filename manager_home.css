@@ -1,0 +1,57 @@
+body{
+    background-color: #67948D;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    position: fixed;
+    top: 0%;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: black;
+    
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 3em;
+}
+#search{
+    display: none;
+}
+.manager-name{
+    background-color: #587A77;
+    color: white;
+    padding: 2%;
+    font-size: 300%;
+    text-align: center;
+}
+.btn{
+    color: white;
+    font-family: 'Pacifico';
+    font-size: larger;
+}
+.main{
+    margin-top: 3%;
+}
+.main-article{
+    margin-left: 10%;
+}
+.head{
+    z-index: 1000;
+}
+.cover{
+    width: 246px;
+    height: 246px;
+}
+.artist-btn:hover{
+    transition: all 0.2s ease-out ;
+    background-color: rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+    color: white;
+}

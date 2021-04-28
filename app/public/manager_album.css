@@ -1,0 +1,170 @@
+body{
+    background-color: #67948D;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    position: fixed;
+    font-size: 64px;
+    z-index: 9;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: black;
+}
+#search{
+    display: none;
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 30px;
+}
+/* .form-inline{
+    padding-right: 75%;
+} */
+.main{
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+}
+.banner{
+    background-color: #587A77;
+    padding: 2%;
+    padding-top: 100px;
+}
+.artist-cover{
+    width: 123px;
+    height: 123px;
+    margin-top: -5rem;
+}
+.text{
+    display: inline-block;
+    color: white;
+}
+.btn{
+    font-family: 'Pacifico';
+    display: block;
+    color: white;
+    text-align: left;
+}
+.btn-edit{
+    font-size: larger;
+    width: 7rem;
+    height: 3rem;
+    border-style: none;
+    background-color: #FFF58E;
+}
+.btn-edit:hover{
+    background-color: whitesmoke;
+}
+.back-button{
+    color: black;
+    font-size: 24px;
+    text-decoration: none;
+}
+.back-button:hover{
+    color: white;
+}
+.artist-name{
+    font-size: 25px;
+}
+ol {
+    margin: auto;
+}
+li{
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    font-size: larger;
+    border-style: solid;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    height: 80px;
+    padding-top: 30px;
+    padding-left: 1rem;
+}
+li:hover{
+    background-color: rgba(88, 122, 119, 0.7);
+    cursor: default;
+}
+li:hover .meatball-menu{
+    display: inline;
+}
+.meatball-menu{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    display: none;
+    right: 0;
+    transform: translateY(-50%);
+}
+.meatball-menu span{
+    width:  5px;
+    height: 5px;
+    border-radius: 50%;
+    background:black;
+    position: absolute;
+}
+.meatball-menu span:nth-child(1){
+    top: 50%;
+    left: 0%;
+    transition: .6s;
+}
+.meatball-menu span:nth-child(2){
+    top: 50%;
+    left: 35%;
+}
+.meatball-menu span:nth-child(3){
+    top: 50%;
+    left: 72%;
+    transition: .6s;
+}
+.meatball-menu:hover{
+    cursor: pointer;
+    
+}
+.option-bar{
+    background-color: #474747;
+    width: 20rem;
+    margin-left: 93.5rem;
+    margin-top: -2.1rem;
+    z-index: 1;
+    display: none;
+    position: relative;
+}
+.option{
+    display: block;
+    color: white;
+    text-decoration: none;
+    z-index: -1;
+    padding: 2%;
+}
+.option:hover{
+    background-color: lightgray;
+    color: lightgray;
+    color: black;
+    z-index: -1;
+}
+.point{
+    cursor: pointer;
+}
+.btn-delete{
+    display: block;
+    position: absolute;
+    font-size: larger;
+    width: 10rem;
+    height: 3rem;
+    border-style: none;
+    background-color: #ff7d66;
+    color: black;
+    margin-left: 95rem;
+    margin-top: -6rem;
+}
+.btn-delete:hover{
+    color: white;
+    background-color: #FA6262;
+}

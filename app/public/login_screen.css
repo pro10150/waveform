@@ -1,0 +1,106 @@
+html,body{
+    background-color: #67948D;
+    overflow-x: hidden;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    position: fixed;
+    font-size: 64px;
+    z-index: 9;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: black;
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 3rem;
+}
+
+.main{
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    padding-top: 10%;
+}
+.banner{
+    padding: 2%;
+    padding-top: 100px;
+    
+}
+.artist-cover{
+    width: 123px;
+    height: 123px;
+}
+.text{
+    display: inline-block;
+    color: white;
+}
+.btn{
+    font-family: 'Pacifico';
+    display: block;
+    color: white;
+    text-align: left;
+}
+.login{
+    margin-left: 25%;
+    margin-right: 20%;
+}
+.main{
+    width: 100%;
+}
+#menu{
+    text-align: center;
+}
+#reveal{
+    display: inline;
+    font-size:xx-large;
+    cursor: pointer;
+}
+#reveal:hover{
+    color: white;
+}
+#password{
+    display: inline;
+}
+#main-article{
+    box-shadow: 
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    padding: 80px;
+    background-color: #E1DEBF;
+    border-radius: 1%;
+}
+#login-section{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-top: -100%;
+    left: 60%;
+}
+#register-section{
+    position: relative;
+    display: inline-block;
+    left: 0%;
+    width: 50%;
+}
+#register-btn{
+    margin-left: 30%;
+    background-color: white;
+    border-color: white;
+    color: black;
+}
+#register-btn:hover{
+    background-color: whitesmoke;
+}
+.login-form{
+    width: 20rem;
+}

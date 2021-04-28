@@ -1,0 +1,217 @@
+<%-include('partials/header_home.ejs') %>
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+      <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="/">
+      Waveform
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+  </nav> 
+  <nav class="side-nav">
+    <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+    <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+    <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+    <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <i class="guest">Guest</i>
+    <a href="#" class="guest" id="signup">Sign in/signup</a>
+  </nav>
+  <section class="main container">
+    <h2>Top Aritsts</h2>
+    <section class="container top artist">
+        <% artist.forEach(function(art){ %>
+            <button type="button" class="btn btn-artist id-artist" id= <%= art._id %> > 
+                <img src= <%= art.cover %> alt="" class="cover"> <br>
+                <h3> <%= art.name %></h3>
+            </button>
+        <% }); %>
+      <!-- <button type="button" class="btn btn-artist"> 
+          <img src="src\cover.png" alt="" class="cover"> <br>
+          <h3>Artist</h3>
+      </button>
+      <button type="button" class="btn btn-artist"> 
+          <img src="src\cover.png" alt="" class="cover"> <br>
+          <h3>Artist</h3>
+      </button>
+      <button type="button" class="btn btn-artist"> 
+          <img src="src\cover.png" alt="" class="cover"> <br>
+          <h3>Artist</h3>
+      </button>
+      <button type="button" class="btn btn-artist"> 
+          <img src="src\cover.png" alt="" class="cover"> <br>
+          <h3>Artist</h3>
+      </button> -->
+  </section>
+  <h2>Top Album</h2>
+  <section class="container top album">
+    <% album.forEach(function(alb){ %>
+        <button type="button" class="btn btn-album id-album" id= <%= alb._id %> > 
+            <i id= <%= artist[0].id %> class="id-artist-album"></i>
+            <img src= <%= alb.cover %> alt="" class="cover"> <br>
+            <h3> <%= alb.name %></h3>
+        </button>
+    <% }); %>
+
+    <!-- <button type="button" class="btn btn-artist"> 
+        <img src="src\cover.png" alt="" class="cover"> <br>
+        <h3>Album</h3>
+    </button>
+    <button type="button" class="btn btn-artist"> 
+        <img src="src\cover.png" alt="" class="cover"> <br>
+        <h3>Album</h3>
+    </button>
+    <button type="button" class="btn btn-artist"> 
+        <img src="src\cover.png" alt="" class="cover"> <br>
+        <h3>Album</h3>
+    </button>
+    <button type="button" class="btn btn-artist"> 
+        <img src="src\cover.png" alt="" class="cover"> <br>
+        <h3>Album</h3>
+    </button> -->
+  </section>
+    <h2>Top Songs</h2>
+  <section class="container top album">
+    <p class="header">
+      <h3 class="header" id="number">#</h3>
+      <h3 class="header" id="title">TITLE</h3>
+      <h3 class="header" id="album">ALBUM</h3>
+      <h3 class="header" id="artist">ARTIST</h3>
+  </p>
+  <ol>
+    <% song.forEach(function(sng){ %>
+        <% let albumId = "/artist/" + sng.artistId + "/album/" + sng.albumId; %>
+        <% let artistId = "/artist/" + sng.artistId; %>
+        <li>
+            <img src= <%= sng.cover %> alt="" class="cover cover-song">
+            <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
+            <a href= <%= albumId %> class="album-top-song">
+                <h5 class="id-song-album" id= <%= sng._id %> > <%= sng.albumName %> </h5>
+            </a>
+            <a href= <%= artistId %> class="artist-song">
+                <h5 class="id-song-artist" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
+            </a>
+            <div class="meatball-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="option-bar">
+                <a href= <%= artistId %> class="artist-option option">Go to artist</a>
+                <a href= <%= albumId %> class="album-option option">Go to album</a>
+                <a href="#" class="favorite-option option">Add to favourite</a>
+                <a href="#" class="download-option option">Download</a>
+            </div>
+        </li>
+    <% }); %>
+
+
+    <!-- <li>
+        <img src="src\cover.png" alt="" class="cover cover-song">
+        <h5 class="title">OK Overture</h5>
+        <a href="#" class="album-top-song">
+            <h5 >OK Orchestra</h5>
+        </a>
+        <a href="#" class="artist-song">
+            <h5 >AJR</h5>
+        </a>
+        <div class="meatball-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="option-bar">
+            <a href="artist.html" class="artist-option option">Go to artist</a>
+            <a href="album.html" class="album-option option">Go to album</a>
+            <a href="#" class="favorite-option option">Add to favourite</a>
+            <a href="#" class="download-option option">Download</a>
+        </div>
+    </li>
+    <li>
+        <img src="src\cover.png" alt="" class="cover cover-song">
+        <h5 class="title">Bummerland</h5>
+        <a href="#" class="album-top-song">
+            <h5 >OK Orchestra</h5>
+        </a>
+        <a href="#" class="artist-song">
+            <h5 >AJR</h5>
+        </a>
+        <div class="meatball-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="option-bar">
+            <a href="artist.html" class="artist-option option">Go to artist</a>
+            <a href="album.html" class="album-option option">Go to album</a>
+            <a href="#" class="favorite-option option">Add to favourite</a>
+            <a href="#" class="download-option option">Download</a>
+        </div>
+        
+    </li>
+    <li>
+        <img src="src\cover.png" alt="" class="cover cover-song">
+        <h5 class="title">3 O'Clock Things</h5>
+        <a href="#" class="album-top-song">
+            <h5 >OK Orchestra</h5>
+        </a>
+        <a href="#" class="artist-song">
+            <h5 >AJR</h5>
+        </a>
+        <div class="meatball-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="option-bar">
+            <a href="artist.html" class="artist-option option">Go to artist</a>
+            <a href="album.html" class="album-option option">Go to album</a>
+            <a href="#" class="favorite-option option">Add to favourite</a>
+            <a href="#" class="download-option option">Download</a>
+        </div>
+    </li>
+    <li>
+        <img src="src\cover.png" alt="" class="cover cover-song">
+        <h5 class="title">My Play</h5>
+        <a href="#" class="album-top-song">
+            <h5 >OK Orchestra</h5>
+        </a>
+        <a href="#" class="artist-song">
+            <h5 >AJR</h5>
+        </a>
+        <div class="meatball-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="option-bar">
+            <a href="artist.html" class="artist-option option">Go to artist</a>
+            <a href="album.html" class="album-option option">Go to album</a>
+            <a href="#" class="favorite-option option">Add to favourite</a>
+            <a href="#" class="download-option option">Download</a>
+        </div>
+    </li>
+    <li>
+        <img src="src\cover.png" alt="" class="cover cover-song">
+        <h5 class="title">Joe</h5>
+        <a href="#" class="album-top-song">
+            <h5 >OK Orchestra</h5>
+        </a>
+        <a href="#" class="artist-song">
+            <h5 >AJR</h5>
+        </a>
+        <div class="meatball-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="option-bar">
+            <a href="artist.html" class="artist-option option">Go to artist</a>
+            <a href="album.html" class="album-option option">Go to album</a>
+            <a href="#" class="favorite-option option">Add to favourite</a>
+            <a href="#" class="download-option option">Download</a>
+        </div>
+    </li> -->
+</ol>
+
+  </section>
+<%-include('partials/footer.ejs') %>   

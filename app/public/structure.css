@@ -1,0 +1,48 @@
+body{
+    background-color: #67948D;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    position: fixed;
+    font-size: 64px;
+    z-index: 9;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: black;
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 30px;
+}
+.form-inline{
+    padding-right: 75%;
+}
+.main{
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+}
+.banner{
+    padding: 2%;
+    padding-top: 100px;
+    
+}
+.artist-cover{
+    width: 123px;
+    height: 123px;
+}
+.text{
+    display: inline-block;
+    color: white;
+}
+.btn{
+    font-family: 'Pacifico';
+    display: block;
+    color: white;
+    text-align: left;
+}

@@ -1,0 +1,78 @@
+<%-include('partials/header_manager_home.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/manager">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav>
+<section class="main">
+    <nav class="container-fluid manager-name">
+        <% let fullName = user.name + " " + user.lastName %>
+        <%= fullName %>
+    </nav>
+    <section class="main-article">
+        <section class="container material-icons-outlined">
+            <button type="button" class="btn" id="btn-add-more-artist">Add More Artist <span class="material-icons">add_circle_outline</span></button>
+        </section>
+        <section class="container artist">
+
+            <% artists.forEach(function(at){ %>
+                <% let artistLink = "/manager/artist/" + at._id %>
+                <button type="button" class="btn artist-btn" id= <%=artistLink%>> 
+                    <img src= <%= at.cover %> alt="" class="cover"> <br>
+                    <%= at.name %>
+                </button>
+            <% }) %>
+
+            <!-- <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button>
+            <button type="button" class="btn artist-btn"> 
+                <img src="src\cover.png" alt="" class="cover"> <br>
+                Artist
+            </button> -->
+        </section>
+    </section>
+    
+
+
+</section>
+
+<%-include('partials/footer.ejs') %>

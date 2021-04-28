@@ -1,0 +1,155 @@
+body{
+    background-color: #67948D;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    font-size: 64px;
+    position: fixed;
+    top: 0%;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: white;
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 3rem;
+}
+.side-nav {
+    display: block;
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    left: 0;
+    background-color: #3C6760; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 100px;
+    margin-top: -5%;
+}
+
+.user{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Pacifico', sans-serif, 'FontAwesome';
+    color: white;
+    display: block;
+}
+.guest{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Pacifico', sans-serif, 'FontAwesome';
+    color: white;
+    display: block;
+    text-align: center;
+    display: none;
+}
+  
+/* When you mouse over the navigation links, change their color */
+.side-nav a:hover {
+    background-color: #83BBB2;
+    transition: 0.3s ease-out all ;
+    color: black;
+}
+  
+/* Style page content */
+.main {
+    margin-left: 200px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+    color: white;
+    margin-top: 5.5%;
+}
+.btn:hover{
+    transition: all 0.2s ease-out ;
+    background-color: rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .side-nav {padding-top: 15px;}
+    .side-nav a {font-size: 18px;}
+}
+.fas{
+    font-style: normal;
+}
+.material-icons{
+    font-size: 400px;
+}
+
+.head{
+    z-index: 1000;
+}
+.header{
+    display: inline-block;
+    width: 100%;
+    margin-left: 20rem;
+    overflow: hidden;
+    padding-top: 3rem;
+}
+#download{
+    display: none;
+}
+#price-name{
+    float: left;
+    font-size: 4rem;
+}
+#ppm{
+    float: right;
+    margin-top: 2rem;
+    margin-right: 20rem;
+}
+#form-ccn{
+    display: block;
+    margin-top: 5rem;
+    margin-left: 10rem;
+    padding-top: 3rem;
+}
+.form-subscribe{
+    width: 40rem;
+}
+.selector{
+    padding: 0.3rem;
+    border-color: transparent;
+    border-radius: 0.5rem;
+    height: 2.5rem;
+}
+#div-selector{
+    margin-left: 10rem;
+}
+#name-expiry-date{
+    padding-bottom: 0.2rem;
+}
+#form-date-cvv{
+    display: inline;
+}
+#form-date{
+    float: left;
+}
+#form-cvv{
+    float: right;
+    position: absolute;
+    margin-top: -5rem;
+    margin-left: 43.5rem;
+}
+#cvv{
+    width: 50%;
+}
+#btn-proceed{
+    display: block;
+    margin-top: 1rem;
+    margin-left: 25rem;
+    background-color: #FFF58E;
+    border-style: none;
+    width: 10rem;
+    height: 3rem;
+}
+#btn-proceed:hover{
+    background-color: rgba(255,245,142,.8);
+}

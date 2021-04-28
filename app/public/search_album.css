@@ -1,0 +1,143 @@
+body{
+    background-color: #67948D;
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.navbar{
+    background-color: #2A4556;
+    font-family: 'Pacifico';
+    font-size: 64px;
+    position: fixed;
+    top: 0%;
+}
+.navbar-brand{
+    color: #F5CE63;
+    font-size: 30px;
+}
+.navbar-brand:hover{
+    color: white;
+}
+.form-rounded{
+    border: black;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif, 'FontAwesome';
+    margin-right: 3em;
+}
+#download{
+    display: none;
+}
+
+.side-nav {
+    display: block;
+    height: 200%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    left: 0;
+    background-color: #3C6760; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 12rem;
+    margin-top: -5%;
+}
+
+.user{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Pacifico', sans-serif, 'FontAwesome';
+    color: white;
+    display: block;
+}
+.guest{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Pacifico', sans-serif, 'FontAwesome';
+    color: white;
+    display: block;
+    text-align: center;
+    display: none;
+}
+  
+/* When you mouse over the navigation links, change their color */
+.side-nav a:hover {
+    background-color: #83BBB2;
+    transition: 0.3s ease-out all ;
+    color: black;
+}
+  
+/* Style page content */
+.main {
+    transition: all 0.2s ease ;
+    margin-left: 200px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+    color: white;
+}
+.btn:hover{
+    transition: all 0.2s ease ;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .side-nav {padding-top: 15px;}
+    .side-nav a {font-size: 18px;}
+}
+.fas{
+    font-style: normal;
+}
+.material-icons{
+    font-size: 400px;
+}
+
+.head{
+    z-index: 1000;
+}
+.cover{
+    width: 246px;
+    height: 246px;
+}
+.back-button{
+    color: black;
+    font-size: 24px;
+    text-decoration: none;
+    display: block;
+    padding-top: 2rem;
+    cursor: pointer;
+}
+.back-button:hover{
+    color: white;
+}
+.top{
+    margin-left: 20%;
+}
+h3{
+    color: white;
+}
+.btn{
+    color: white;
+    font-family: 'Pacifico';
+    font-size: larger;
+}
+.main{
+    margin-top: 3%;
+}
+.artist{
+    margin-left: 20rem;
+}
+.main-article{
+    margin-left: 10%;
+}
+.head{
+    z-index: 1000;
+}
+.cover{
+    width: 246px;
+    height: 246px;
+}
+.artist-btn:hover{
+    transition: all 0.2s ease-out ;
+    background-color: rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+    color: white;
+}

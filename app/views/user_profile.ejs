@@ -1,0 +1,49 @@
+<%-include('partials/header_user_profile.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+        <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="">
+        Waveform
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav> 
+<nav class="side-nav">
+    <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+    <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+    <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+    <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <i class="guest">Guest</i>
+    <a href="login_screen.html" class="guest" id="signup">Sign in/signup</a>
+</nav>
+<section class="main container">
+    <a href="/" id="logout-btn">Logout<span class="material-icons" id="logout-logo">logout</span></a>
+    <section id="profile-main">
+        <img src= <%= user.profilePicture %> alt="" id="profile-img">
+        <% var subscribe = ''; %>
+        <% if(user.subscribe === true) { %>
+            <% subscribe = "subscribed"; %>
+        <% }else{ %>
+            <% subscribe = "unsubscribed"; %>
+        <% } %>
+        <h4 id="subscribe-status"><%= subscribe %></h4>
+
+        <% var subscribeButton = ''; %>
+        <% if(user.subscribe === true) { %>
+            <% subscribeButton = "unsubscribe"; %>
+        <% }else{ %>
+            <% subscribeButton = "subscribe"; %>
+        <% } %>
+        <i id=<%=user.status%> class="status"></i>
+        <button type="button" class="rounded-pill" id="subscribe-btn"><%=subscribeButton%></button>
+        <p id="name">
+            <h3 id="first-name"><%=user.name%></h3>
+            <h3 id="last-name"><%=user.lastName%></h3>
+        </p>
+        <button type="button" class="rounded-pill" id="edit-btn">Edit</button>
+    </section>
+</section>
+  
+
+<%-include('partials/footer.ejs') %>

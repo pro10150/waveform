@@ -1,0 +1,50 @@
+<%-include('partials/header_login_screen.ejs') %>
+
+<nav class="navbar container-fluid">
+    <a class="navbar-brand home-button" href="/">
+      <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline search-btn">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search" id="search-form">
+    </form>
+</nav>
+<section class="main">
+    <section class="login">
+        <section id="main-article">
+            <section id="register-section" class="inside-section">
+                <h1>
+                    Login to WaveForm account
+                </h1>
+                <h3>
+                    Login or register an account to searching for music and download
+                </h3>
+                <button type="submit" id="register-btn" class="btn-primary btn-lg">
+                    Register
+                </button>
+            </section>
+            <section id="login-section" class="inside-section">
+                <form>
+                    <h4>Email</h4>
+                        <input id="input-email" type="email" class="form-control mr-sm-2 login-form" placeholder="Email" required>
+                    <h4>Password</h4>
+                    <section id="password">
+                        <input id="input-password" type="password" class="form-control mr-sm-5 login-form" placeholder="Password" required>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="flexCheckDefault">
+                            <label for="flexCheckDefault">
+                                Reveal Password
+                            </label>
+                        </div>
+                    </section>
+                    <button type="submit" class="btn btn-primary" id="btn-login">Login</button>    
+                </form>
+                
+            </section>
+        </section>
+        
+        
+    </section>
+</section>
+
+<%-include('partials/footer.ejs') %>

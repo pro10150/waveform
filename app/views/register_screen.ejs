@@ -1,0 +1,46 @@
+<%-include('partials/header_register_screen.ejs') %>
+
+<nav class="navbar container-fluid">
+    <a class="navbar-brand home-button" href="/">
+      <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline" id="form-search">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav>
+<section class="main">
+    <a href="/login" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+    <section class="register">
+        <h1>Sign up with us!</h1>
+        <section id="main-article">
+            <h4>First name <span class="important">*</span></h4>
+            <form class="form-inline">
+                <input type="name" class="form-control mr-sm-5 register-form" id="input-name" placeholder="Name" required>
+            </form>
+            <h4>Last name <span class="important">*</span></h4>
+            <form class="form-inline">
+                <input type="last-name" class="form-control mr-sm-5 register-form" id="input-last-name" placeholder="Last name" required>
+            </form>
+            <h4>Email <span class="important">*</span></h4>
+            <form class="form-inline">
+                <input type="email" class="form-control mr-sm-5 register-form" id="input-email" placeholder="Email" required>
+            </form>
+            <h4>Password <span class="important">*</span></h4>
+            <form class="form-inline">
+                <input type="password" class="form-control mr-sm-5 register-form" id="input-password" placeholder="password" required>
+            </form>
+            <h4>Confirm password <span class="important">*</span></h4>
+            <form class="form-inline">
+                <input type="password" class="form-control mr-sm-5 register-form" id="input-comfirm-password" placeholder="confirm password" required>
+            </form>
+            <button type="submit" class="btn-primary" id="register-btn">Register</button>
+        </section>
+        
+        
+    </section>
+</section>
+
+<%-include('partials/footer.ejs') %>
