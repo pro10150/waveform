@@ -21,11 +21,13 @@
     <div class="header">
         <h1 id="price-name">Subscription</h1>
         <h5 id="ppm">$6.99/month</h5>
-        <form class="form-inline" id="form-ccn">
+        <form action="/profile/subscribe" method="post">
+        <div class="form-inline" id="form-ccn">
             <h4>Card number</h4>
-            <input id="ccn" type="tel" required inputmode="numeric" pattern="[0-9\s]{16,16}" maxlength=16 placeholder="xxxx xxxx xxxx xxxx" class="form-control mr-sm-2 form-subscribe">
+            <input type="text" name="id" style="display: none;" value="<%=currentUser.id%>">
+            <input id="ccn" name="ccn" type="tel" required inputmode="numeric" pattern="[0-9\s]{16,16}" maxlength=16 placeholder="xxxx xxxx xxxx xxxx" class="form-control mr-sm-2 form-subscribe">
             <h4>Name</h4>
-            <input type="text" id="name" placeholder="Cardholder name" class="form-control mr-sm-2 form-subscribe" required></form>
+            <input type="text" id="name" name="name" placeholder="Cardholder name" class="form-control mr-sm-2 form-subscribe" required></div>
             <div id="div-selector">
                 <h4 id="name-expiry-date">Expiry Date</h4>
                 <select id="month" name="month" class="selector" required>
@@ -46,11 +48,9 @@
             
             <div class="form-inline" id="form-cvv">
                 <h4>CVV</h4>
-                <input type="tel" required class="form-control sm-mr-2" minlength=3 maxlength=3 placeholder="CVV" pattern="[0-9\s]{3,3}" id="cvv">
+                <input type="tel" name="cvv" required class="form-control sm-mr-2" minlength=3 maxlength=3 placeholder="CVV" pattern="[0-9\s]{3,3}" id="cvv">
             </div>    
-            <button type="submit" class="rounded-pill" id="btn-proceed">
-                Proceed
-            </button>
+            <button type="submit" class="rounded-pill" id="btn-proceed">Proceed</button>
         </form>
     </div>
 </section>

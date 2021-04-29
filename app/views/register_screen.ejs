@@ -16,27 +16,30 @@
     <section class="register">
         <h1>Sign up with us!</h1>
         <section id="main-article">
-            <h4>First name <span class="important">*</span></h4>
-            <form class="form-inline">
-                <input type="name" class="form-control mr-sm-5 register-form" id="input-name" placeholder="Name" required>
+            <form action="/register" method="post">
+                <h4>First name <span class="important">*</span></h4>
+                <div class="form-inline">
+                    <input type="name" name="name" class="form-control mr-sm-5 register-form" id="input-name" placeholder="Name" required>
+                </div>
+                <h4>Last name <span class="important">*</span></h4>
+                <div class="form-inline">
+                    <input type="last-name" name="lastName" class="form-control mr-sm-5 register-form" id="input-last-name" placeholder="Last name" required>
+                </div>
+                <h4>Email <span class="important">*</span></h4>
+                <div class="form-inline">
+                    <input type="email" name="username" class="form-control mr-sm-5 register-form" id="input-email" placeholder="Email" required>
+                </div>
+                <h4>Password <span class="important">*</span></h4>
+                <div class="form-inline">
+                    <input type="password" name="password" class="form-control mr-sm-5 register-form" id="input-password" placeholder="password" required>
+                </div>
+                <h4>Confirm password <span class="important">*</span></h4>
+                <div class="form-inline">
+                    <input type="password" class="form-control mr-sm-5 register-form" id="input-comfirm-password" placeholder="confirm password" required>
+                </div>
+                <button type="submit" class="btn-primary" id="register-btn">Register</button>
             </form>
-            <h4>Last name <span class="important">*</span></h4>
-            <form class="form-inline">
-                <input type="last-name" class="form-control mr-sm-5 register-form" id="input-last-name" placeholder="Last name" required>
-            </form>
-            <h4>Email <span class="important">*</span></h4>
-            <form class="form-inline">
-                <input type="email" class="form-control mr-sm-5 register-form" id="input-email" placeholder="Email" required>
-            </form>
-            <h4>Password <span class="important">*</span></h4>
-            <form class="form-inline">
-                <input type="password" class="form-control mr-sm-5 register-form" id="input-password" placeholder="password" required>
-            </form>
-            <h4>Confirm password <span class="important">*</span></h4>
-            <form class="form-inline">
-                <input type="password" class="form-control mr-sm-5 register-form" id="input-comfirm-password" placeholder="confirm password" required>
-            </form>
-            <button type="submit" class="btn-primary" id="register-btn">Register</button>
+            
         </section>
         
         

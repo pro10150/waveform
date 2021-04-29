@@ -25,10 +25,4 @@ function changeImg(){
     // console.log(img.value);
 }
 function onClickSubmit(){
-    var check = confirm('Are you sure about that?')
-    if(check){
-        if(name.value !== "" && lastName.value !== "") alert(name.value + "\n" + lastName.value + "\n" + url.src);
-        else alert("Please enter name and lastname"); 
-    }
-    
 }

@@ -22,30 +22,6 @@ console.log("month: " + m);
 
 
 function onClickProceed(){
-
-if(parseInt(y) < parseInt(year.value))
-    check = true;
-else{
-    if(parseInt(y) === parseInt(year.value)){
-        if(parseInt(m) < parseInt(month.value))
-            check = true;
-        else check = false;
-    } 
-    else check = false;
-}
-
-console.log(check);
-
-    if(ccn.value.length === 16 && name.value !== "" && month.value !== "month" && check && year.value !== "year" && cvv.value.length === 3) {
-        var check = confirm('Are you sure about that');
-        if(check){
-            alert(ccn.value + "\n" + name.value + "\n" + month.value + "\n" + year.value + "\n" + cvv.value);
-            window.location.href = "/profile";
-        }
-        else alert('The fuck are you submitted for');
-        
-    }
-    else alert("Please enter everything correctly");
 }
 function searchEnter(event){
     if(event.keyCode === 13){

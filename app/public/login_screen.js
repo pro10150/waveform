@@ -25,6 +25,4 @@ function onClickReveal(){
     else password.type = 'password';
 }
 function submitLogin(){
-    alert(document.getElementById("input-email").value + "\n" + document.getElementById("input-password").value);
-    window.location.href = "/";
 }

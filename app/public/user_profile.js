@@ -12,11 +12,6 @@ function onClickEdit(){
     window.location.href = "/profile/edit";
 }
 function onClickSubscribe(){
-    if(subscribeButton.innerText === 'subscribe') window.location.href = "/profile/subscribe-protal";
-    else {
-        alert('unsubscribing');
-        window.location.href = "/";
-    }
 }
 function searchEnter(event){
     if(event.keyCode === 13){

@@ -10,6 +10,6 @@ function onClickBack(){
     window.history.back();
 }
 function onClickSubmit(){
-    if(inputTitle.value === '') alert("Please put a title on");
+    // if(inputTitle.value === '') alert("Please put a title on");
 }
 

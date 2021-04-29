@@ -20,5 +20,5 @@ function changeImg(){
     // console.log(img.value);
 }
 function onClickSubmit(){
-    alert(songTitle.value + "\n" + url.src);
+    // alert(songTitle.value + "\n" + url.src);
 }

@@ -24,12 +24,12 @@
                 </button>
             </section>
             <section id="login-section" class="inside-section">
-                <form>
+                <form action="/login" method="post">
                     <h4>Email</h4>
-                        <input id="input-email" type="email" class="form-control mr-sm-2 login-form" placeholder="Email" required>
+                        <input id="input-email" name="username" type="email" class="form-control mr-sm-2 login-form" placeholder="Email" required>
                     <h4>Password</h4>
                     <section id="password">
-                        <input id="input-password" type="password" class="form-control mr-sm-5 login-form" placeholder="Password" required>
+                        <input id="input-password" name="password" type="password" class="form-control mr-sm-5 login-form" placeholder="Password" required>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="flexCheckDefault">
                             <label for="flexCheckDefault">
@@ -37,7 +37,7 @@
                             </label>
                         </div>
                     </section>
-                    <button type="submit" class="btn btn-primary" id="btn-login">Login</button>    
+                    <button type="submit" class="btn btn-primary" id="btn-login" value="login">Login</button>    
                 </form>
                 
             </section>

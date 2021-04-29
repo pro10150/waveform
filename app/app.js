@@ -1,18 +1,37 @@
-
-const   express     = require('express'),
-        app         = express(),
-        bodyParser  = require('body-parser'),
-        mongoose    = require('mongoose'),
-        Artist      = require('./models/artist'),
-        Album       = require('./models/album'),
-        Song        = require('./models/song'),
-        seedDB      = require('./seed');
+const   express             = require('express'),
+        app                 = express(),
+        bodyParser          = require('body-parser'),
+        mongoose            = require('mongoose'),
+        passport            = require('passport'),
+        LocalStrategy       = require('passport-local'),
+        Artist              = require('./models/artist'),
+        Album               = require('./models/album'),
+        Song                = require('./models/song'),
+        User                = require('./models/user'),
+        seedDB              = require('./seed'),
+        SubscriptionDetail  = require('./models/subscriptionDetail');
 
 // seedDB();
 mongoose.connect('mongodb://localhost/waveform');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
+
+app.use(require('express-session')({
+    secret: 'secret is always secret.',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // let artistSchema = new mongoose.Schema({
 //     name: String,
@@ -561,7 +580,26 @@ app.get('/login',function(req, res){
     res.render('login_screen.ejs');
 });
 
-app.get('/manager', function(req, res){
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
+
+app.post('/login', passport.authenticate('local', 
+    {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }), function(req, res){
+});
+
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
+
+app.get('/manager', isLoggedIn, function(req, res){
     // let artist = [
     //     {artistName: 'AJR',artistId: 'AT-00001', artistCover: 'https://s3-us-west-2.amazonaws.com/paradigm-media-library/music_artists/ajr-20190501.jpg'},
     //     {artistName: 'Imagine Dragon',artistId: 'AT-00002', artistCover: 'https://mpics.mgronline.com/pics/Images/561000011690001.JPEG'},
@@ -598,11 +636,11 @@ app.post('/manager', function(req, res){
     })
 })
 
-app.get('/manager/artist/add', function(req, res){
+app.get('/manager/artist/add', isLoggedIn, function(req, res){
     res.render('manager_artist_add.ejs');
 });
 
-app.get('/manager/artist/:artistId', function(req, res){
+app.get('/manager/artist/:artistId', isLoggedIn, function(req, res){
     // let artist = {artistName: 'AJR',artistId: 'AT-00001', artistCover: 'https://s3-us-west-2.amazonaws.com/paradigm-media-library/music_artists/ajr-20190501.jpg'};
     let artistId = req.params.artistId;
     Artist.find({_id: artistId}).populate('albums').exec(function(err, searchedArtist){
@@ -616,7 +654,7 @@ app.get('/manager/artist/:artistId', function(req, res){
     })
 });
 
-app.get('/manager/artist/:artistId/add', function(req, res){
+app.get('/manager/artist/:artistId/add', isLoggedIn, function(req, res){
     let id = req.params.artistId;
     res.render('manager_album_add.ejs',{id});
 });
@@ -668,7 +706,7 @@ app.post('/manager/artist/:artistId/delete', function(req, res){
     });
 });
 
-app.get('/manager/artist/:artistId/edit', function(req ,res){
+app.get('/manager/artist/:artistId/edit', isLoggedIn, function(req ,res){
     let id = req.params.artistId;
     Artist.find({_id: id}, function(err, searchedArtist){
         if(err){
@@ -699,7 +737,7 @@ app.post('/manager/artist/:artistId/edit', function(req, res){
 });
 
 
-app.get('/manager/artist/:artistId/album/:albumId', function(req, res){
+app.get('/manager/artist/:artistId/album/:albumId', isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     let artistId = req.params.artistId;
     Artist.find({_id: artistId}, function(err, searchedArtist){
@@ -722,7 +760,7 @@ app.get('/manager/artist/:artistId/album/:albumId', function(req, res){
     // res.render('manager_album.ejs',{album, song});
 });
 
-app.get('/manager/artist/:artistId/album/:albumId/edit', function(req, res){
+app.get('/manager/artist/:artistId/album/:albumId/edit', isLoggedIn, function(req, res){
     let id = req.params.albumId;
     Album.find({_id: id}, function(err, searchedAlbum){
         if(err){
@@ -750,7 +788,7 @@ app.post('/manager/artist/:artistId/album/:albumId/edit', function(req, res){
     });
 });
 
-app.get('/manager/artist/:artistId/album/:albumId/add', function(req, res){
+app.get('/manager/artist/:artistId/album/:albumId/add', isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     Album.find({_id: albumId}, function(err, searchedAlbum){
         if(err){
@@ -832,7 +870,7 @@ app.post('/manager/artist/:artistId/album/:albumId/delete', function(req, res){
     })
 });
 
-app.get('/manager/artist/:artistId/album/:albumId/song/:songId/edit', function(req, res){
+app.get('/manager/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     let songId = req.params.songId;
     Album.find({_id: albumId}, function(err, editedAlbum){
@@ -886,20 +924,85 @@ app.get('/register', function(req, res){
     res.render('register_screen.ejs');
 });
 
-app.get('/profile', function(req, res){
+app.post('/register', function(req, res){
+    var newUser = new User({username: req.body.username, name: req.body.name, lastName: req.body.lastName, subscribe: false, status: 'user'});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err) {
+            console.log(err);
+            return res.render('register');
+        }
+        passport.authenticate('local')(req, res, function(){
+            res.redirect('/login');
+        });
+    });
+});
+
+app.get('/profile', isLoggedIn, function(req, res){
     
     res.render('user_profile.ejs',{user});
 });
 
-app.get('/profile/subscribe-protal', function(req, res){
+app.get('/profile/subscribe-protal', isLoggedIn, function(req, res){
     res.render('user_profile_subscribe.ejs',{user});
 });
 
-app.get('/profile/edit', function(req, res){
-    res.render('user_profile_edit.ejs',{user});
+app.post('/profile/subscribe', function(req, res){
+    let newSubscriptionDetail = {id: req.body.id, ccn: req.body.ccn, name: req.body.name, expiredMonth: req.body.month, expiredYear: req.body.year, cvv: req.body.cvv}
+    console.log("test");
+    User.findByIdAndUpdate(req.body.id, {subscribe: true}, function(err, user){
+        if(err){
+            console.log(err);
+        }
+        else{
+            SubscriptionDetail.create(newSubscriptionDetail, function(err, newSubscription){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(newSubscription);
+                    res.redirect('/profile');
+                }
+            });        
+        }
+    });
 });
 
-app.get('/favorite', function(req, res){
+app.post('/profile/unsubscribe', function(req, res){
+    User.findByIdAndUpdate(req.body.userId, {subscribe: false}, function(err, user){
+        if(err){
+            console.log(err);
+        }
+        else{
+            SubscriptionDetail.findOneAndDelete({id: req.body.userId}, function(err, subscribe){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.redirect('/profile');
+                }
+            })
+        }
+    })
+})
+
+app.get('/profile/edit', isLoggedIn, function(req, res){
+    res.render('user_profile_edit.ejs');
+});
+
+app.post('/profile/edit', function(req, res){
+    User.findByIdAndUpdate(req.body.id,{profilePicture: req.body.url, name: req.body.name, lastName: req.body.lastName}, function(err, user){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(user);
+            console.log(req.body.id);
+            res.redirect('/profile');
+        }
+    });
+});
+
+app.get('/favorite', isLoggedIn, function(req, res){
 
     let fav = [
         {
