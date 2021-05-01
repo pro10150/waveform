@@ -50,14 +50,13 @@ function onClickArtist(i){
     window.location.href = '/artist/' + artistId[i].id;
 }
 function onClickAlbum(i){
-    window.location.href = '/artist/' + albumArtistId[i].id + '/album/' + albumId[i].id;
+    window.location.href = '/album/' + albumId[i].id;
 }
 function searchEnter(event){
     if(event.keyCode === 13){
-        // window.location.href = 'search.html';
+        // window.location.href = '/search/' + search.value;
         // console.log('/search/' + search.value);
         // alert(window.location.href);
-        window.location.href = "http://stackoverflow.com";
     }
 }
 function onClickCloseOption(){
@@ -80,9 +79,7 @@ function onClickOption(i){
 }
 function onClickDownload(i){
     flag = true;
-    alert("downloaded " + i);
 }
 function onClickFavorite(i){
     flag = true;
-    alert("add to fav " + i);
 }

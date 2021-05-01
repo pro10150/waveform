@@ -5,17 +5,20 @@
       <img src="\src\home.png" width="50" height="50" class="d-inline-block" alt="">
       Waveform
     </a>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
     </form>
   </nav> 
   <nav class="side-nav">
-    <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-    <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
-    <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
-    <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
-    <i class="guest">Guest</i>
-    <a href="/login" class="guest" id="signup">Sign in/signup</a>
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
   </nav>
   <section class="main container">
     <section class="container-fluid banner">

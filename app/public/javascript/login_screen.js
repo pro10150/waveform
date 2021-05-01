@@ -15,7 +15,6 @@ function onClickRegister(){
 function searchEnter(event){
     if(event.keyCode === 13){
         // window.location.href = 'search.html';
-        alert(document.getElementById("search").value);
     }
 }
 function onClickReveal(){

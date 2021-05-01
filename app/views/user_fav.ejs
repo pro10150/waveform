@@ -5,17 +5,20 @@
         <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="">
         Waveform
     </a>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
     </form>
 </nav> 
 <nav class="side-nav">
-    <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-    <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
-    <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
-    <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
-    <i class="guest">Guest</i>
-    <a href="login_screen.html" class="guest" id="signup">Sign in/signup</a>
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
 </nav>
 <section class="main container">
     <p class="header added-fav">
@@ -25,12 +28,12 @@
         <h3 class="header" id="artist">ARTIST</h3>
     </p>
     <ol class="added-fav">
-        <% fav.forEach(function(fv){ %>
-            <% let albumId = "/artist/" + fv.artistId + "/album/" + fv.albumId; %>
+        <% result.forEach(function(fv){ %>
+            <% let albumId = "/album/" + fv.albumId; %>
             <% let artistId = "/artist/" + fv.artistId; %>
             <li>
                 <img src= <%= fv.cover %> alt="" class="cover">
-                <h5 class="title"> <%= fv.songTitle %> </h5>
+                <h5 class="title"> <%= fv.title %> </h5>
                 <a href= <%= albumId %> class="album">
                     <h5 > <%= fv.albumName %></h5>
                 </a>
@@ -45,8 +48,31 @@
                 <div class="option-bar">
                     <a href= <%= albumId %> class="artist-option option">Go to artist</a>
                     <a href= <%= artistId %> class="album-option option">Go to album</a>
-                    <a href="#" class="favorite-option option">Add to favourite</a>
-                    <a href="#" class="download-option option">Download</a>
+                    <% if(currentUser){ %>
+                        <% let flag = false %>
+                        <% for(let i = 0; i< fav.length; i++){ %>
+                            <% if(sng._id == fav[i].songId){ %>
+                                <% flag = true; %>
+                                <% break; %> 
+                            <% } %> 
+                        <% } %>
+                        <% console.log(flag) %>
+                        <% if(flag === true){ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
+                            </form>   
+                        <% } else{ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
+                            </form>      
+                        <% } %>
+                          
+                    <% } %>
+                    <% if(currentUser){ %>
+                        <% if(currentUser.subscribe === true) { %>
+                            <a href="#" class="download-option option">Download</a>
+                        <% } %>
+                    <% } %>
                 </div>
             </li>
         <% }); %>

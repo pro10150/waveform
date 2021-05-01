@@ -38,7 +38,7 @@ html, body {
     background-color: #3C6760; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 12rem;
-    margin-top: -5%;
+    margin-top: -5rem;
 }
 
 .user{
@@ -57,7 +57,6 @@ html, body {
     color: white;
     display: block;
     text-align: center;
-    display: none;
 }
   
 /* When you mouse over the navigation links, change their color */
@@ -101,7 +100,6 @@ html, body {
     color: black;
     font-size: 24px;
     text-decoration: none;
-    display: block;
     padding-top: 2rem;
     cursor: pointer;
 }
@@ -138,6 +136,11 @@ h3{
 .artist-btn:hover{
     transition: all 0.2s ease-out ;
     background-color: rgba(0, 0, 0, 0.3);
-    transform: scale(1.2);
     color: white;
+}
+.title{
+    width: 20rem;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }

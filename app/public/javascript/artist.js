@@ -15,9 +15,8 @@ function onClickBack(){
 function searchEnter(event){
     if(event.keyCode === 13){
         // window.location.href = 'search.html';
-        alert(document.getElementById("search").value);
     }
 }
 function onClickAlbum(i){
-    window.location.href = '/artist/' + artistName[0].id + '/album/' + album[i].id;
+    window.location.href = '/album/' + album[i].id;
 }

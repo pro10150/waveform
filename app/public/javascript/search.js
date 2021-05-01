@@ -1,12 +1,18 @@
 const meatball = document.querySelectorAll(".meatball-menu");
-// const option = document.querySelectorAll(".option-bar");
-let search = document.querySelector("#search");
+const search = document.querySelector("#search");
 const body = document.querySelector("body");
 const option = document.getElementsByClassName("option-bar");
 const fav = document.querySelectorAll(".favorite-option");
 const download = document.querySelectorAll(".download-option");
+const artist = document.getElementsByClassName("btn-artist");
+const album = document.getElementsByClassName("btn-album");
+const topResult = document.getElementById("top-result");
+const topType = document.getElementById("type-top-result");
+const topResultId = document.getElementsByClassName('id-top-result');
+const keyword = document.getElementsByClassName('hidden'); 
 let flag = true;
 
+topResult.addEventListener("click",function(){onClickTopResult()});
 body.addEventListener("click", function(){onClickCloseOption()});
 search.addEventListener("keypress",function(){searchEnter(event)});
 for(let i = 0; i < meatball.length; i++){
@@ -19,14 +25,29 @@ for(let i = 0;i < fav.length; i++){
 for(let i = 0;i < download.length; i++){
     download[i].addEventListener("click",function(){onClickDownload(i)});
 }
+for(let i = 0;i < artist.length;i++){
+    artist[i].addEventListener("click",function(){onClickArtist(i)});
+}
+for(let i = 0;i < album.length;i++){
+    album[i].addEventListener("click",function(){onClickAlbum(i)});
+}
 
+function onClickTopResult(){
+    if(topType.innerText === "SONG") window.location.href = "/artist/" + topResultId[1].id + "/album/" + topResultId[0].id;
+    else if(topType.innerText === "ALBUM") window.location.href = "/artist/" + topResultId[1].id + "/album/" + topResultId[0].id;
+    else window.location.href = "/artist/" + topResultId[1].id;
+}
+function onClickArtist(i){
+    window.location.href = artist[i].id;
+}
+function onClickAlbum(i){
+    window.location.href = album[i].id;
+}
 function onClickDownload(i){
     flag = true;
-    alert("downloaded " + i);
 }
 function onClickFavorite(i){
     flag = true;
-    alert("add to fav " + i);
 }
 function onClickCloseOption(){
     console.log("test");  
@@ -49,6 +70,5 @@ function onClickOption(i){
 function searchEnter(event){
     if(event.keyCode === 13){
         // window.location.href = 'search.html';
-        alert(document.getElementById("search").value);
     }
 }

@@ -1,11 +1,11 @@
 <%-include('partials/header_home.ejs') %>
 <nav class="navbar container-fluid head">
     <a class="navbar-brand home-button" href="/">
-      <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="/">
+      <img src="/src/home.png" width="50" height="50" class="d-inline-block" alt="/">
       Waveform
     </a>
-    <form class="form-inline" action="/search" method="get">
-        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
     </form>
   </nav> 
   <nav class="side-nav">
@@ -29,22 +29,6 @@
                 <h3> <%= art.name %></h3>
             </button>
         <% }); %>
-      <!-- <button type="button" class="btn btn-artist"> 
-          <img src="src\cover.png" alt="" class="cover"> <br>
-          <h3>Artist</h3>
-      </button>
-      <button type="button" class="btn btn-artist"> 
-          <img src="src\cover.png" alt="" class="cover"> <br>
-          <h3>Artist</h3>
-      </button>
-      <button type="button" class="btn btn-artist"> 
-          <img src="src\cover.png" alt="" class="cover"> <br>
-          <h3>Artist</h3>
-      </button>
-      <button type="button" class="btn btn-artist"> 
-          <img src="src\cover.png" alt="" class="cover"> <br>
-          <h3>Artist</h3>
-      </button> -->
   </section>
   <h2>Top Album</h2>
   <section class="container top album">
@@ -55,23 +39,6 @@
             <h3> <%= alb.name %></h3>
         </button>
     <% }); %>
-
-    <!-- <button type="button" class="btn btn-artist"> 
-        <img src="src\cover.png" alt="" class="cover"> <br>
-        <h3>Album</h3>
-    </button>
-    <button type="button" class="btn btn-artist"> 
-        <img src="src\cover.png" alt="" class="cover"> <br>
-        <h3>Album</h3>
-    </button>
-    <button type="button" class="btn btn-artist"> 
-        <img src="src\cover.png" alt="" class="cover"> <br>
-        <h3>Album</h3>
-    </button>
-    <button type="button" class="btn btn-artist"> 
-        <img src="src\cover.png" alt="" class="cover"> <br>
-        <h3>Album</h3>
-    </button> -->
   </section>
     <h2>Top Songs</h2>
   <section class="container top album">
@@ -83,7 +50,7 @@
   </p>
   <ol>
     <% song.forEach(function(sng){ %>
-        <% let albumId = "/artist/" + sng.artistId + "/album/" + sng.albumId; %>
+        <% let albumId = "/album/" + sng.albumId; %>
         <% let artistId = "/artist/" + sng.artistId; %>
         <li>
             <img src= <%= sng.cover %> alt="" class="cover cover-song">
@@ -102,8 +69,33 @@
             <div class="option-bar">
                 <a href= <%= artistId %> class="artist-option option">Go to artist</a>
                 <a href= <%= albumId %> class="album-option option">Go to album</a>
-                <a href="#" class="favorite-option option">Add to favourite</a>
-                <a href="#" class="download-option option">Download</a>
+                <% if(currentUser){ %>
+                    <% let flag = false %>
+                    <% for(let i = 0; i< fav.length; i++){ %>
+                        <% if(sng._id == fav[i].songId){ %>
+                            <% flag = true; %>
+                            <% break; %> 
+                        <% } %> 
+                    <% } %>
+                    <% console.log(flag) %>
+                    <% if(flag === true){ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
+                        </form>   
+                    <% } else{ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
+                        </form>      
+                    <% } %>
+                      
+                <% } %>
+                <% if(currentUser){ %>
+                    <% if(currentUser.subscribe === true) { %>
+                        <a href="#" class="download-option option">Download</a>
+                    <% } %>
+                <% } %>
+                
+                
             </div>
         </li>
     <% }); %>

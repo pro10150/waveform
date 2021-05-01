@@ -1,5 +1,6 @@
 body{
     background-color: #67948D;
+    overflow-x: hidden;
 }
 .navbar{
     background-color: #2A4556;
@@ -155,7 +156,7 @@ li{
     border-left: transparent;
     border-right: transparent;
     height: 80px;
-    width: 103.7rem;
+    width: 105.7rem;
     padding-left: 4rem;
     padding-top: 30px;
 }

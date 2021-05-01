@@ -1,8 +1,5 @@
 body{
     background-color: #67948D;
-}
-html, body {
-    max-width: 100%;
     overflow-x: hidden;
 }
 .navbar{
@@ -26,25 +23,17 @@ html, body {
     margin-right: 3em;
 }
 
-#download{
-    display: none;
-}
-.title{
-    width: 40rem;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-}
+
 .side-nav {
     display: block;
-    height: 200%; /* Full-height: remove this if you want "auto" height */
+    height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 200px; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     left: 0;
     background-color: #3C6760; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 12rem;
-    margin-top: -5rem;
+    padding-top: 100px;
+    margin-top: -5%;
 }
 
 .user{
@@ -63,7 +52,6 @@ html, body {
     color: white;
     display: block;
     text-align: center;
-    display: none;
 }
   
 /* When you mouse over the navigation links, change their color */
@@ -75,15 +63,15 @@ html, body {
   
 /* Style page content */
 .main {
-    transition: all 0.2s ease ;
     margin-left: 200px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     color: white;
     margin-top: 5.5%;
 }
 .btn:hover{
-    transition: all 0.2s ease ;
+    transition: all 0.2s ease-out ;
     background-color: rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
@@ -100,105 +88,83 @@ html, body {
 .head{
     z-index: 1000;
 }
-.cover{
-    width: 246px;
-    height: 246px;
+
+.banner{
+    background-color: #587A77;
+    padding: 2%;
+    width: 129.5%;
+    box-shadow: rgba(0, 0, 0, 0.3);
+}
+.album-cover{
+    width: 123px;
+    height: 123px;
+}
+.text{
+    display: inline-block;
+    color: white;
+}
+.btn{
+    font-family: 'Pacifico';
+    display: block;
+    color: white;
+    text-align: left;
+}
+#download{
+    display: none;
 }
 .back-button{
     color: black;
     font-size: 24px;
     text-decoration: none;
-    display: block;
-    padding-top: 2rem;
+    cursor: pointer;
 }
 .back-button:hover{
     color: white;
 }
-.top{
-    margin-left: 20%;
+.album-name{
+    font-size: 25px;
 }
-h3{
+.album-btn{
     color: white;
+    font-family: 'Pacifico';
+    font-size: larger;
+    text-align: center;
+    display: inline;
 }
-#top-result{
-    transition: all ease 0.2s;
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    width: 70%;
-    float: left;
-}
-#top-result:hover{
+.album-btn:hover{
+    transition: all 0.2s ease-out ;
     background-color: rgba(0, 0, 0, 0.3);
-    /* transform: scale(1.05); */
-    transition: all ease 0.2s;
-    cursor: pointer;
-}
-#title{
-    margin-left: 6rem;
-    width: 25%;
-}
-#album{
-    margin-left: 24.5rem;
-    width: 10%;
-}
-#artist{
-    margin-left: 9rem;
-    width: 20%;
+    color: white;
+    transform: scale(1.2);
 }
 .cover{
-    width: 50px;
-    height: 50px;
-    margin-top: -1%;
-    margin-left: -3%;
-}
-.title{
-    display: inline-block;
-    position: absolute;
-    margin-left: 1rem;
-    width: 40%;
-}
-.album{
-    display: inline-block;
-    position: absolute;
-    margin-left: 30rem;
-    width: 20%;
-    text-align: left;
-    color: lightgrey;
-    text-decoration: none;
-}
-.album:hover{
-    color: white;
-    text-decoration: underline;
+    width: 246px;
+    height: 246px;
 }
 .artist{
-    display: inline-block;
-    position: absolute;
-    margin-left: 46rem;
-    width: 20%;
-    color: lightgrey;
-    text-decoration: none;
+    padding-top: 2%;
 }
-.artist:hover{
-    color: white;
-    text-decoration: underline;
+ol {
+    margin: auto;
 }
 li{
     font-family: 'Roboto', sans-serif, 'FontAwesome';
     font-size: larger;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.3);
-    border-bottom: transparent;
+    border-top: transparent;
     border-left: transparent;
     border-right: transparent;
+    border-color: rgba(0, 0, 0, 0.3);
+    color: white;
     height: 80px;
-    width: 104.7rem;
-    padding-left: 4rem;
     padding-top: 30px;
+    padding-left: 1rem;
+    width: 800rem;
+    list-style-type:decimal;
 }
 li:hover{
     background-color: rgba(88, 122, 119, 0.7);
     cursor: default;
-    color: white;
 }
 li:hover .meatball-menu{
     display: inline;
@@ -218,6 +184,10 @@ li:hover .meatball-menu{
     background:black;
     position: absolute;
 }
+.meatball-menu:hover span{
+    
+    background:white;
+}
 .meatball-menu span:nth-child(1){
     top: 50%;
     left: 0%;
@@ -236,14 +206,13 @@ li:hover .meatball-menu{
     cursor: pointer;
 }
 .option-bar{
-    transition: all ease 0.2s;
     background-color: #474747;
-    width: 20%;
-    margin-left: 78rem;
+    width: 20rem;
+    margin-left: 82rem;
     margin-top: -2.1rem;
     z-index: 1;
-    position: relative;
     display: none;
+    position: relative;
 }
 .option{
     display: block;
@@ -258,9 +227,7 @@ li:hover .meatball-menu{
     color: black;
     z-index: -1;
 }
-div.header{
-    height: 3rem;
-}
-h3.header{
-    display: inline;
+.no-song{
+    display: none;
+    text-align: center;
 }
