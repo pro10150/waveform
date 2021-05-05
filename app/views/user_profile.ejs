@@ -40,11 +40,11 @@
         <% if(currentUser.subscribe === true) { %>
             <form action="/profile/unsubscribe" method="post">
                 <input type="text" name="userId" style="display: none;" value="<%=currentUser.id%>">
-                <button type="submit" class="rounded-pill" id="subscribe-btn">unsubscribe</button>
+                <button type="submit" class="rounded-pill" id="subscribe-btn">Unsubscribe</button>
             </form>
         <% }else{ %>
             <form action="/profile/subscribe-protal" method="get">
-                <button type="submit" class="rounded-pill" id="subscribe-btn">subscribe</button>
+                <button type="submit" class="rounded-pill" id="subscribe-btn">Subscribe</button>
             </form>
         <% } %>
         <i id=<%=currentUser.status%> class="status"></i>
@@ -53,7 +53,17 @@
             <h3 id="first-name"><%=currentUser.name%></h3>
             <h3 id="last-name"><%=currentUser.lastName%></h3>
         </p>
-        <button type="button" class="rounded-pill" id="edit-btn">Edit</button>
+        <form action="/profile/edit" method="get">
+            <button type="submit" class="rounded-pill" id="edit-btn">Edit</button>
+        </form>
+        
+        <form action="/profile/change-password" method="get">
+            <button type="submit" class="rounded-pill" id="edit-btn">Change Password</button>
+        </form>
+        <form action="/profile/manager-register" method="get">
+            <button type="submit" class="rounded-pill" id="edit-btn">Register as Manager</button>
+        </form>
+        
     </section>
 </section>
   

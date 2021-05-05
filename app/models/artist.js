@@ -9,7 +9,8 @@ let artistSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Album' 
         }
-    ]
+    ],
+    manager: String
 });
 
 module.exports = mongoose.model('Artist', artistSchema);

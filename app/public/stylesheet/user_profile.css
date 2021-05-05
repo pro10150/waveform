@@ -145,8 +145,9 @@ body{
     position:static;
     display: block;
     border-color: transparent;
-    margin-left: 58%;
-    width: 180px;
+    margin-left: 57%;
+    margin-top: 0.5rem;
+    width: 200px;
     height: 50px;
     font-size: larger;
     background-color: #FFF58E;

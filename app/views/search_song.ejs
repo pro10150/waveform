@@ -55,18 +55,18 @@
                     <% if(currentUser){ %>
                         <% let flag = false %>
                         <% for(let i = 0; i< fav.length; i++){ %>
-                            <% if(sng._id == fav[i].songId){ %>
+                            <% if(ts._id == fav[i].songId){ %>
                                 <% flag = true; %>
                                 <% break; %> 
                             <% } %> 
                         <% } %>
                         <% console.log(flag) %>
                         <% if(flag === true){ %>
-                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/delete" method="post">
                                 <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
                             </form>   
                         <% } else{ %>
-                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/add" method="post">
                                 <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
                             </form>      
                         <% } %>

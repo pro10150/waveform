@@ -8,7 +8,7 @@
         <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
     </form>
   </nav> 
-  <nav class="side-nav ">
+  <nav class="side-nav d-none d-lg-block">
     <% if(currentUser){ %>
         <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
         <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
@@ -24,7 +24,7 @@
     <h2>Top Aritsts</h2>
     <section class="container top artist">
         <% artist.forEach(function(art){ %>
-            <button type="button" class="btn btn-artist id-artist" id= <%= art._id %> > 
+            <button type="button" class="btn btn-artist id-artist col-sm" id= <%= art._id %> > 
                 <img src= <%= art.cover %> alt="" class="cover"> <br>
                 <h3> <%= art.name %></h3>
             </button>
@@ -33,7 +33,7 @@
   <h2>Top Album</h2>
   <section class="container top album">
     <% album.forEach(function(alb){ %>
-        <button type="button" class="btn btn-album id-album" id= <%= alb._id %> > 
+        <button type="button" class="btn btn-album id-album col-sm" id= <%= alb._id %> > 
             <i id= <%= artist[0].id %> class="id-artist-album"></i>
             <img src= <%= alb.cover %> alt="" class="cover"> <br>
             <h3> <%= alb.name %></h3>
@@ -43,10 +43,10 @@
     <h2>Top Songs</h2>
   <section class="container top album">
     <p class="header">
-      <h3 class="header" id="number">#</h3>
-      <h3 class="header" id="title">TITLE</h3>
-      <h3 class="header" id="album">ALBUM</h3>
-      <h3 class="header" id="artist">ARTIST</h3>
+      <h3 class="header d-none d-lg-inline-block" id="number">#</h3>
+      <h3 class="header d-none d-lg-inline-block" id="title">TITLE</h3>
+      <h3 class="header d-none d-lg-inline-block" id="album">ALBUM</h3>
+      <h3 class="header d-none d-lg-inline-block" id="artist">ARTIST</h3>
   </p>
   <ol>
     <% song.forEach(function(sng){ %>
@@ -56,10 +56,10 @@
             <img src= <%= sng.cover %> alt="" class="cover cover-song">
             <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
             <a href= <%= albumId %> class="album-top-song">
-                <h5 class="id-song-album" id= <%= sng._id %> > <%= sng.albumName %> </h5>
+                <h5 class="id-song-album d-none d-lg-block" id= <%= sng._id %> > <%= sng.albumName %> </h5>
             </a>
             <a href= <%= artistId %> class="artist-song">
-                <h5 class="id-song-artist" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
+                <h5 class="id-song-artist d-none d-lg-block" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
             </a>
             <div class="meatball-menu">
                 <span></span>

@@ -33,8 +33,8 @@ for(let i = 0;i < album.length;i++){
 }
 
 function onClickTopResult(){
-    if(topType.innerText === "SONG") window.location.href = "/artist/" + topResultId[1].id + "/album/" + topResultId[0].id;
-    else if(topType.innerText === "ALBUM") window.location.href = "/artist/" + topResultId[1].id + "/album/" + topResultId[0].id;
+    if(topType.innerText === "SONG") window.location.href = "/album/" + topResultId[0].id;
+    else if(topType.innerText === "ALBUM") window.location.href = "/album/" + topResultId[0].id;
     else window.location.href = "/artist/" + topResultId[1].id;
 }
 function onClickArtist(i){

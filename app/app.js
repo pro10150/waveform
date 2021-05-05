@@ -316,7 +316,19 @@ app.get('/album/:albumId', function(req, res){
             console.log(err);
         }
         else{
-            res.render('album.ejs',{id: artistId,album: searchedAlbum});
+            if(req.isAuthenticated()){
+                Favorite.find({id: req.user._id}, function(err, fav){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('album.ejs',{id: artistId,album: searchedAlbum, fav: fav});
+                    }
+                })    
+            }
+            else{
+                res.render('album.ejs',{id: artistId,album: searchedAlbum});
+            }
         }
     })
     
@@ -390,7 +402,19 @@ app.get('/search/:keyword', function(req,res){
                             }
                             console.log(topResult[0])
                             console.log(top)
-                            res.render('search.ejs',{keyword,topResult: top,topSong: searchedSong,topAlbum: searchedAlbum,topArtist: searchedArtist});
+                            if(req.isAuthenticated()){
+                                Favorite.find({id: req.user._id}, function(err, fav){
+                                    if(err){
+                                        console.log(err);
+                                    }
+                                    else{
+                                        res.render('search.ejs',{keyword,topResult: top,topSong: searchedSong,topAlbum: searchedAlbum,topArtist: searchedArtist, fav: fav});
+                                    }
+                                })    
+                            }
+                            else{
+                                res.render('search.ejs',{keyword,topResult: top,topSong: searchedSong,topAlbum: searchedAlbum,topArtist: searchedArtist});
+                            }
                         }
                     })
                 }
@@ -407,7 +431,20 @@ app.get('/search/:searchKeyword/song', function(req, res){
             console.log(err);
         }
         else{
-            res.render('search_song.ejs',{keyword,topSong});
+            if(req.isAuthenticated()){
+                Favorite.find({id: req.user._id}, function(err, fav){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('search_song.ejs',{keyword,topSong, fav: fav});
+                    }
+                })    
+            }
+            else{
+                res.render('search_song.ejs',{keyword,topSong});
+            }
+            
         }
     })
     
@@ -469,7 +506,7 @@ app.get('/manager', isLoggedIn, function(req, res){
     //     {artistName: 'Maroon 5',artistId: 'AT-00004', artistCover: 'https://i.pinimg.com/originals/49/01/8f/49018fd5d24c32a141d556f5a00a8324.jpg'}
     // ];
 
-    Artist.find({}, function(err, managedArtist){
+    Artist.find({manager: req.user._id}, function(err, managedArtist){
         if(err){
             console.log(err);
         }
@@ -486,7 +523,7 @@ app.post('/manager', function(req, res){
     let imgUrl = req.body.imgUrl;
     let popularity = 0;
     console.log(name);
-    let newArtist = {name: name, cover: imgUrl, popularity: popularity};
+    let newArtist = {name: name, cover: imgUrl, popularity: popularity,manager: req.user._id};
     Artist.create(newArtist, function(err, newlyCreated){
         if(err){
             console.log(err);
@@ -880,8 +917,19 @@ app.get('/favorite', isLoggedIn, function(req, res){
                         console.log(err);
                     }
                     else{
-                        console.log(result);
-                        res.render('user_fav.ejs',{result});
+                        if(req.isAuthenticated()){
+                            Favorite.find({id: req.user._id}, function(err, fav){
+                                if(err){
+                                    console.log(err);
+                                }
+                                else{
+                                    res.render('user_fav.ejs',{result, fav: fav});
+                                }
+                            })    
+                        }
+                        else{
+                            res.render('user_fav.ejs',{result});
+                        }
                     }
                 })
         }
