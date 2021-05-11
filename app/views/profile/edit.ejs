@@ -1,0 +1,56 @@
+<%-include('../partials/header_profile_edit.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+        <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+        Waveform
+    </a>
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav> 
+<nav class="side-nav">
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
+</nav>
+<section class="main container">
+    <a href="/" id="logout-btn">Logout<span class="material-icons" id="logout-logo">logout</span></a>
+    <section id="profile-main">
+        <form action="/profile/edit" method="post">
+            <div>
+                <label for="fileToUpload">
+                    <input type="text" name="id" style="display: none;" value="<%=currentUser._id%>">
+                <% if(!currentUser.profilePicture){ %>
+                        <img class="profile-pic" src="/src/upload-pic.png" alt="" id="profile-img">
+                <% } else {%>
+                    <img class="profile-pic" src=" <%= currentUser.profilePicture %>" alt="" id="profile-img">
+                <% } %>            
+            </label>
+            <input type="url" name="url" id="fileToUpload" class="form-control" placeholder="image url" value="<%=currentUser.profilePicture%>">
+            <button type="button" class="btn btn-primary" id="btn-add">add</button>
+            </div>
+            <section id="edit-name">
+                <div class="form-inline">
+                    <h4 id="first-name">First name</h4>
+                    <input type="name" name="name" id="input-name" class="form-control mr-sm-5 edit-form" placeholder="First name" value="<%=currentUser.name%>" required>
+                </div>
+                <div class="form-inline">
+                    <h4 id="last-name">Last name</h4>
+                    <input type="name" name="lastName" id="input-last-name" class="form-control mr-sm-5 edit-form" placeholder="Last name" value="<%=currentUser.lastName%>" required>
+                </div>
+                
+            </section>
+            <button type="submit" class="rounded-pill" id="edit-btn">Submit</button>    
+        </form>
+        
+    </section>
+</section>
+
+<%-include('../partials/footer.ejs') %>

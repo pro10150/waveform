@@ -1,0 +1,43 @@
+<%-include('../partials/header_manager_album_add.ejs') %>
+
+<nav class="navbar container-fluid">
+    <a class="navbar-brand home-button" href="/manager">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline" action="/search" method="get">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav>
+<section class="main">
+    <section class="container-fluid banner">
+        <a class="material-icons back-button point" id="back">arrow_back</a>
+        
+        <br>
+        
+        <section class="main-article">
+            <h2>Album</h2>
+            <form action="/manager/artist/<%=id %>/add" method="post">
+                <label for="fileToUpload">
+                    <img class="profile-pic" src="/src/upload-pic.png" id="profile-img">
+                </label>
+                <h3>image url</h3>
+                <input type="url" name="cover" id="fileToUpload" class="form-control">
+                <button type="button" class="btn btn-primary" id="btn-add">preview</button>
+            
+            <!-- <img src="src\upload-pic.png" alt="" class="upload"> -->
+                <div class="form-inline name-form">
+                    <div class="mb-3">
+                        <h3 for="exampleInputEmail1" class="form-label" id="albumNameLabel">Album Name</h3>
+                        <br>
+                        <input type="name" name="name" class="form-control" id="albumNameForm" aria-describedby="" placeholder="Album title">
+                        <br>
+                        <button type="submit" class="btn btn-primary" id="albumNameButton">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        
+</section>
+
+<%-include('../partials/footer.ejs') %>

@@ -1,0 +1,92 @@
+<%-include('../partials/header_manager_artist.ejs') %>
+
+<nav class="navbar container-fluid">
+    <a class="navbar-brand home-button" href="/manager">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav>
+<section class="main">
+    <section class="container-fluid banner">
+        <a href="/manager" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+        <% artist.forEach(function(at){ %>
+            <img src='<%=at.cover %>' alt="" class="artist-cover">
+            <section class="text">
+                
+                <i>Artist</i>
+                <br>
+                <i class="artist-name"><%=at.name %></i>
+                <button type="button" class="btn material-icons-outlined" id="btn-add-more-artist">Add More Album <span class="material-icons">add_circle_outline</span></button> 
+                <% let backLink = "/manager/" + "artist/" + at._id; %>
+                <i class="backLink" id=<%=backLink %>></i>
+                <button type="button" class="btn-edit rounded-pill" id="btn-edit">Edit</button>
+                <form action="/manager/artist/<%=at._id%>/delete" method="post">
+                    <button class="rounded-pill btn-delete" id="delete" onclick="return confirm('Are you sure you want to delete this item?');">Delete artist</button>
+                </form>
+            </section>
+        
+
+            </section>
+            <section class="container artist">
+
+            <% if(at.albums.length === 0) { %>
+                <h1 style="text-align: center; color: white;">This artist has no album</h1>
+            <% } %>
+
+            <% at.albums.forEach(function(al){ %>
+                <% let albumLink = "/manager/artist/" + at._id + "/album/" + al._id %>
+                <button type="button" class="btn artist-btn" id=<%=albumLink%>> 
+                    <img src= "<%= al.cover %>" alt="" class="cover"> <br>
+                    <%=al.name%>
+                </button>
+            <% }) %>
+        <% }) %>
+        <!-- <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Artist
+        </button> -->
+    </section>
+</section>
+
+<%-include('../partials/footer.ejs') %>

@@ -1,0 +1,40 @@
+<%-include('../partials/header_manager_song_add.ejs') %>
+
+<nav class="navbar container-fluid">
+    <a class="navbar-brand home-button" href="/manager">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform 
+    </a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav>
+<section class="main">
+    <section class="container-fluid banner">
+        <% album.forEach(function(al){ %>
+            <% song.forEach(function(sn){ %>
+                <a  class="material-icons back-button point" id="back">arrow_back</a>
+                
+                <br>
+                
+                <section class="main-article">
+                    <div class="album">
+                        <h2 id="album-name"><%=al.name%></h2>
+                        <img src=<%=al.cover%> alt="" class="upload">    
+                    </div>
+                    <form action="/manager/artist/<%=id%>/album/<%=al._id%>/song/<%=sn._id%>/edit" method="post" class="form-inline" id="form-song">
+                        <h4 class="title">Title</h4>
+                        <input type="text" name="title" class="form-control" id="input-title" placeholder="Song title" required value="<%=sn.title%>">
+                        <br>
+                        <h4 class="title">Lyrics</h4>
+                        <textarea name="lyrics" id="lyrics" cols="40" rows="15" placeholder="Song lyrics" ><%=sn.lyrics%></textarea>
+                        <button type="submit" id="btn-add" class="rounded-pill">Update</button>
+                    </form>
+                </section>
+            <% }); %>
+        <% }); %>
+        
+        
+</section>
+
+<%-include('../partials/footer.ejs') %>

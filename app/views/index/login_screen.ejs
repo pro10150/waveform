@@ -1,4 +1,4 @@
-<%-include('partials/header_login_screen.ejs') %>
+<%-include('../partials/header_login_screen.ejs') %>
 
 <nav class="navbar container-fluid">
     <a class="navbar-brand home-button" href="/">
@@ -34,7 +34,7 @@
                     <section id="password">
                         <input id="input-password" name="password" type="password" class="form-control mr-sm-5 login-form" placeholder="Password" required>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="flexCheckDefault">
+                            <input type="checkbox" class="form-check-input" id="flexCheckDefault" onclick="onClickReveal()">
                             <label for="flexCheckDefault">
                                 Reveal Password
                             </label>
@@ -52,4 +52,4 @@
     </section>
 </section>
 
-<%-include('partials/footer.ejs') %>
+<%-include('../partials/footer.ejs') %>

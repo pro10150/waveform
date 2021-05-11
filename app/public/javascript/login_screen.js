@@ -1,13 +1,11 @@
 let search = document.querySelector("#search");
 const register = document.querySelector("#register-btn");
 const reveal = document.getElementById("flexCheckDefault");
-const password = document.getElementById("input-password");
 const login = document.getElementById("btn-login");
+const submit = document.getElementById('btn-submit');
+var password = document.getElementById('input-password');
 
-reveal.addEventListener("click",function(){onClickReveal()});
 search.addEventListener("keypress",function(){searchEnter(event)});
-register.addEventListener("click",function(){onClickRegister()});
-login.addEventListener("click",function(){submitLogin()});
 
 function onClickRegister(){
     window.location.href = '/register';
@@ -22,6 +20,4 @@ function onClickReveal(){
         password.type = 'text';
     }
     else password.type = 'password';
-}
-function submitLogin(){
 }

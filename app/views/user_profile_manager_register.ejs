@@ -1,0 +1,40 @@
+<%-include('partials/header_user_profile_change_password.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+        <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+        Waveform
+    </a>
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav> 
+<nav class="side-nav">
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
+</nav>
+<section class="main container">
+    <div class="header">
+        <h1 id="price-name">Register as Manager</h1>
+        
+        <form action="" method="post">
+        <div class="form-inline" id="form-ccn">
+            <textarea name="" id="" cols="70" rows="20" readonly style="resize: none; margin-left: 10rem; border-color:transparent;">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem odio blanditiis assumenda error possimus. Harum debitis aspernatur expedita rerum tempore dolore? Iure maiores dicta aut, maxime ipsa itaque dolores libero, accusamus officiis veritatis temporibus officia similique commodi! Animi mollitia quaerat iusto quasi quos. Enim distinctio corrupti animi a porro reprehenderit, ullam, libero quas at explicabo ipsam, nam ab eligendi quam reiciendis dolorum nisi. Aspernatur, exercitationem officiis assumenda eum, illo voluptatum doloremque, perferendis possimus quod voluptate voluptas dignissimos tempora quidem porro magni non alias saepe autem. Magnam voluptate molestias illum placeat ut quia vel tempore cum iusto ea commodi, quibusdam ullam illo accusantium! Modi, praesentium. Vel, ratione. Dicta non, inventore aspernatur hic in minima? Ad repellat qui natus architecto assumenda corporis, quod id nobis totam unde, similique sunt, ut reiciendis ratione! Eum sunt adipisci iure incidunt, reprehenderit minus dolor blanditiis iste distinctio sit doloribus. Quia id rem saepe totam voluptatum nobis eum at tempora harum earum commodi neque, molestiae accusantium, quam expedita necessitatibus? Nam, accusantium eligendi dolore sequi tempora ullam, dolorum reprehenderit sapiente aperiam quis hic repellat, doloribus molestiae saepe cum. Dolorem laudantium itaque consequatur adipisci facere maxime fuga debitis voluptatem quae ab. Quia iusto consectetur laudantium exercitationem minima tenetur quo?
+            </textarea>
+            <br>
+            <input type="checkbox" name="check" id="check" style="margin-left: 10rem;" required>
+            <label for="check">I accept this agreement</label>
+            <button type="submit" class="rounded-pill" id="btn-proceed">Proceed</button>
+        </form>
+    </div>
+</section>
+
+<%-include('partials/footer.ejs') %>

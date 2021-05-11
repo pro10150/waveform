@@ -1,0 +1,90 @@
+<%-include('../partials/header_album.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform
+    </a>
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+  </nav> 
+  <nav class="side-nav">
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
+  </nav>
+  <section class="main container">
+    <section class="container-fluid banner">
+        <a  id="back" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+        <img src= <%= album.cover %> alt="" class="album-cover">
+        <section class="text">
+            <i id= <%= album._id %> class="id-album" >Album</i>
+            <br>
+            <i class="album-name" class="id-artist" id= <%= id %>> <%= album.name %> </i>
+        </section>
+        
+    </section>
+    <section class="container artist">
+
+        <% album.songs.forEach(function(sng){ %>
+
+
+            <li>
+                <%= sng.title %>
+                <div class="meatball-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="option-bar">
+                    <a href="/artist/<%=id%>" class="artist-option option">Go to artist</a>
+                    <% if(currentUser){ %>
+                        <% let flag = false %>
+                        <% for(let i = 0; i< fav.length; i++){ %>
+                            <% if(sng._id == fav[i].songId){ %>
+                                <% flag = true; %>
+                                <% break; %> 
+                            <% } %> 
+                        <% } %>
+                        <% console.log(flag) %>
+                        <% if(flag === true){ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
+                            </form>   
+                        <% } else{ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
+                            </form>      
+                        <% } %>
+                          
+                    <% } %>
+                    <% if(currentUser){ %>
+                        <% if(currentUser.subscribe === true) { %>
+                            <a href="#" class="download-option option">Download</a>
+                        <% } %>
+                    <% } %>
+                </div>
+            </li>
+
+
+        <% }); %>
+
+
+    </ol>
+    <% if(album.songs.length === 0){ %>
+        <h1 style="text-align: center;">This album has no song</h1>
+    <% } %>
+    
+    </section>
+  </section>
+
+<%-include('../partials/footer.ejs') %>

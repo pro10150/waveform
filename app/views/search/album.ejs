@@ -1,0 +1,80 @@
+<%-include('../partials/header_search_album.ejs') %>
+
+<nav class="navbar container-fluid head">
+    <a class="navbar-brand home-button" href="/">
+      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
+      Waveform
+    </a>
+    <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
+    </form>
+</nav> 
+<nav class="side-nav">
+    <% if(currentUser){ %>
+        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
+        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
+        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
+    <% } else { %>
+        <i class="guest">Guest</i>
+        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
+    <% } %>
+</nav>
+<section class="main container">
+    <% let backLink = "/search/" + keyword %>
+    <a id="back" class="material-icons back-button">arrow_back</a>
+
+    <h2 id="title-head">All albums for "<span id="search"><%=keyword%></span>"</h2>
+    
+    <section class="container artist">
+        <% topAlbum.forEach(function(tal){ %>
+            <% let albumLink = "/album/" + tal._id %>
+            <button type="button" class="btn artist-btn" id= <%= albumLink %>> 
+                <img src= <%= tal.cover %> alt="" class="cover"> <br>
+                <%= tal.name %>
+            </button>
+        <% }); %>
+        <!-- <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button>
+        <button type="button" class="btn artist-btn"> 
+            <img src="src\cover.png" alt="" class="cover"> <br>
+            Album
+        </button> -->
+    </section>
+</section>
+
+<%-include('../partials/footer.ejs') %>
