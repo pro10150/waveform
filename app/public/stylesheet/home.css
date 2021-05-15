@@ -33,7 +33,7 @@ body{
     background-color: #3C6760; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 100px;
-    margin-top: -5%;
+    margin-top: -4.5%;
 }
 
 .user{
@@ -265,4 +265,10 @@ p.header{
 }
 .id-artist-album{
     display: none;
+}
+.song-top-song{
+    color: lightgrey;
+}
+.song-top-song:hover{
+    color: white;
 }

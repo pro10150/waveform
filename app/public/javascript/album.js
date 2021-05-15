@@ -27,11 +27,9 @@ function onClickBack(){
 }
 function onClickDownload(i){
     flag = true;
-    alert("downloaded " + i);
 }
 function onClickFavorite(i){
     flag = true;
-    alert("add to fav " + i);
 }
 function onClickCloseOption(){
     console.log("test");  

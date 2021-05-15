@@ -231,3 +231,10 @@ li:hover .meatball-menu{
     display: none;
     text-align: center;
 }
+.song-list{
+    color: lightgrey;
+    text-decoration: none;
+}
+.song-list:hover{
+    color: white;
+}

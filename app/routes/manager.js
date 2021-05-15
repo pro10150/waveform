@@ -1,5 +1,41 @@
+const song = require('../models/song');
+
 var express             = require('express'),
     router              = express.Router(),
+    multer              = require('multer'),
+    path                = require('path'),
+    coverStorage        = multer.diskStorage({
+        destination: function(req, file, callback){
+            callback(null,'./public/uploads/covers/');
+        },
+        filename: function(req, file, callback){
+            callback(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+        }
+    }),
+    imageFilter         = function(req, file, callback){
+        if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)){
+            return callback(new Error('Only JPG, JPEG, PNG and GIF image files allowed!'), false);
+        }
+        callback(null, true);
+    },
+    audioStorage        = multer.diskStorage({
+        destination: function(req, fule, callback){
+            callback(null, './public/uploads/audios/');
+        },
+        filename: function(req, file, callback){
+            callback(null, file.originalname);
+        }
+    }),
+    audioFilter         = function(req, file, callback){
+        if(!file.originalname.match(/\.(m4a|flac|mp3|mp4|wav|wma|aac|aif|aiff)$/i)){
+            return callback(new Error('Only M4A, FLAC, MP3, MP4, WAV, WMA, AAC, AIFF audio files allowed!'), false);
+        }
+        callback(null, true);
+    },
+    uploads             = multer({storage: coverStorage, fileFilter: imageFilter}),
+    audioUploads        = multer({storage: audioStorage, fileFilter: audioFilter}),
+    Grid                = require('gridfs-stream');
+    fs                  = require('fs');
     Artist              = require('../models/artist'),
     Album               = require('../models/album'),
     Song                = require('../models/song'),
@@ -7,44 +43,37 @@ var express             = require('express'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
     Favorite            = require('../models/favorite');
 
-router.get('/', isLoggedIn, function(req, res){
-    // let artist = [
-    //     {artistName: 'AJR',artistId: 'AT-00001', artistCover: 'https://s3-us-west-2.amazonaws.com/paradigm-media-library/music_artists/ajr-20190501.jpg'},
-    //     {artistName: 'Imagine Dragon',artistId: 'AT-00002', artistCover: 'https://mpics.mgronline.com/pics/Images/561000011690001.JPEG'},
-    //     {artistName: 'All Time Low',artistId: 'AT-00003', artistCover: 'https://www.upsetmagazine.com/images/article/Artist-Images/A/All-Time-Low/Upset%20Cover%20Shoot%20Apr20/_crop1500x1000/All-Time-Low_London_February-2020_199.jpg'},
-    //     {artistName: 'Maroon 5',artistId: 'AT-00004', artistCover: 'https://i.pinimg.com/originals/49/01/8f/49018fd5d24c32a141d556f5a00a8324.jpg'}
-    // ];
+router.get('/', isUser, isLoggedIn, function(req, res){
 
     Artist.find({manager: req.user._id}, function(err, managedArtist){
         if(err){
             console.log(err);
         }
         else{
-            res.render('index/home.ejs', {artists: managedArtist});
+            res.render('manager/home.ejs', {artists: managedArtist});
         }
     })
     
-    // res.render('manager_home.ejs',{user,artist});
 });
 
-router.post('/', function(req, res){
+router.post('/', isLoggedIn, uploads.single("imgUrl"), function(req, res){
     let name = req.body.name;
     let imgUrl = req.body.imgUrl;
     let popularity = 0;
-    console.log(name);
-    let newArtist = {name: name, cover: imgUrl, popularity: popularity,manager: req.user._id};
+    console.log(req.file);
+    let newArtist = {name: name, popularity: popularity,manager: req.user._id};
+    newArtist.cover = "/uploads/covers/" + req.file.filename;
     Artist.create(newArtist, function(err, newlyCreated){
         if(err){
             console.log(err);
         }
         else{
-            console.log(newlyCreated);
             res.redirect('/manager');
         }
     })
 })
 
-router.get('/artist/add', isLoggedIn, function(req, res){
+router.get('/artist/add', isUser, isLoggedIn, function(req, res){
     res.render('manager/artist_add.ejs');
 });
 
@@ -56,36 +85,31 @@ router.get('/artist/:artistId', isLoggedIn, function(req, res){
             console.log(err);
         }
         else{
-            console.log(searchedArtist);
             res.render('manager/artist.ejs', {artist: searchedArtist});
         }
     })
 });
 
-router.get('/artist/:artistId/add', isLoggedIn, function(req, res){
+router.get('/artist/:artistId/add', isUser, isLoggedIn, function(req, res){
     let id = req.params.artistId;
     res.render('manager/album_add.ejs',{id});
 });
 
-router.post('/artist/:artistId/add', function(req, res){
-    let id = req.params.artistId;
-    let name = req.body.name;
-    let cover = req.body.cover;
-    let popularity = 0;
-    let newAlbum = {name: name, cover: cover, popularity: popularity};
-    Album.create(newAlbum, function(err, newlyCreated){
+router.post('/artist/:artistId/add', isLoggedIn, uploads.single('cover'), function(req, res){
+    req.body.album.artistId = req.params.artistId;
+    req.body.album.popularity = 0;
+    req.body.album.cover = "/uploads/covers/" + req.file.filename;
+    Album.create(req.body.album, function(err, newlyCreated){
         if(err){
             console.log(err);
         }
         else{
-            console.log("YEET");
-            Artist.updateOne({_id: id}, {$push: {albums: newlyCreated._id}}, function(err, addedAlbum){
+            Artist.updateOne({_id: req.params.artistId}, {$push: {albums: newlyCreated._id}}, function(err, addedAlbum){
                 if(err){
                     console.log(err);
                 }
                 else{
-                    console.log(addedAlbum);
-                    res.redirect('/manager/artist/' + id);
+                    res.redirect('/manager/artist/' + req.params.artistId);
                 }
             })
             
@@ -102,7 +126,6 @@ router.post('/artist/:artistId/delete', function(req, res){
         else{
             Album.deleteMany({artistId: id}, function(err, oldContent){
                 if(err){
-                    console.log('error at 773');
                     console.log(err);
                 }
                 else{
@@ -114,11 +137,10 @@ router.post('/artist/:artistId/delete', function(req, res){
     });
 });
 
-router.get('/artist/:artistId/edit', isLoggedIn, function(req ,res){
+router.get('/artist/:artistId/edit', isUser, isLoggedIn, function(req ,res){
     let id = req.params.artistId;
     Artist.find({_id: id}, function(err, searchedArtist){
         if(err){
-            console.log('error at get artist edit' );
             console.log(err);
         }
         else{
@@ -129,23 +151,23 @@ router.get('/artist/:artistId/edit', isLoggedIn, function(req ,res){
     
 });
 
-router.post('/artist/:artistId/edit', function(req, res){
+router.post('/artist/:artistId/edit', isLoggedIn, uploads.single('cover'), function(req, res){
     let id = req.params.artistId;
-    let name = req.body.name;
-    let cover = req.body.cover;
-    Artist.findByIdAndUpdate(id,{name: name, cover: cover}, function(err, searchedArtist){
+    if(typeof req.file !== "undefined"){
+        req.body.artist.cover = "/uploads/covers/" + req.file.filename;
+    }
+    Artist.findByIdAndUpdate(id, req.body.artist, function(err, searchedArtist){
         if(err){
             console.log(err);    
         }
         else{
-            console.log('artist updated');
             res.redirect('/manager/artist/' + id);
         }
     });
 });
 
 
-router.get('/artist/:artistId/album/:albumId', isLoggedIn, function(req, res){
+router.get('/artist/:artistId/album/:albumId', isUser, isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     let artistId = req.params.artistId;
     Artist.find({_id: artistId}, function(err, searchedArtist){
@@ -168,7 +190,7 @@ router.get('/artist/:artistId/album/:albumId', isLoggedIn, function(req, res){
     // res.render('manager_album.ejs',{album, song});
 });
 
-router.get('/artist/:artistId/album/:albumId/edit', isLoggedIn, function(req, res){
+router.get('/artist/:artistId/album/:albumId/edit', isUser, isLoggedIn, function(req, res){
     let id = req.params.albumId;
     Album.find({_id: id}, function(err, searchedAlbum){
         if(err){
@@ -181,22 +203,36 @@ router.get('/artist/:artistId/album/:albumId/edit', isLoggedIn, function(req, re
     
 });
 
-router.post('/artist/:artistId/album/:albumId/edit', function(req, res){
+router.post('/artist/:artistId/album/:albumId/edit', isLoggedIn, uploads.single('cover'), function(req, res){
     let id = req.params.albumId;
-    let name = req.body.name;
-    let cover = req.body.cover;
-    Album.findByIdAndUpdate(id, {name: name, cover: cover}, function(err, editedAlbum){
+    if(typeof req.file !== "undefined"){
+        req.body.album.cover = "/uploads/covers/" + req.file.filename;
+    }
+    Album.findByIdAndUpdate(id, req.body.album, function(err, editedAlbum){
         if(err){
             console.log(err);
         }
         else{
-            console.log('edit album');
-            res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);
+            if(req.body.album.cover){
+                Song.updateMany({_id: editedAlbum.songs}, {cover: req.body.album.cover}).exec(function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);
+                    }
+                })    
+            }
+            else{
+                res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);    
+            }
+            
+            
         }
     });
 });
 
-router.get('/artist/:artistId/album/:albumId/add', isLoggedIn, function(req, res){
+router.get('/artist/:artistId/album/:albumId/add', isUser, isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     Album.find({_id: albumId}, function(err, searchedAlbum){
         if(err){
@@ -210,7 +246,7 @@ router.get('/artist/:artistId/album/:albumId/add', isLoggedIn, function(req, res
     // res.render('manager_song_add.ejs',{album});
 });
 
-router.post('/artist/:artistId/album/:albumId/add', function(req, res){
+router.post('/artist/:artistId/album/:albumId/add', isLoggedIn, audioUploads.single('audio'), function(req, res){
     let artistId = req.params.artistId;
     let albumId = req.params.albumId;
     let title = req.body.title;
@@ -234,6 +270,7 @@ router.post('/artist/:artistId/album/:albumId/add', function(req, res){
                     albumName = searchedAlbum[0].name;
                     cover = searchedAlbum[0].cover;
                     let newSong = {title: title, lyrics: lyrics, popularity: popularity, artistId: artistId, artistName: artistName, albumId: albumId, albumName: albumName, cover: cover};
+                    newSong.audio = "/uploads/audios/" + req.file.filename;
                     Song.create(newSong, function(err, newlyCreated){
                         if(err){
                             console.log(err);
@@ -257,7 +294,7 @@ router.post('/artist/:artistId/album/:albumId/add', function(req, res){
     
 });
 
-router.post('/artist/:artistId/album/:albumId/delete', function(req, res){
+router.post('/artist/:artistId/album/:albumId/delete', isLoggedIn, function(req, res){
     let artistId = req.params.artistId;
     let id =req.params.albumId;
     Album.findByIdAndDelete(id, function(err, oldContent){
@@ -278,7 +315,7 @@ router.post('/artist/:artistId/album/:albumId/delete', function(req, res){
     })
 });
 
-router.get('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, function(req, res){
+router.get('/artist/:artistId/album/:albumId/song/:songId/edit', isUser, isLoggedIn, function(req, res){
     let albumId = req.params.albumId;
     let songId = req.params.songId;
     Album.find({_id: albumId}, function(err, editedAlbum){
@@ -286,7 +323,6 @@ router.get('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, fun
             console.log(err);
         }
         else{
-            console.log('edit song album');
             Song.find({_id: songId}, function(err, editedSong){
                 if(err){
                     console.log('error at get song edit');
@@ -300,29 +336,28 @@ router.get('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, fun
     });
 });
 
-router.post('/artist/:artistId/album/:albumId/song/:songId/edit', function(req, res){
+router.post('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, audioUploads.single('audio'), function(req, res){
     let songId = req.params.songId;
-    let title = req.body.title;
-    let lyrics = req.body.lyrics;
-    Song.findByIdAndUpdate(songId, {title: title, lyrics: lyrics}, function(err, updatedSong){
+    if(typeof req.file !== "undefined"){
+        req.body.song.audio = "/uploads/audios/" + req.file.filename;
+    }
+    Song.findByIdAndUpdate(songId, req.body.song, function(err, updatedSong){
         if(err){
             console.log(err);
         }
         else{
-            console.log('song updated');
             res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
         }
     })
 })
 
-router.post('/artist/:artistId/album/:albumId/song/:songId/delete', function(req, res){
+router.post('/artist/:artistId/album/:albumId/song/:songId/delete', isLoggedIn, function(req, res){
     let songId = req.params.songId;
     Song.findByIdAndDelete(songId, function(err, deletedSong){
         if(err){
             console.log(err);
         }
         else{
-            console.log('song deleted');
             res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
         }
     })
@@ -333,6 +368,20 @@ function isLoggedIn(req, res, next){
         return next();
     }
     res.redirect('/login');
+}
+function isUser(req, res, next){
+    if(req.user){
+        if(req.user.status === "user"){
+            console.log("here");
+            res.redirect("/");
+        }
+        else{
+            next();
+        }
+    }
+    else{
+        res.redirect("/login");
+    }
 }
 
 module.exports = router;

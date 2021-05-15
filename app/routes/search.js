@@ -13,17 +13,17 @@ router.post('/', function(req, res){
 
 router.get('/:keyword', function(req,res){
     let keyword = req.params.keyword;
-    Artist.find({name: { $regex : keyword,$options:'i' }}).sort({popularity: -1}).limit(4).exec(function(err, searchedArtist){
+    Artist.find({name: { $regex : new RegExp("^" + keyword, "i")}}).sort({popularity: -1}).limit(4).exec(function(err, searchedArtist){
         if(err){
             console.log(err);
         }
         else{
-            Album.find({name: {$regex: keyword,$options:'i'}}).sort({popularity: -1}).limit(4).exec(function(err, searchedAlbum){
+            Album.find({name: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}).limit(4).exec(function(err, searchedAlbum){
                 if(err){
                     console.log(err);
                 }
                 else{
-                    Song.find({title: {$regex: keyword,$options:'i'}}).sort({popularity: -1}).limit(5).exec(function(err, searchedSong){
+                    Song.find({title: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}).limit(5).exec(function(err, searchedSong){
                         if(err){
                             console.log(err);
                         }
@@ -73,8 +73,6 @@ router.get('/:keyword', function(req,res){
                                     top = topResult[0];
                                 }
                             }
-                            console.log(topResult[0])
-                            console.log(top)
                             if(req.isAuthenticated()){
                                 Favorite.find({id: req.user._id}, function(err, fav){
                                     if(err){

@@ -19,18 +19,17 @@
         
         <section class="main-article">
             <h2>Artist</h2>
-            <form action="/manager/artist/<%=at._id%>/edit" method="post">
+            <form action="/manager/artist/<%=at._id%>/edit" method="post" enctype="multipart/form-data">
                 <label for="fileToUpload">
                     <img class="profile-pic" src=<%=at.cover%> id="profile-img">
               </label>
-              <h3>image url</h3>
-              <input type="url" name="cover" id="fileToUpload" class="form-control" value="<%=at.cover%>">
-              <button type="button" class="btn btn-primary" id="btn-add">add</button>
+              <h3>image</h3>
+              <input type="file" accept="image/*" name="cover" id="fileToUpload" class="form-control" value="<%=at.cover%>" style="width: 20%; margin-left: 40%; margin-top: 1%;">
             <div class="form-inline name-form">
                 <div class="mb-3">
                     <h3 for="exampleInputEmail1" class="form-label" id="artistNameLabel">Artist Name</h3>
                     <br>
-                    <input type="name" name="name" class="form-control" id="artistNameForm" aria-describedby="" placeholder="Artist name" value="<%=at.name%>">
+                    <input type="name" name="artist[name]" class="form-control" id="artistNameForm" aria-describedby="" placeholder="Artist name" value="<%=at.name%>">
                     <br>
                     <button type="submit" class="btn btn-primary" id="artistNameButton">Submit</button>
                 </div>

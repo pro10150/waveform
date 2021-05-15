@@ -61,7 +61,9 @@
                             <% let artistLink = "/artist/" + ts.artistId %>
                             <li>
                                 <img src= <%=ts.cover %> alt="" class="cover cover-song">
-                                <h5 class="title"><%=ts.title%></h5>
+                                <a href="/song/<%=ts._id%>" class="song-top-song">
+                                    <h5 class="title"><%=ts.title%></h5>
+                                </a>
                                 <a href= <%= albumLink %> class="album-top-song id-top-song-album">
                                     <h5 ><%=ts.albumName%></h5>
                                 </a>
@@ -84,7 +86,6 @@
                                                 <% break; %> 
                                             <% } %> 
                                         <% } %>
-                                        <% console.log(flag) %>
                                         <% if(flag === true){ %>
                                             <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/delete" method="post">
                                                 <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
@@ -98,7 +99,9 @@
                                     <% } %>
                                     <% if(currentUser){ %>
                                         <% if(currentUser.subscribe === true) { %>
-                                            <a href="#" class="download-option option">Download</a>
+                                            <form action="/song/<%=sng._id%>/download" method="post">
+                                                <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
+                                            </form>
                                         <% } %>
                                     <% } %>
                                 </div>

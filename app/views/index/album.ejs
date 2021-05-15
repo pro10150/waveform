@@ -39,14 +39,14 @@
 
 
             <li>
-                <%= sng.title %>
+                <a href="/song/<%=sng._id%>" class="song-list"><%= sng.title %></a>
                 <div class="meatball-menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
                 <div class="option-bar">
-                    <a href="/artist/<%=id%>" class="artist-option option">Go to artist</a>
+                    <a href="/artist/<%=album.artistId%>" class="artist-option option">Go to artist</a>
                     <% if(currentUser){ %>
                         <% let flag = false %>
                         <% for(let i = 0; i< fav.length; i++){ %>
@@ -55,7 +55,6 @@
                                 <% break; %> 
                             <% } %> 
                         <% } %>
-                        <% console.log(flag) %>
                         <% if(flag === true){ %>
                             <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
                                 <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
@@ -69,7 +68,10 @@
                     <% } %>
                     <% if(currentUser){ %>
                         <% if(currentUser.subscribe === true) { %>
-                            <a href="#" class="download-option option">Download</a>
+                            <form action="/song/<%=sng._id%>/download" method="post">
+                                <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
+                            </form>
+                            
                         <% } %>
                     <% } %>
                 </div>

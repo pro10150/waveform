@@ -22,11 +22,9 @@ for(let i = 0;i < download.length; i++){
 
 function onClickDownload(i){
     flag = true;
-    alert("downloaded " + i);
 }
 function onClickFavorite(i){
     flag = true;
-    alert("add to fav " + i);
 }
 function onClickCloseOption(){
     console.log("test");  

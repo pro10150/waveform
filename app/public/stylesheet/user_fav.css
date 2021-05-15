@@ -229,3 +229,9 @@ p.header{
 .unadded-fav{
     display: none;
 }
+.song-top-song{
+    color: lightgrey;
+}
+.song-top-song:hover{
+    color: white;
+}

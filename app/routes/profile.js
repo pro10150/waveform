@@ -1,5 +1,22 @@
 var express             = require('express'),
     router              = express.Router(),
+    multer              = require('multer'),
+    path                = require('path'),
+    profileStorage      = multer.diskStorage({
+        destination: function(req, file, callback){
+            callback(null,'./public/uploads/profiles/');
+        },
+        filename: function(req, file, callback){
+            callback(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+        }
+    }),
+    imageFilter         = function(req, file, callback){
+        if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)){
+            return callback(new Error('Only JPG, JPEG, PNG and GIF image files allowed!'), false);
+        }
+        callback(null, true);
+    },
+    uploads             = multer({storage: profileStorage, fileFilter: imageFilter}),
     Artist              = require('../models/artist'),
     Album               = require('../models/album'),
     Song                = require('../models/song'),
@@ -7,12 +24,14 @@ var express             = require('express'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
     Favorite            = require('../models/favorite');
 
-router.get('/', isLoggedIn, function(req, res){
+
+    
+router.get('/', isManager, isLoggedIn, function(req, res){
     
     res.render('profile/profile.ejs',{user: req.user});
 });
 
-router.get('/subscribe-protal', isLoggedIn, function(req, res){
+router.get('/subscribe-protal', isManager, isLoggedIn, function(req, res){
     res.render('profile/subscribe.ejs',{user: req.user});
 });
 
@@ -55,12 +74,18 @@ router.post('/unsubscribe', function(req, res){
     })
 })
 
-router.get('/edit', isLoggedIn, function(req, res){
+router.get('/edit', isManager, isLoggedIn, function(req, res){
     res.render('profile/edit.ejs');
 });
 
-router.post('/profile/edit', function(req, res){
-    User.findByIdAndUpdate(req.body.id,{profilePicture: req.body.url, name: req.body.name, lastName: req.body.lastName}, function(err, user){
+router.post('/edit', isLoggedIn, uploads.single('profilePicture'), function(req, res){
+    if(typeof req.file !== "undefined"){
+        if(typeof req.file.filename !== "undefined"){
+            req.body.profile.profilePicture = "/uploads/profiles/" + req.file.filename;
+        }    
+    }
+    
+    User.findByIdAndUpdate(req.body.id, req.body.profile, function(err, user){
         if(err){
             console.log(err);
         }
@@ -72,11 +97,11 @@ router.post('/profile/edit', function(req, res){
     });
 });
 
-router.get('/change-password', isLoggedIn, function(req, res){
+router.get('/change-password', isManager, isLoggedIn, function(req, res){
     res.render('profile/change_password.ejs');
 })
 
-router.post('/change-password', isLoggedIn, function(req, res){
+router.post('/change-password', isLoggedIn, isLoggedIn, function(req, res){
     User.findById(req.user._id).exec(function(err, user){
         if(err){
             console.log(err);
@@ -97,7 +122,7 @@ router.post('/change-password', isLoggedIn, function(req, res){
     
 });
 
-router.get('/manager-register', isLoggedIn, function(req, res){
+router.get('/manager-register', isManager, isLoggedIn, function(req, res){
     res.render('profile/manager_register.ejs');
 })
 
@@ -119,6 +144,19 @@ function isLoggedIn(req, res, next){
         return next();
     }
     res.redirect('/login');
+}
+function isManager(req, res, next){
+    if(req.user){
+        if(req.user.status === "manager"){
+            res.redirect("/manager");
+        }
+        else{
+            return next();
+        }
+    }
+    else{
+        return next();
+    }
 }
 
 module.exports = router;

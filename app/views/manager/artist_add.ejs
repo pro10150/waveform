@@ -17,13 +17,12 @@
         
         <section class="main-article">
             <h2>Artist</h2>
-            <form action="/manager" method="post">
+            <form action="/manager" method="post" enctype="multipart/form-data">
                 <label for="fileToUpload">
                     <img class="profile-pic" src="/src/upload-pic.png" id="profile-img">
                 </label>
-                <h3>image url</h3>
-                <input type="url" name="imgUrl" id="fileToUpload" class="form-control">
-                <button type="button" class="btn btn-primary" id="btn-add">preview</button>
+                <h3>image</h3>
+                <input type="file" accept="image/*" name="imgUrl" id="fileToUpload" class="form-control" style="width: 20%; margin-left: 40%; margin-top: 1%;">
                 <div class="form-inline name-form">
                     <div class="mb-auto">
                         <h3 for="exampleInputEmail1" class="form-label" id="artistNameLabel">Artist Name</h3>

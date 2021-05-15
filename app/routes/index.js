@@ -8,8 +8,7 @@ var express             = require('express'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
     Favorite            = require('../models/favorite');
 
-router.get('/', function(req, res){
-
+router.get('/', isManager, function(req, res){
     Artist.find({$query: {}}).sort({popularity: -1}).limit(4).exec(function(err, allArtist){
         if(err){
             console.log(err);
@@ -48,7 +47,7 @@ router.get('/', function(req, res){
     
 });
 
-router.get('/artist/:artistId', function(req, res){
+router.get('/artist/:artistId', isManager, function(req, res){
     let id = req.params.artistId;
     Artist.findByIdAndUpdate(id, {$inc: {'popularity' : 10}}).populate("albums").exec(function(err, searchedArtist){
         if(err){
@@ -61,7 +60,7 @@ router.get('/artist/:artistId', function(req, res){
     
 }); 
 
-router.get('/album/:albumId', function(req, res){
+router.get('/album/:albumId', isManager, function(req, res){
     let artistId = req.params.artistId;
     let albumId = req.params.albumId;
     Album.findByIdAndUpdate(albumId,{$inc: {'popularity' : 10}}).populate("songs").exec(function(err, searchedAlbum){
@@ -87,6 +86,52 @@ router.get('/album/:albumId', function(req, res){
     
 });
 
+router.get('/song/:songId', isManager, function(req, res){
+    let songId = req.params.songId;
+    Song.findByIdAndUpdate(songId, {$inc: {'popularity' : 2}}).exec(function(err, song){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(req.isAuthenticated()){
+                Favorite.find({id: req.user._id}, function(err, fav){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('index/song.ejs', {song: song, fav: fav});
+                    }
+                })
+            }
+            else{
+                res.render('index/song.ejs', {song: song});
+            }
+            
+        }
+    })
+});
+
+router.post('/song/:songId/download', isLoggedIn, isPremium, function(req, res){
+    let id = req.params.songId;
+    Song.findByIdAndUpdate(id, {$inc: {'popularity': 10}}).exec(function(err, song){
+        if(err){
+            console.log(err);
+        }
+        else{
+            let path = "./public";
+            res.download(path + song.audio, (err) => {
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    // res.redirect(res.get('referer'));
+                }
+                
+            });
+        }
+    })
+})
+
 router.get('/login',function(req, res){
     res.render('index/login_screen.ejs');
 });
@@ -108,22 +153,23 @@ router.get('/reset-password', function(req, res){
 })
 
 router.post('/reset-password', function(req, res){
-    User.find({username: req.body.username}).exec(function(err, user){
+    User.findOne({username: req.body.username}).exec(function(err, user){
         if(err){
             console.log(err);
         }
         else{
-            user[0].setPassword(req.body.password, function(err){
+            console.log(user);
+            user.setPassword(req.body.password, function(err){
                 if(err){
                     console.log(err);
                 }
                 else{
                     res.redirect('/login');
                 }
-            })
+            });
         }
-    })
-})
+    });
+});
 
 router.get('/register', function(req, res){
     res.render('index/register_screen.ejs');
@@ -147,6 +193,29 @@ function isLoggedIn(req, res, next){
         return next();
     }
     res.redirect('/login');
+}
+function isManager(req, res, next){
+    if(req.user){
+        if(req.user.status === "manager"){
+            res.redirect("/manager");
+        }
+        else{
+            return next();
+        }
+    }
+    else{
+        return next();
+    }
+}
+function isPremium(req, res, next){
+    if(req.user){
+        if(req.user.subscribe !== true){
+            res.redirect(res.get('referer'));
+        }
+        else{
+            return next();
+        }
+    }
 }
 
 module.exports = router;

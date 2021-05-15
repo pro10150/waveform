@@ -7,7 +7,7 @@ var express             = require('express'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
     Favorite            = require('../models/favorite');
 
-router.get('/', isLoggedIn, function(req, res){
+router.get('/', isManager, isLoggedIn, function(req, res){
     songIdArray = []
     Favorite.find({id: req.user._id}, function(err, searchedFavorite){
         if(err){
@@ -42,24 +42,25 @@ router.get('/', isLoggedIn, function(req, res){
     })
 });
 
-router.post('/:id/:songId/add', function(req, res){
+router.post('/:id/:songId/add', isLoggedIn, isManager, function(req, res){
     Favorite.create({id: req.params.id,songId: req.params.songId}, function(err, addedfavorite){
         if(err){
             console.log(err);
         }
         else{
-            Song.findByIdAndUpdate(req.params.songId, {$inc: {popularity: 100}}, function(err, song){
+            Song.findByIdAndUpdate(req.params.songId, {$inc: {popularity: 5}}, function(err, song){
                 if(err){
                     console.log(err);
                 }
                 else{
+                    res.redirect(req.get('referer'));
                 }
             })
         }
     })
 });
 
-router.post('/:id/:songId/delete', function(req, res){
+router.post('/:id/:songId/delete', isLoggedIn, function(req, res){
     Favorite.findOneAndDelete({id:req.params.id, songId: req.params.songId}, function(err, deletedFavorite){
         if(err){
             console.log(err);
@@ -70,6 +71,7 @@ router.post('/:id/:songId/delete', function(req, res){
                     console.log(err);
                 }
                 else{
+                    res.redirect(req.get('referer'));
                 }
             })
         }
@@ -82,5 +84,19 @@ function isLoggedIn(req, res, next){
     }
     res.redirect('/login');
 }
+function isManager(req, res, next){
+    if(req.user){
+        if(req.user.status === "manager"){
+            res.redirect("/manager");
+        }
+        else{
+            return next();
+        }
+    }
+    else{
+        return next();
+    }
+}
+
 
 module.exports = router;

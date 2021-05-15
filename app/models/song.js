@@ -8,8 +8,8 @@ let songSchema = new mongoose.Schema({
     artistName: {type: mongoose.Schema.Types.String, ref: "Artist"},
     albumId: {type: mongoose.Schema.Types.ObjectId, ref: "Album"},
     albumName: {type: mongoose.Schema.Types.String, ref: "Album"},
-    cover: {type: mongoose.Schema.Types.String, ref: "album"}
-
+    cover: {type: mongoose.Schema.Types.String, ref: "album"},
+    audio: String
 });
 
 module.exports = mongoose.model('Song', songSchema)

@@ -263,3 +263,9 @@ div.header{
 h3.header{
     display: inline;
 }
+.song-top-song{
+    color: lightgrey;
+}
+.song-top-song:hover{
+    color: white;
+}

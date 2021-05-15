@@ -273,3 +273,9 @@ p.header{
 #section-top-song{
     padding-left: 1rem;
 }
+.song-top-song{
+    color: lightgrey;
+}
+.song-top-song:hover{
+    color: white;
+}

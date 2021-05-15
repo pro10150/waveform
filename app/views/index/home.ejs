@@ -54,7 +54,9 @@
         <% let artistId = "/artist/" + sng.artistId; %>
         <li>
             <img src= <%= sng.cover %> alt="" class="cover cover-song">
-            <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
+            <a href="/song/<%=sng._id%>" class="song-top-song">
+                <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
+            </a>
             <a href= <%= albumId %> class="album-top-song">
                 <h5 class="id-song-album d-none d-lg-block" id= <%= sng._id %> > <%= sng.albumName %> </h5>
             </a>
@@ -77,7 +79,6 @@
                             <% break; %> 
                         <% } %> 
                     <% } %>
-                    <% console.log(flag) %>
                     <% if(flag === true){ %>
                         <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
                             <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
@@ -91,7 +92,10 @@
                 <% } %>
                 <% if(currentUser){ %>
                     <% if(currentUser.subscribe === true) { %>
-                        <a href="#" class="download-option option">Download</a>
+                        <form action="/song/<%=sng._id%>/download" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
+                        </form>
+                        
                     <% } %>
                 <% } %>
                 

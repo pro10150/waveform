@@ -7,17 +7,17 @@ const backButton = document.getElementById('back');
 
 backButton.addEventListener('click', function(){onClickBack()});
 submitButton.addEventListener("click",function(){onClickSubmit()});
-linkButton.addEventListener("click",function(){changeImg()});
+img.addEventListener("change",function(event){changeImg()});
 
 function onClickBack(){
     window.history.back();
 }
 function changeImg(){
-    
-    let newUrl = img.value;
-    console.log(img.value);
-    if(newUrl !== '') url.src = newUrl;
-    // console.log(img.value);
+
+    url.src = URL.createObjectURL(event.target.files[0]);
+    url.onload = function(){
+        URL.revokeObjectURL(url.src);
+    }
 }
 function onClickSubmit(){
     // if(artistName.value !== '' && url.src !== 'http://localhost:3000/src/upload-pic.png') alert(artistName.value + "\n" + url.src);
