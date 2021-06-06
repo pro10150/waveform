@@ -1,66 +1,4 @@
-body{
-    background-color: #67948D;
-    overflow-x: hidden;
-}
-.navbar{
-    background-color: #2A4556;
-    font-family: 'Pacifico';
-    font-size: 64px;
-    position: fixed;
-    top: 0%;
-}
-.navbar-brand{
-    color: #F5CE63;
-    font-size: 30px;
-}
-.navbar-brand:hover{
-    color: white;
-}
-.form-rounded{
-    border: black;
-    border-radius: 20px;
-    font-family: 'Roboto', sans-serif, 'FontAwesome';
-    margin-right: 3em;
-}
 
-
-.side-nav {
-    display: block;
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 200px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    left: 0;
-    background-color: #3C6760; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 100px;
-    margin-top: -5%;
-}
-
-.user{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-}
-.guest{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-    text-align: center;
-}
-  
-/* When you mouse over the navigation links, change their color */
-.side-nav a:hover {
-    background-color: #83BBB2;
-    transition: 0.3s ease-out all ;
-    color: black;
-}
-  
 /* Style page content */
 .main {
     margin-left: 200px; /* Same as the width of the sidebar */
@@ -147,34 +85,29 @@ body{
 ol {
     margin: auto;
 }
-li{
+.song{
     font-family: 'Roboto', sans-serif, 'FontAwesome';
     font-size: larger;
     border-style: solid;
-    border-top: transparent;
+    border-color: rgba(0, 0, 0, 0.3);
+    border-bottom: transparent;
     border-left: transparent;
     border-right: transparent;
-    border-color: rgba(0, 0, 0, 0.3);
-    color: white;
     height: 80px;
+    padding-left: 2rem;
     padding-top: 30px;
-    padding-left: 1rem;
-    width: 800rem;
-    list-style-type:decimal;
 }
-li:hover{
+.song:hover{
     background-color: rgba(88, 122, 119, 0.7);
     cursor: default;
-}
-li:hover .meatball-menu{
-    display: inline;
+    color: white;
 }
 .meatball-menu{
     width: 40px;
     height: 40px;
     position: absolute;
-    display: none;
-    right: 0;
+    margin-left: 62%;
+    margin-top: -1.5%;
     transform: translateY(-50%);
 }
 .meatball-menu span{
@@ -183,10 +116,6 @@ li:hover .meatball-menu{
     border-radius: 50%;
     background:black;
     position: absolute;
-}
-.meatball-menu:hover span{
-    
-    background:white;
 }
 .meatball-menu span:nth-child(1){
     top: 50%;
@@ -206,13 +135,14 @@ li:hover .meatball-menu{
     cursor: pointer;
 }
 .option-bar{
+    transition: all ease 0.2s;
     background-color: #474747;
-    width: 20rem;
-    margin-left: 82rem;
+    width: 20%;
+    margin-left: 78rem;
     margin-top: -2.1rem;
     z-index: 1;
-    display: none;
     position: relative;
+    display: none;
 }
 .option{
     display: block;
@@ -237,4 +167,24 @@ li:hover .meatball-menu{
 }
 .song-list:hover{
     color: white;
+}
+.card-body{
+    background-color: #2A4556;
+    color: white;
+    z-index: 1;
+}
+.song-toggler{
+    color: black;
+    margin-top: -3%;
+}
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }

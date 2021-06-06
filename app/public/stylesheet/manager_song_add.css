@@ -1,23 +1,5 @@
 body{
-    background-color: #67948D;
-}
-html, body {
-    max-width: 100%;
     overflow-x: hidden;
-}
-.navbar{
-    background-color: #2A4556;
-    font-family: 'Pacifico';
-    position: fixed;
-    font-size: 64px;
-    z-index: 9;
-}
-.navbar-brand{
-    color: #F5CE63;
-    font-size: 30px;
-}
-.navbar-brand:hover{
-    color: black;
 }
 .form-rounded{
     border: black;
@@ -103,4 +85,24 @@ html, body {
 }
 .point{
     cursor: pointer;
+}
+#logout-btn{
+    border-color: transparent;
+    color: white;
+    font-size: 1.5rem;
+}
+#logout-btn:hover{
+
+    color: red;
+}
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }

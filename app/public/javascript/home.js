@@ -60,7 +60,6 @@ function searchEnter(event){
     }
 }
 function onClickCloseOption(){
-    console.log("test");  
     if(flag === false){
        for(let i = 0; i < option.length; i++){
             if(option[i].style.display === "block")
@@ -70,7 +69,6 @@ function onClickCloseOption(){
     flag = false;
 }
 function onClickOption(i){
-    console.log("Hello");
     flag = true;
     for(let j = 0;j < option.length ;j++){
         option[j].style.display = "none";

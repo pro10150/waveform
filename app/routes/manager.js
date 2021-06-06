@@ -23,7 +23,7 @@ var express             = require('express'),
             callback(null, './public/uploads/audios/');
         },
         filename: function(req, file, callback){
-            callback(null, file.originalname);
+            callback(null, file.originalname + "-" + Date.now() + path.extname(file.originalname));
         }
     }),
     audioFilter         = function(req, file, callback){
@@ -109,6 +109,7 @@ router.post('/artist/:artistId/add', isLoggedIn, uploads.single('cover'), functi
                     console.log(err);
                 }
                 else{
+                    req.flash('success', 'Artist added successfully');
                     res.redirect('/manager/artist/' + req.params.artistId);
                 }
             })
@@ -129,7 +130,15 @@ router.post('/artist/:artistId/delete', function(req, res){
                     console.log(err);
                 }
                 else{
-                    res.redirect('/manager');
+                    Song.deleteMany({artistId: id}, function(err, oldContent){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Artist deleted successfully');
+                            res.redirect('/manager');
+                        }
+                    })
                 }
             });
             
@@ -161,6 +170,7 @@ router.post('/artist/:artistId/edit', isLoggedIn, uploads.single('cover'), funct
             console.log(err);    
         }
         else{
+            req.flash('success', 'Artist edited successfully');
             res.redirect('/manager/artist/' + id);
         }
     });
@@ -219,11 +229,13 @@ router.post('/artist/:artistId/album/:albumId/edit', isLoggedIn, uploads.single(
                         console.log(err);
                     }
                     else{
+                        req.flash('success', 'Album edited successfully');
                         res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);
                     }
                 })    
             }
             else{
+                req.flash('success', 'Album edited successfully');
                 res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);    
             }
             
@@ -281,6 +293,7 @@ router.post('/artist/:artistId/album/:albumId/add', isLoggedIn, audioUploads.sin
                                     console.log(err);
                                 }
                                 else{
+                                    req.flash('success', 'Song added successfully');
                                     res.redirect('/manager/artist/' + artistId + "/album/" + albumId);
                                 }
                             })
@@ -308,6 +321,7 @@ router.post('/artist/:artistId/album/:albumId/delete', isLoggedIn, function(req,
                     console.log(err);
                 }
                 else{
+                    req.flash('success', 'Album deleted successfully');
                     res.redirect('/manager/artist/' + artistId);
                 }
             });
@@ -346,6 +360,7 @@ router.post('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, au
             console.log(err);
         }
         else{
+            req.flash("success", "Song edited successfully");
             res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
         }
     })
@@ -358,6 +373,7 @@ router.post('/artist/:artistId/album/:albumId/song/:songId/delete', isLoggedIn, 
             console.log(err);
         }
         else{
+            req.flash("success", "Song deleted successfully!");
             res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
         }
     })
@@ -367,12 +383,13 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash('error', "You need to log in first!");
     res.redirect('/login');
 }
 function isUser(req, res, next){
     if(req.user){
         if(req.user.status === "user"){
-            console.log("here");
+            req.flash('error', "Only user with manager permission can do this. Either register as manager via profile tab or bugger off!");
             res.redirect("/");
         }
         else{
@@ -380,6 +397,7 @@ function isUser(req, res, next){
         }
     }
     else{
+        req.flash('error', "You need to log in first!");
         res.redirect("/login");
     }
 }

@@ -1,15 +1,6 @@
 <%-include('../partials/header_manager_home.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
 
-<nav class="navbar container-fluid head">
-    <a class="navbar-brand home-button" href="/manager">
-      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
-      Waveform 
-    </a>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2 form-rounded" id="search" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-        <a href="/logout" class="rounded-pill" id="logout-btn">logout</a>
-    </form>
-</nav>
 <section class="main">
     <nav class="container-fluid manager-name">
         <% let fullName = currentUser.name + " " + currentUser.lastName %>

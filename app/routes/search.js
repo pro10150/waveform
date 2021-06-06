@@ -97,7 +97,7 @@ router.get('/:keyword', function(req,res){
 
 router.get('/:searchKeyword/song', function(req, res){
     let keyword = req.params.searchKeyword;
-    Song.find({title: {$regex: keyword,$options:'i'}}).sort({popularity: -1}). exec(function(err, topSong){
+    Song.find({title: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}). exec(function(err, topSong){
         if(err){
             console.log(err);
         }
@@ -123,7 +123,7 @@ router.get('/:searchKeyword/song', function(req, res){
 
 router.get('/:searchKeyword/artist', function(req, res){
     let keyword = req.params.searchKeyword;
-    Artist.find({name: {$regex: keyword,$options:'i'}}).sort({popularity: -1}). exec(function(err, topArtist){
+    Artist.find({name: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}). exec(function(err, topArtist){
         if(err){
             console.log(err);
         }
@@ -136,7 +136,7 @@ router.get('/:searchKeyword/artist', function(req, res){
 
 router.get('/:searchKeyword/album', function(req, res){
     let keyword = req.params.searchKeyword;
-    Album.find({name: {$regex: keyword,$options:'i'}}).sort({popularity: -1}). exec(function(err, topAlbum){
+    Album.find({name: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}). exec(function(err, topAlbum){
         if(err){
             console.log(err);
         }

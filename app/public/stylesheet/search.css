@@ -1,25 +1,4 @@
-body{
-    background-color: #67948D;
-}
-html,body{
-    max-width: 100%;
-    overflow-x: hidden;
-}
-.navbar{
-    background-color: #2A4556;
-    font-family: 'Pacifico';
-    font-size: 64px;
-    position: fixed;
-    top: 0%;
-}
 
-.navbar-brand{
-    color: #F5CE63;
-    font-size: 30px;
-}
-.navbar-brand:hover{
-    color: white;
-}
 .form-rounded{
     border: black;
     border-radius: 20px;
@@ -28,18 +7,6 @@ html,body{
 }
 #download{
     display: none;
-}
-
-.side-nav {
-    display: block;
-    height: 200%; /* Full-height: remove this if you want "auto" height */
-    width: 200px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    left: 0;
-    background-color: #3C6760; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 12rem;
-    margin-top: -5rem;
 }
 
 .user{
@@ -278,4 +245,15 @@ p.header{
 }
 .song-top-song:hover{
     color: white;
+}
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }

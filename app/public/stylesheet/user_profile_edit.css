@@ -178,4 +178,15 @@ form input[type="url"] {
     margin-top: -4.2rem;
     margin-left: 66rem;
 }
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
 

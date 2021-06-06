@@ -1,48 +1,30 @@
 <%-include('../partials/header_user_fav.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+<%-include('../partials/header_sidenav.ejs') %>
 
-<nav class="navbar container-fluid head">
-    <a class="navbar-brand home-button" href="/">
-        <img src="src\home.png" width="50" height="50" class="d-inline-block" alt="">
-        Waveform
-    </a>
-    <form class="form-inline" action="/search" method="post">
-        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-    </form>
-</nav> 
-<nav class="side-nav">
-    <% if(currentUser){ %>
-        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
-        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
-        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
-    <% } else { %>
-        <i class="guest">Guest</i>
-        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
-    <% } %>
-</nav>
 <section class="main container">
-    <p class="header added-fav">
-        <h3 class="header" id="number">#</h3>
-        <h3 class="header" id="title">TITLE</h3>
-        <h3 class="header" id="album">ALBUM</h3>
-        <h3 class="header" id="artist">ARTIST</h3>
-    </p>
+    <p class="header">
+      <h3 class="header d-none d-lg-inline-block" id="number">#</h3>
+      <h3 class="header d-none d-lg-inline-block" id="title">TITLE</h3>
+      <h3 class="header d-none d-lg-inline-block" id="album">ALBUM</h3>
+      <h3 class="header d-none d-lg-inline-block" id="artist">ARTIST</h3>
+  </p>
     <ol class="added-fav">
         <% result.forEach(function(fv){ %>
             <% let albumId = "/album/" + fv.albumId; %>
             <% let artistId = "/artist/" + fv.artistId; %>
-            <li>
+            <li class="song">
                 <img src= <%= fv.cover %> alt="" class="cover">
                 <a href="/song/<%=fv._id%>" class="song-top-song">
                     <h5 class="title"> <%= fv.title %> </h5>
                 </a>
                 <a href= <%= albumId %> class="album">
-                    <h5 > <%= fv.albumName %></h5>
+                    <h5 class=" d-none d-lg-block"> <%= fv.albumName %></h5>
                 </a>
                 <a href= <%= artistId %> class="artist">
-                    <h5 > <%= fv.artistName %></h5>
+                    <h5 class=" d-none d-lg-block"> <%= fv.artistName %></h5>
                 </a>
-                <div class="meatball-menu">
+                <div class="meatball-menu d-none d-lg-block">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -78,7 +60,53 @@
                         <% } %>
                     <% } %>
                 </div>
+                <button class="navbar-toggler d-block d-lg-none navbar-dark bg-inverse song-toggler" type="button" data-bs-toggle="collapse" style="float: right;" data-bs-target="#collapse<%=fv._id%>" aria-controls="<%=fv._id%>" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon bg-inverse"></span>
+                </button>
             </li>
+                <div class="collapse navbar-collapse song-menu" id="collapse<%=fv._id%>" style="float: right;">
+                  <ul class="navbar-nav" >
+                    <div class="d-block d-lg-none card card-body">
+                        <li class="nav-item">
+                            <a href= <%= artistId %> class="artist-option option dropdown-item">Go to artist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href= <%= albumId %> class="album-option option dropdown-item">Go to album</a>
+                        </li>
+                        <% if(currentUser){ %>
+                            <% let flag = false %>
+                            <% for(let i = 0; i< fav.length; i++){ %>
+                                <% if(fv._id == fav[i].songId){ %>
+                                    <% flag = true; %>
+                                    <% break; %> 
+                                <% } %> 
+                            <% } %>
+                            <% if(flag === true){ %>
+                                <li class="nav-item">
+                                    <form action="/favorite/<%=currentUser._id%>/<%=fv._id%>/delete" method="post">
+                                        <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Delete from favourite</a>
+                                    </form>  
+                                </li>
+                            <% } else{ %>
+                                <li class="nav-item">
+                                    <form action="/favorite/<%=currentUser._id%>/<%=fv._id%>/add" method="post">
+                                        <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Add to favourite</a>
+                                    </form>  
+                                </li>    
+                            <% } %>
+                              
+                        <% } %>
+                        <% if(currentUser){ %>
+                            <% if(currentUser.subscribe === true) { %>
+                                <li class="nav-item">
+                                    <form action="/song/<%=fv._id%>/download" method="post">
+                                        <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
+                                    </form>
+                                </li>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
         <% }); %>
     </ol>
     <div class="container unadded-fav">

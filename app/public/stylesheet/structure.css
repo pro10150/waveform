@@ -46,3 +46,14 @@ body{
     color: white;
     text-align: left;
 }
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}

@@ -24,10 +24,7 @@ body{
     margin-right: 3rem;
 }
 
-.form-inline{
-    padding-right: 75%;
-}
-#form-search{
+#search{
     padding-right: 0%;
 }
 .main{
@@ -104,6 +101,14 @@ body{
 #register-btn{
     margin-top: 2%;
 }
-.register-form{
-    width: 400%;
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }

@@ -1,27 +1,9 @@
 <%-include('../partials/header_home.ejs') %>
-<nav class="navbar container-fluid head">
-    <a class="navbar-brand home-button" href="/">
-      <img src="/src/home.png" width="50" height="50" class="d-inline-block" alt="/">
-      Waveform
-    </a>
-    <form class="form-inline" action="/search" method="post">
-        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-    </form>
-  </nav> 
-  <nav class="side-nav d-none d-lg-block">
-    <% if(currentUser){ %>
-        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
-        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
-        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
-    <% } else { %>
-        <i class="guest">Guest</i>
-        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
-    <% } %>
-    
-  </nav>
+<%-include('../partials/header_navbar.ejs') %>
+<%-include('../partials/header_sidenav.ejs') %>
   <section class="main container">
-    <h2>Top Aritsts</h2>
+    <h1 class="d-none d-lg-block">Top Aritsts</h1>
+    <h1 class="d-block d-lg-none" style="text-align:center">Top Aritsts</h1>
     <section class="container top artist">
         <% artist.forEach(function(art){ %>
             <button type="button" class="btn btn-artist id-artist col-sm" id= <%= art._id %> > 
@@ -30,7 +12,8 @@
             </button>
         <% }); %>
   </section>
-  <h2>Top Album</h2>
+  <h1 class="d-none d-lg-block">Top Albums</h1>
+  <h1 class="d-block d-lg-none" style="text-align:center">Top Albums</h1>
   <section class="container top album">
     <% album.forEach(function(alb){ %>
         <button type="button" class="btn btn-album id-album col-sm" id= <%= alb._id %> > 
@@ -40,7 +23,8 @@
         </button>
     <% }); %>
   </section>
-    <h2>Top Songs</h2>
+  <h1 class="d-none d-lg-block">Top Songs</h1>
+  <h1 class="d-block d-lg-none" style="text-align:center">Top Songs</h1>
   <section class="container top album">
     <p class="header">
       <h3 class="header d-none d-lg-inline-block" id="number">#</h3>
@@ -52,7 +36,7 @@
     <% song.forEach(function(sng){ %>
         <% let albumId = "/album/" + sng.albumId; %>
         <% let artistId = "/artist/" + sng.artistId; %>
-        <li>
+        <li class="song">
             <img src= <%= sng.cover %> alt="" class="cover cover-song">
             <a href="/song/<%=sng._id%>" class="song-top-song">
                 <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
@@ -63,14 +47,14 @@
             <a href= <%= artistId %> class="artist-song">
                 <h5 class="id-song-artist d-none d-lg-block" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
             </a>
-            <div class="meatball-menu">
+            <div class="meatball-menu d-none d-lg-block">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-            <div class="option-bar">
-                <a href= <%= artistId %> class="artist-option option">Go to artist</a>
-                <a href= <%= albumId %> class="album-option option">Go to album</a>
+            <div class="option-bar dropdown-menu ">
+                <a href= <%= artistId %> class="artist-option option dropdown-item">Go to artist</a>
+                <a href= <%= albumId %> class="album-option option dropdown-item">Go to album</a>
                 <% if(currentUser){ %>
                     <% let flag = false %>
                     <% for(let i = 0; i< fav.length; i++){ %>
@@ -81,11 +65,11 @@
                     <% } %>
                     <% if(flag === true){ %>
                         <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
-                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Delete from favourite</a>
                         </form>   
                     <% } else{ %>
                         <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
-                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Add to favourite</a>
                         </form>      
                     <% } %>
                       
@@ -98,119 +82,56 @@
                         
                     <% } %>
                 <% } %>
-                
-                
             </div>
+            <button class="navbar-toggler d-block d-lg-none navbar-dark bg-inverse song-toggler" type="button" data-bs-toggle="collapse" style="float: right;" data-bs-target="#collapse<%=sng._id%>" aria-controls="<%=sng._id%>" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon bg-inverse"></span>
+            </button>
         </li>
+            <div class="collapse navbar-collapse song-menu" id="collapse<%=sng._id%>" style="float: right;">
+              <ul class="navbar-nav" >
+                <div class="d-block d-lg-none card card-body">
+                    <li class="nav-item">
+                        <a href= <%= artistId %> class="artist-option option dropdown-item">Go to artist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href= <%= albumId %> class="album-option option dropdown-item">Go to album</a>
+                    </li>
+                    <% if(currentUser){ %>
+                        <% let flag = false %>
+                        <% for(let i = 0; i< fav.length; i++){ %>
+                            <% if(sng._id == fav[i].songId){ %>
+                                <% flag = true; %>
+                                <% break; %> 
+                            <% } %> 
+                        <% } %>
+                        <% if(flag === true){ %>
+                            <li class="nav-item">
+                                <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                                    <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Delete from favourite</a>
+                                </form>  
+                            </li>
+                        <% } else{ %>
+                            <li class="nav-item">
+                                <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                                    <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Add to favourite</a>
+                                </form>  
+                            </li>    
+                        <% } %>
+                          
+                    <% } %>
+                    <% if(currentUser){ %>
+                        <% if(currentUser.subscribe === true) { %>
+                            <li class="nav-item">
+                                <form action="/song/<%=sng._id%>/download" method="post">
+                                    <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
+                                </form>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
     <% }); %>
 
-
-    <!-- <li>
-        <img src="src\cover.png" alt="" class="cover cover-song">
-        <h5 class="title">OK Overture</h5>
-        <a href="#" class="album-top-song">
-            <h5 >OK Orchestra</h5>
-        </a>
-        <a href="#" class="artist-song">
-            <h5 >AJR</h5>
-        </a>
-        <div class="meatball-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="option-bar">
-            <a href="artist.html" class="artist-option option">Go to artist</a>
-            <a href="album.html" class="album-option option">Go to album</a>
-            <a href="#" class="favorite-option option">Add to favourite</a>
-            <a href="#" class="download-option option">Download</a>
-        </div>
-    </li>
-    <li>
-        <img src="src\cover.png" alt="" class="cover cover-song">
-        <h5 class="title">Bummerland</h5>
-        <a href="#" class="album-top-song">
-            <h5 >OK Orchestra</h5>
-        </a>
-        <a href="#" class="artist-song">
-            <h5 >AJR</h5>
-        </a>
-        <div class="meatball-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="option-bar">
-            <a href="artist.html" class="artist-option option">Go to artist</a>
-            <a href="album.html" class="album-option option">Go to album</a>
-            <a href="#" class="favorite-option option">Add to favourite</a>
-            <a href="#" class="download-option option">Download</a>
-        </div>
-        
-    </li>
-    <li>
-        <img src="src\cover.png" alt="" class="cover cover-song">
-        <h5 class="title">3 O'Clock Things</h5>
-        <a href="#" class="album-top-song">
-            <h5 >OK Orchestra</h5>
-        </a>
-        <a href="#" class="artist-song">
-            <h5 >AJR</h5>
-        </a>
-        <div class="meatball-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="option-bar">
-            <a href="artist.html" class="artist-option option">Go to artist</a>
-            <a href="album.html" class="album-option option">Go to album</a>
-            <a href="#" class="favorite-option option">Add to favourite</a>
-            <a href="#" class="download-option option">Download</a>
-        </div>
-    </li>
-    <li>
-        <img src="src\cover.png" alt="" class="cover cover-song">
-        <h5 class="title">My Play</h5>
-        <a href="#" class="album-top-song">
-            <h5 >OK Orchestra</h5>
-        </a>
-        <a href="#" class="artist-song">
-            <h5 >AJR</h5>
-        </a>
-        <div class="meatball-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="option-bar">
-            <a href="artist.html" class="artist-option option">Go to artist</a>
-            <a href="album.html" class="album-option option">Go to album</a>
-            <a href="#" class="favorite-option option">Add to favourite</a>
-            <a href="#" class="download-option option">Download</a>
-        </div>
-    </li>
-    <li>
-        <img src="src\cover.png" alt="" class="cover cover-song">
-        <h5 class="title">Joe</h5>
-        <a href="#" class="album-top-song">
-            <h5 >OK Orchestra</h5>
-        </a>
-        <a href="#" class="artist-song">
-            <h5 >AJR</h5>
-        </a>
-        <div class="meatball-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="option-bar">
-            <a href="artist.html" class="artist-option option">Go to artist</a>
-            <a href="album.html" class="album-option option">Go to album</a>
-            <a href="#" class="favorite-option option">Add to favourite</a>
-            <a href="#" class="download-option option">Download</a>
-        </div>
-    </li> -->
 </ol>
 
   </section>

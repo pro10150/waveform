@@ -1,6 +1,5 @@
 body{
     background-color: #67948D;
-    overflow-x: hidden;
 }
 .navbar{
     background-color: #2A4556;
@@ -147,7 +146,7 @@ body{
     color: white;
     text-decoration: underline;
 }
-li{
+.song{
     font-family: 'Roboto', sans-serif, 'FontAwesome';
     font-size: larger;
     border-style: solid;
@@ -156,24 +155,20 @@ li{
     border-left: transparent;
     border-right: transparent;
     height: 80px;
-    width: 105.7rem;
-    padding-left: 4rem;
+    padding-left: 2rem;
     padding-top: 30px;
 }
-li:hover{
+.song:hover{
     background-color: rgba(88, 122, 119, 0.7);
     cursor: default;
     color: white;
-}
-li:hover .meatball-menu{
-    display: inline;
 }
 .meatball-menu{
     width: 40px;
     height: 40px;
     position: absolute;
-    display: none;
-    right: 0;
+    margin-left: 62%;
+    margin-top: -1.5%;
     transform: translateY(-50%);
 }
 .meatball-menu span{
@@ -234,4 +229,24 @@ p.header{
 }
 .song-top-song:hover{
     color: white;
+}
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+.card-body{
+    background-color: #2A4556;
+    color: white;
+    z-index: 1;
+}
+.song-toggler{
+    color: black;
+    margin-top: -3%;
 }

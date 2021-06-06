@@ -49,6 +49,7 @@ router.post('/subscribe', function(req, res){
                 }
                 else{
                     console.log(newSubscription);
+                    req.flash('success', 'Subscribed. Welcome!');
                     res.redirect('/profile');
                 }
             });        
@@ -67,6 +68,7 @@ router.post('/unsubscribe', function(req, res){
                     console.log(err);
                 }
                 else{
+                    req.flash('success', 'Unsubscribed!');
                     res.redirect('/profile');
                 }
             })
@@ -87,11 +89,12 @@ router.post('/edit', isLoggedIn, uploads.single('profilePicture'), function(req,
     
     User.findByIdAndUpdate(req.body.id, req.body.profile, function(err, user){
         if(err){
-            console.log(err);
+            req.flash('error', err.message);
         }
         else{
             console.log(user);
             console.log(req.body.id);
+            req.flash('success', 'Profile updated');
             res.redirect('/profile');
         }
     });
@@ -109,11 +112,11 @@ router.post('/change-password', isLoggedIn, isLoggedIn, function(req, res){
         else{
             user.changePassword(req.body.oldPassword, req.body.newPassword, function(err){
                 if(err){
-                    console.log(err);
-                    let alertMessage = 'Incorrect Password'
-                    res.render('profile/change_password', {alertMessage});
+                    req.flash('error', err.message);
+                    res.redirect('/profile/change-password',);
                 }
                 else{
+                    req.flash('success', 'Password has changed');
                     res.redirect('/profile');
                 }
             });        
@@ -133,6 +136,7 @@ router.post('/manager-register', isLoggedIn, function(req, res){
             console.log(err);
         }
         else{
+            req.flash('success', 'Congratulations! You are now a manager!');
             res.redirect('/manager');
         }
     })
@@ -143,11 +147,13 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash('error', 'You need to log in first');
     res.redirect('/login');
 }
 function isManager(req, res, next){
     if(req.user){
         if(req.user.status === "manager"){
+            req.flash('error', "You are not a user. You are not allowed to go to the user side. Please login with different user")
             res.redirect("/manager");
         }
         else{

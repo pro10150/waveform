@@ -1,14 +1,5 @@
 <%-include('../partials/header_manager_album_add.ejs') %>
-
-<nav class="navbar container-fluid">
-    <a class="navbar-brand home-button" href="/manager">
-      <img src="/src\home.png" width="50" height="50" class="d-inline-block" alt="">
-      Waveform 
-    </a>
-    <form class="form-inline" action="/search" method="get">
-        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-    </form>
-</nav>
+<%-include('../partials/header_navbar.ejs') %>
 <section class="main">
     <section class="container-fluid banner">
         <a class="material-icons back-button point" id="back">arrow_back</a>

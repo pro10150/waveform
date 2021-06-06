@@ -139,12 +139,17 @@ router.get('/login',function(req, res){
 router.post('/login', passport.authenticate('local', 
     {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/login',
+        successFlash: true,
+        failureFlash: true,
+        successFlash: 'Successfully logged in',
+        failureFlash: 'Invalid username or password'
     }), function(req, res){
 });
 
 router.get('/logout', function(req, res){
     req.logout();
+    req.flash('success', 'Logged out successfully');
     res.redirect('/');
 });
 
@@ -164,7 +169,15 @@ router.post('/reset-password', function(req, res){
                     console.log(err);
                 }
                 else{
-                    res.redirect('/login');
+                    user.save(function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            res.redirect('/login');
+                        }
+                    })
+                    
                 }
             });
         }
@@ -179,10 +192,11 @@ router.post('/register', function(req, res){
     var newUser = new User({username: req.body.username, name: req.body.name, lastName: req.body.lastName, subscribe: false, status: 'user'});
     User.register(newUser, req.body.password, function(err, user){
         if(err) {
-            console.log(err);
-            return res.render('index/register');
+            req.flash('error', err.message);
+            return res.render('index/register_screen.ejs');
         }
         passport.authenticate('local')(req, res, function(){
+            req.flash('success', 'Registered successfully');
             res.redirect('/login');
         });
     });
@@ -192,6 +206,8 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
+    res.flash("error", "You need to sign in first");
+    console.log("check");
     res.redirect('/login');
 }
 function isManager(req, res, next){

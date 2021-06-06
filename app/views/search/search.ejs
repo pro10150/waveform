@@ -99,7 +99,7 @@
                                     <% } %>
                                     <% if(currentUser){ %>
                                         <% if(currentUser.subscribe === true) { %>
-                                            <form action="/song/<%=sng._id%>/download" method="post">
+                                            <form action="/song/<%=ts._id%>/download" method="post">
                                                 <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
                                             </form>
                                         <% } %>

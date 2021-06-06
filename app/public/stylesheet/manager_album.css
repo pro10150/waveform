@@ -1,35 +1,4 @@
-body{
-    background-color: #67948D;
-}
-.navbar{
-    background-color: #2A4556;
-    font-family: 'Pacifico';
-    position: fixed;
-    font-size: 64px;
-    z-index: 9;
-}
-.navbar-brand{
-    color: #F5CE63;
-    font-size: 30px;
-}
-.navbar-brand:hover{
-    color: black;
-}
-#search{
-    display: none;
-}
-.form-rounded{
-    border: black;
-    border-radius: 20px;
-    font-family: 'Roboto', sans-serif, 'FontAwesome';
-    margin-right: 30px;
-}
-/* .form-inline{
-    padding-right: 75%;
-} */
-.main{
-    font-family: 'Roboto', sans-serif, 'FontAwesome';
-}
+
 .banner{
     background-color: #587A77;
     padding: 2%;
@@ -74,7 +43,7 @@ body{
 ol {
     margin: auto;
 }
-li{
+.song-list{
     font-family: 'Roboto', sans-serif, 'FontAwesome';
     font-size: larger;
     border-style: solid;
@@ -87,11 +56,11 @@ li{
     padding-top: 30px;
     padding-left: 1rem;
 }
-li:hover{
+.song-list:hover{
     background-color: rgba(88, 122, 119, 0.7);
     cursor: default;
 }
-li:hover .meatball-menu{
+.song-list:hover .meatball-menu{
     display: inline;
 }
 .meatball-menu{
@@ -167,4 +136,24 @@ li:hover .meatball-menu{
 .btn-delete:hover{
     color: white;
     background-color: #FA6262;
+}
+#logout-btn{
+    border-color: transparent;
+    color: white;
+    font-size: 1.5rem;
+}
+#logout-btn:hover{
+
+    color: red;
+}
+.alert{
+    animation: createBox .25s;
+}
+@keyframes createBox{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }
