@@ -1,0 +1,33 @@
+<%-include('../partials/header_manager_home.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+
+<section class="main">
+    <nav class="container-fluid manager-name">
+        Administration Section
+    </nav>
+    <section class="main-article">
+        <br>
+        <h1 style="font-size: 550%; color: white;">Menu</h1>
+        <section class="container artist">
+            <form action="/admin/music" method="GET">
+                <button type="submit" class="btn artist-btn" style="background-color: rgba(0, 0, 0, 0.1);">
+                    <img src="/src/home.png" alt="" class="cover">
+                    Music
+                </button>
+            </form>
+            <br>
+            <form action="/admin/user" method="GET">
+                <button type="submit" class="btn artist-btn" style="background-color: rgba(0, 0, 0, 0.1);">
+                    <img src="/src/user-512.png" alt="" class="cover">
+                    User
+                </button>
+            </form>
+        </section>
+        
+    </section>
+    
+
+
+</section>
+
+<%-include('../partials/footer.ejs') %>

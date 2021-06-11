@@ -9,24 +9,46 @@
                 <br>
                 
                 <section class="main-article">
-                    <form action="/manager/artist/<%=id%>/album/<%=al._id%>/song/<%=sn._id%>/edit" method="post" enctype="multipart/form-data">
+                    <div class="d-none d-lg-block">
+                        <form action="/manager/artist/<%=id%>/album/<%=al._id%>/song/<%=sn._id%>/edit" method="post" enctype="multipart/form-data">
 
-                        <div class="album">
-                            <h2 id="album-name"><%=al.name%></h2>
-                            <img src=<%=al.cover%> alt="" class="upload">        
-                            <br>    
-                            <br>
-                            <input type="file" accept="audio/*" name="audio" class="form-control">
-                        </div>
-                        <div class="form-inline" id="form-song">
-                            <h4 class="title">Title</h4>
-                            <input type="text" name="song[title]" class="form-control" id="input-title" placeholder="Song title" required value="<%=sn.title%>">
-                            <br>
-                            <h4 class="title">Lyrics</h4>
-                            <textarea name="song[lyrics]" id="lyrics" cols="40" rows="15" placeholder="Song lyrics" ><%=sn.lyrics%></textarea>
-                            <button type="submit" id="btn-add" class="rounded-pill">Update</button>
-                        </div>   
-                    </form>
+                            <div class="album">
+                                <h2 id="album-name"><%=al.name%></h2>
+                                <img src=<%=al.cover%> alt="" class="upload">        
+                                <br>    
+                                <br>
+                                <input type="file" accept="audio/*" name="audio" class="form-control">
+                            </div>
+                            <div class="form-inline" id="form-song">
+                                <h4 class="title">Title</h4>
+                                <input type="text" name="song[title]" class="form-control" id="input-title" placeholder="Song title" required value="<%=sn.title%>">
+                                <br>
+                                <h4 class="title">Lyrics</h4>
+                                <textarea name="song[lyrics]" id="lyrics" cols="40" rows="15" placeholder="Song lyrics" ><%=sn.lyrics%></textarea>
+                                <button type="submit" id="btn-add" class="rounded-pill">Update</button>
+                            </div>   
+                        </form>
+                    </div>
+                    <div class="d-block d-lg-none">
+                        <form action="/manager/artist/<%=id%>/album/<%=al._id%>/song/<%=sn._id%>/edit" method="post" enctype="multipart/form-data">
+
+                            <div>
+                                <h2 id="album-name"><%=al.name%></h2>
+                                <img src=<%=al.cover%> alt="" class="upload">        
+                                <br>    
+                                <br>
+                                <input type="file" accept="audio/*" name="audio" class="form-control form-small">
+                            </div>
+                            <div class="form-inline" id="form-song-small">
+                                <h2>Title</h2>
+                                <input type="text" name="song[title]" class="form-control" id="input-title-small" placeholder="Song title" required value="<%=sn.title%>">
+                                <h2>Lyrics</h2>
+                                <textarea name="song[lyrics]" id="lyrics" cols="40" rows="15" placeholder="Song lyrics" ><%=sn.lyrics%></textarea>
+                                <button type="submit" id="btn-add" class="rounded-pill">Update</button>
+                            </div>   
+                        </form>
+                    </div>
+                    
                     
                 </section>
             <% }); %>

@@ -1,29 +1,10 @@
 <%-include('../partials/header_search.ejs') %>
-
-<nav class="navbar container-fluid head">
-    <a class="navbar-brand home-button" href="/">
-      <img src="\src\home.png" width="50" height="50" class="d-inline-block" alt="">
-      Waveform
-    </a>
-    <form class="form-inline" action="/search" method="post">
-        <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-    </form>
-</nav> 
-<nav class="side-nav">
-    <% if(currentUser){ %>
-        <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-        <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
-        <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
-        <a href="#" class="user" id="download"><span class="material-icons">download</span>Download</a>
-    <% } else { %>
-        <i class="guest">Guest</i>
-        <a href="/login" class="guest" id="signup">Sign in/signup</a> 
-    <% } %>
-</nav>
-<section class="main container">
+<%-include('../partials/header_navbar.ejs') %>
+<%-include('../partials/header_sidenav.ejs') %>
+<section class="main container d-none d-lg-block">
     <% if(topResult.length !== 0 || topSong.length !== 0 || topArtist.length !== 0 || topAlbum.length !== 0){ %>
         <% if(topResult) {%>
-        <h2>Top result</h2>
+        <h2 class="top-title">Top result</h2>
         <div id="top-result" class="container">
             <img src= "<%= topResult.cover %> "alt="" class="cover" id="img-top-result"> 
             <h1 class="title-song id-top-result" id=<%=topResult.albumId%>><%= topResult.songTitle %></h1>
@@ -44,83 +25,17 @@
         <% } else{ %>
 
         <% } %>
-        <% if(topSong){ %>
-            <section id="section-top-song">
-                <h2 id="header-top-song">Top songs</h2>
-                <% let songLink = "/search/" + keyword + "/song" %>
-                <a href="/search/<%=keyword%>/song" id="see-all-song" class="see-all">
-                    <h4 class="see-all">SEE ALL</h4>
-                </a>
-                <% if(topSong.length === 0){ %>
-                    <h3 style="text-align: center;">Couldn't find any song with "<%=keyword%>"</h3>
-                <% } %>
-                <section class="container top song">
-                    <ol>
-                        <% topSong.forEach(function(ts){ %>
-                            <% let albumLink = "/album/" + ts.albumId %>
-                            <% let artistLink = "/artist/" + ts.artistId %>
-                            <li>
-                                <img src= <%=ts.cover %> alt="" class="cover cover-song">
-                                <a href="/song/<%=ts._id%>" class="song-top-song">
-                                    <h5 class="title"><%=ts.title%></h5>
-                                </a>
-                                <a href= <%= albumLink %> class="album-top-song id-top-song-album">
-                                    <h5 ><%=ts.albumName%></h5>
-                                </a>
-                                <a href= <%= artistLink %> class="artist">
-                                    <h5 > <%= ts.artistName %></h5>
-                                </a>
-                                <div class="meatball-menu">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                                <div class="option-bar">
-                                    <a href= <%=artistLink %> class="artist-option option">Go to artist</a>
-                                    <a href= <%=albumLink %> class="album-option option">Go to album</a>
-                                    <% if(currentUser){ %>
-                                        <% let flag = false %>
-                                        <% for(let i = 0; i< fav.length; i++){ %>
-                                            <% if(ts._id == fav[i].songId){ %>
-                                                <% flag = true; %>
-                                                <% break; %> 
-                                            <% } %> 
-                                        <% } %>
-                                        <% if(flag === true){ %>
-                                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/delete" method="post">
-                                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
-                                            </form>   
-                                        <% } else{ %>
-                                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/add" method="post">
-                                                <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
-                                            </form>      
-                                        <% } %>
-                                        
-                                    <% } %>
-                                    <% if(currentUser){ %>
-                                        <% if(currentUser.subscribe === true) { %>
-                                            <form action="/song/<%=ts._id%>/download" method="post">
-                                                <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
-                                            </form>
-                                        <% } %>
-                                    <% } %>
-                                </div>
-                            </li>
-                        <% }); %>
-                        
-                </section>
-            </section>
-        <% } %>
         
         <% if(topArtist){ %>
             <section class="section-artist">
-                <h2>Top aritsts</h2>
+                <h2 class="top-title">Top aritsts</h2>
                 <% let artistLink = "/search/" + keyword + "/artist" %>
-                <a href="/search/<%=keyword%>/artist" id="see-all-artist" class="see-all see-all-long">
-                    <h4 class="see-all">SEE ALL</h4>
-                </a>
                 <% if(topArtist.length === 0){ %>
                     <h3>Couldn't find artist song with "<%=keyword%>"</h3>
+                <% } else {%>
+                    <a href="/search/<%=keyword%>/artist" id="see-all-artist" class="see-all see-all-long">
+                        <h4 class="see-all">SEE ALL</h4>
+                    </a>
                 <% } %>
                 <section class="container top top-artist">
                     <% topArtist.forEach(function(ta){ %>
@@ -135,13 +50,15 @@
         <% } %>
         <% if(topAlbum){ %>    
             <section class="section-album">
-                <h2>Top album</h2>
+                <h2 class="top-title">Top album</h2>
                 <% let albumLink = "/search/" + keyword + "/album" %>
-                <a href="/search/<%=keyword%>/album" id="see-all-album" class="see-all see-all-long">
-                    <h4 class="see-all">SEE ALL</h4>
-                </a>
+                    
                 <% if(topAlbum.length === 0){ %>
                     <h3>Couldn't find any album with "<%=keyword%>"</h3>
+                <% } else{%>
+                    <a href="/search/<%=keyword%>/album" id="see-all-album" class="see-all see-all-long">
+                        <h4 class="see-all">SEE ALL</h4>
+                    </a>
                 <% } %>
                 <section class="container top album">
                     <% topAlbum.forEach(function(tal){ %>
@@ -154,16 +71,219 @@
                 </section>    
             </section>    
         <% } %>    
+        <% if(topSong){ %>
+            <section id="section-top-song">
+                <h2 id="header-top-song" class="top-title">Top songs</h2>
+                <% let songLink = "/search/" + keyword + "/song" %>
+                <% if(topSong.length === 0){ %>
+                    <h3 style="text-align: center;">Couldn't find any song with "<%=keyword%>"</h3>
+                <% } else {%>
+                    <a href="/search/<%=keyword%>/song" id="see-all-song" class="see-all">
+                        <h4 class="see-all">SEE ALL</h4>
+                    </a>
+                    <p class="header">
+                        <h3 class="header d-none d-lg-inline-block" id="title" style="margin-left: 24rem;">TITLE</h3>
+                        <h3 class="header d-none d-lg-inline-block" id="album" style="margin-left: 13rem;">ALBUM</h3>
+                        <h3 class="header d-none d-lg-inline-block" id="artist" style="margin-left: 6rem;">ARTIST</h3>
+                    </p>
+                <% } %>
+                <section class="container top song">
+                    <div>
+                        <% topSong.forEach(function(ts){ %>
+                            <% let albumLink = "/album/" + ts.albumId %>
+                            <% let artistLink = "/artist/" + ts.artistId %>
+                            <div class="accordion-item" id="accordionSong">
+                                <h2 class="accordion-header" id="heading<%=ts._id%>">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=ts._id%>" aria-expanded="true" aria-controls="collapse<%=ts._id%>">
+                                        <img src= <%= ts.cover %> alt="" class="cover cover-song d-none d-lg-block">
+                                        <h5 class="title id-song-title" id= <%= ts._id %> > <%= ts.title %></h5>
+                                        <h5 class="id-song-album d-none d-lg-block" id= <%= ts._id %> > <%= ts.albumName %> </h5>
+                                        <h5 class="id-song-artist d-none d-lg-block" id= <%= ts.artistId %> > <%= ts.artistName %> </h5>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse<%=ts._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=ts._id%>" data-bs-parent="#accordionSong" style="width: 78.8rem;">
+                                <div class="accordion-body">
+                                    <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <a href="/artist/<%=ts.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                                    <a href="/album/<%=ts.albumId%>" class="artist-option option rounded-pill">Go to album</a>
+                                <% if(currentUser){ %>
+                                    <% let flag = false %>
+                                    <% for(let i = 0; i< fav.length; i++){ %>
+                                        <% if(ts._id == fav[i].songId){ %>
+                                            <% flag = true; %>
+                                            <% break; %> 
+                                        <% } %> 
+                                    <% } %>
+                                    <% if(flag === true){ %>
+                                        <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/delete" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                                        </form>   
+                                    <% } else{ %>
+                                        <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/add" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                                        </form>      
+                                    <% } %>
+                                    
+                                <% } %>
+                                <% if(currentUser){ %>
+                                    <% if(currentUser.subscribe === true) { %>
+                                        <form action="/song/<%=ts._id%>/download" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                                        </form>
+                                        
+                                    <% } %>
+                                <% } %>
+                                </div>
+                            </div>
+                        <% }); %>
+                        </div>    
+                </section>
+            </section>
+        <% } %>
     <% } else { %>
         <h2 style="text-align: center;">No results found for "<%=keyword%>"</h2>
         <h3 style="text-align: center;">Please make your spelling is correct or use less or different keywords</h3>
     <% } %>
-    
-    
-    
-    
-
 </section>
-      
+<section class="main container d-block d-lg-none" style="margin-left: 0px; margin-top: 5rem;">
+    <% if(topResult.length !== 0 || topSong.length !== 0 || topArtist.length !== 0 || topAlbum.length !== 0){ %>
+        <% if(topResult) {%>
+        <h2 class="top-title">Top result</h2>
+        <div id="top-result-2" class="container">
+            <img src= "<%= topResult.cover %> "alt="" class="cover" id="img-top-result"> 
+            <h1 class="title-song id-top-result" id=<%=topResult.albumId%>><%= topResult.songTitle %></h1>
+            <p>
+                <% if('title' in topResult){ %>
+                    <h5 id= <%=topResult._id %> class="title-artist id-top-result"> <%= topResult.title %></h5>
+                    <h4 id="type-top-result-2" class="rounded-pill">SONG</h4>
+                <% } else if('songs' in topResult){ %>
+                    <h5 id= <%=topResult._id %> class="title-artist id-top-result"> <%= topResult.name %></h5>
+                    <h4 id="type-top-result-2" class="rounded-pill">ALBUM</h4>
+                <% } else {%>
+                    <h5 id= <%=topResult._id %> class="title-artist id-top-result"> <%= topResult.name %></h5>
+                    <h4 id="type-top-result-2" class="rounded-pill">ARTIST</h4>
+                <% } %>
+                
+            </p>
+        </div>
+        <% } else{ %>
+
+        <% } %>
+        
+        <% if(topArtist){ %>
+            <section class="section-artist">
+                <h2 class="top-title">Top aritsts</h2>
+                <% let artistLink = "/search/" + keyword + "/artist" %>
+                <% if(topArtist.length === 0){ %>
+                    <h3>Couldn't find artist song with "<%=keyword%>"</h3>
+                <% } else {%>
+                    <a href="/search/<%=keyword%>/artist" id="see-all-artist" class="see-all see-all-long">
+                        <h4 class="see-all">SEE ALL</h4>
+                    </a>
+                <% } %>
+                <section class="container top top-artist">
+                    <% topArtist.forEach(function(ta){ %>
+                        <%let link = "/artist/" + ta._id %>
+                        <button type="button" class="btn btn-artist" id= <%= link %> > 
+                            <img src= <%= ta.cover %> alt="" class="cover"> <br>
+                            <h3><%=ta.name%></h3>
+                        </button>
+                    <% }); %>
+                </section>
+            </section>
+        <% } %>
+        <% if(topAlbum){ %>    
+            <section class="section-album">
+                <h2 class="top-title">Top album</h2>
+                <% let albumLink = "/search/" + keyword + "/album" %>
+                <% if(topAlbum.length === 0){ %>
+                    <h3>Couldn't find any album with "<%=keyword%>"</h3>
+                <% } else {%>
+                    <a href="/search/<%=keyword%>/album" id="see-all-album" class="see-all see-all-long">
+                        <h4 class="see-all">SEE ALL</h4>
+                    </a>
+                <% } %>
+                <section class="container top album">
+                    <% topAlbum.forEach(function(tal){ %>
+                        <%let link = "/album/" + tal._id %>
+                        <button type="button" class="btn btn-album" id= <%= link %> > 
+                            <img src= <%= tal.cover %> alt="" class="cover"> <br>
+                            <h3><%=tal.name%></h3>
+                        </button>
+                    <% }); %>
+                </section>    
+            </section>    
+        <% } %>    
+        <% if(topSong){ %>
+            <section id="section-top-song">
+                <h2 id="header-top-song" class="top-title">Top songs</h2>
+                <% let songLink = "/search/" + keyword + "/song" %>
+                <% if(topSong.length === 0){ %>
+                    <h3 style="text-align: center;">Couldn't find any song with "<%=keyword%>"</h3>
+                <% } else {%>
+                    <a href="/search/<%=keyword%>/song" id="see-all-song" class="see-all">
+                        <h4>SEE ALL</h4>
+                    </a>
+                <% } %>
+                <section class="container top song">
+                    <div class="accordion">
+                        <% topSong.forEach(function(ts){ %>
+                            <% let albumLink = "/album/" + ts.albumId %>
+                            <% let artistLink = "/artist/" + ts.artistId %>
+                            <div class="accordion-item" id="accordionSong">
+                                <h2 class="accordion-header" id="heading<%=ts._id%>">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=ts._id%>" aria-expanded="true" aria-controls="collapse<%=ts._id%>">
+                                        <img src= <%= ts.cover %> alt="" class="cover cover-song d-none d-lg-block">
+                                        <h5 class="title id-song-title" id= <%= ts._id %> > <%= ts.title %></h5>
+                                        <h5 class="id-song-album d-none d-lg-block" id= <%= ts._id %> > <%= ts.albumName %> </h5>
+                                        <h5 class="id-song-artist d-none d-lg-block" id= <%= ts.artistId %> > <%= ts.artistName %> </h5>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse<%=ts._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=ts._id%>" data-bs-parent="#accordionSong">
+                                <div class="accordion-body">
+                                    <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <a href="/artist/<%=ts.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                                    <a href="/album/<%=ts.albumId%>" class="artist-option option rounded-pill">Go to album</a>
+                                <% if(currentUser){ %>
+                                    <% let flag = false %>
+                                    <% for(let i = 0; i< fav.length; i++){ %>
+                                        <% if(ts._id == fav[i].songId){ %>
+                                            <% flag = true; %>
+                                            <% break; %> 
+                                        <% } %> 
+                                    <% } %>
+                                    <% if(flag === true){ %>
+                                        <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/delete" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                                        </form>   
+                                    <% } else{ %>
+                                        <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>/add" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                                        </form>      
+                                    <% } %>
+                                    
+                                <% } %>
+                                <% if(currentUser){ %>
+                                    <% if(currentUser.subscribe === true) { %>
+                                        <form action="/song/<%=ts._id%>/download" method="post">
+                                            <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                                        </form>
+                                        
+                                    <% } %>
+                                <% } %>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>    
+                </section>
+            </section>
+        <% } %>
+    <% } else { %>
+        <h2 style="text-align: center;">No results found for "<%=keyword%>"</h2>
+        <h3 style="text-align: center;">Please make your spelling is correct or use less or different keywords</h3>
+    <% } %>
+</section>
 
 <%-include('../partials/footer.ejs') %>

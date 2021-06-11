@@ -3,7 +3,7 @@
 
  
 <section class="main">
-    <section class="login">
+    <section class="login d-none d-lg-block">
         <section id="main-article">
             <section id="register-section" class="inside-section">
                 <h1>
@@ -42,6 +42,39 @@
         </section>
         
         
+    </section>
+    <section class="login d-block d-lg-none" style="color:whitesmoke; margin: 0 auto; margin-top: 10%;">
+        <h1>
+            Login to WaveForm account
+        </h1>
+        <h3>
+            Login or register an account to searching for music and download
+        </h3>
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <label for="input-email" class="form-label">Email</label>
+                <input id="input-email" name="username" type="email" class="form-control mr-sm-2 login-form" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="input-password" class="form-label">Password</label>
+                <input id="input-password-2" name="password" type="password" class="form-control mr-sm-5 login-form" placeholder="Password" required>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="flexCheckDefault-2" onclick="onClickReveal()">
+                    <label for="flexCheckDefault">
+                        Reveal Password
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-login" value="login">Login</button>       
+        </form>
+        <form action="/reset-password" method="get">
+            <button type="submit" class="btn btn-primary" id="btn-forget" value="login">Forget Password</button> 
+        </form>
+        <form action="/register" method="get" style="margin-left: -42%;">
+            <button type="submit" id="register-btn" class="btn-primary btn-lg">
+                Register
+            </button>
+        </form>
     </section>
 </section>
 

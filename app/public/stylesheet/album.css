@@ -148,11 +148,12 @@ ol {
     display: block;
     color: white;
     text-decoration: none;
+    font-size: larger;
     z-index: -1;
     padding: 2%;
 }
 .option:hover{
-    background-color: lightgray;
+    background-color: white;
     color: lightgray;
     color: black;
     z-index: -1;
@@ -187,4 +188,15 @@ ol {
     to{
         transform: scale(1);
     }
+}
+.accordion-button{
+    background-color: #e7f1ff;
+    color: royalblue;
+    font-size: large;
+}
+.accordion-item{
+    border-color: white;
+}
+.accordion-collapse{
+    background-color: #587A77;
 }

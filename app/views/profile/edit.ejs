@@ -1,8 +1,7 @@
 <%-include('../partials/header_profile_edit.ejs') %>
 <%-include('../partials/header_navbar.ejs') %>
 <%-include('../partials/header_sidenav.ejs') %>
-<section class="main container">
-    <a href="/" id="logout-btn">Logout<span class="material-icons" id="logout-logo">logout</span></a>
+<section class="main container d-none d-lg-block">
     <section id="profile-main">
         <form action="/profile/edit" method="post" enctype="multipart/form-data">
             <div>
@@ -30,6 +29,36 @@
             <button type="submit" class="rounded-pill" id="edit-btn">Submit</button>    
         </form>
         
+    </section>
+</section>
+<section class="container d-block d-lg-none">
+    <section>
+        <form action="/profile/edit" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="fileToUpload">
+                        <input type="text" name="id" style="display: none;" value="<%=currentUser._id%>">
+                    <% if(!currentUser.profilePicture){ %>
+                        <img class="profile-pic" src="/src/upload-pic.png" alt="" id="profile-img" style="margin-top: 5rem; margin-left: -4rem;">
+                    <% } else {%>
+                        <img class="profile-pic" src=" <%= currentUser.profilePicture %>" alt="" id="profile-img" style="margin-top: 5rem; margin-left: 6rem;">
+                    <% } %> 
+                </label>
+                <input type="file" accept="image/*" name="profilePicture" id="fileToUpload" class="form-control" style="margin-top: 1rem;">
+            </div>
+            <section id="edit-name">
+                <div style="display: flex;">
+                    <div style="margin-left: -15rem; margin-top: 0.3rem;">
+                        <h4 id="first-name">First name</h4>
+                        <input type="name" name="profile[name]" id="input-name" class="form-control" placeholder="First name" value="<%=currentUser.name%>" required>
+                    </div>
+                    <div style="margin-left: 3rem;">
+                        <h4 id="last-name">Last name</h4>
+                        <input type="name" name="profile[lastName]" id="input-last-name" class="form-control" placeholder="Last name" value="<%=currentUser.lastName%>" required>
+                    </div>
+                </div>
+            </section>
+            <button type="submit" class="rounded-pill" id="edit-btn" style="margin-left: 8rem">Submit</button> 
+        </form>
     </section>
 </section>
 

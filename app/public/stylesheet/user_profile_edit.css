@@ -96,8 +96,6 @@ body{
     font-size: xx-large;
 }
 #logout-btn{
-    margin-left: 120%;
-    color: black;
     font-size: xx-large;
 }
 #logout-btn:hover{

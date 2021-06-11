@@ -41,7 +41,8 @@ var express             = require('express'),
     Song                = require('../models/song'),
     User                = require('../models/user'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
-    Favorite            = require('../models/favorite');
+    Favorite            = require('../models/favorite'),
+    Activity            = require('../models/activity');
 
 router.get('/', isUser, isLoggedIn, function(req, res){
 
@@ -68,7 +69,14 @@ router.post('/', isLoggedIn, uploads.single("imgUrl"), function(req, res){
             console.log(err);
         }
         else{
-            res.redirect('/manager');
+            Activity.create({user: req.user._id, date: Date.now(), detail: "add new artist: " + newlyCreated}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.redirect('/manager');
+                }
+            })
         }
     })
 })
@@ -85,7 +93,14 @@ router.get('/artist/:artistId', isLoggedIn, function(req, res){
             console.log(err);
         }
         else{
-            res.render('manager/artist.ejs', {artist: searchedArtist});
+            Activity.create({user: req.user._id, date: Date.now(), detail: "view artist: " + searchedArtist}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.render('manager/artist.ejs', {artist: searchedArtist});
+                }
+            })
         }
     })
 });
@@ -109,18 +124,24 @@ router.post('/artist/:artistId/add', isLoggedIn, uploads.single('cover'), functi
                     console.log(err);
                 }
                 else{
-                    req.flash('success', 'Artist added successfully');
-                    res.redirect('/manager/artist/' + req.params.artistId);
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "add new album: " + newlyCreated}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Artist added successfully');
+                            res.redirect('/manager/artist/' + req.params.artistId);
+                        }
+                    })
                 }
             })
-            
         }
     });
 });
 
 router.post('/artist/:artistId/delete', function(req, res){
     let id = req.params.artistId;
-    Artist.findByIdAndDelete(id, function(err, oldContent){
+    Artist.findByIdAndDelete(id, function(err, deletedArtist){
         if(err){
             console.log('error at 767');
         }
@@ -135,8 +156,15 @@ router.post('/artist/:artistId/delete', function(req, res){
                             console.log(err);
                         }
                         else{
-                            req.flash('success', 'Artist deleted successfully');
-                            res.redirect('/manager');
+                            Activity.create({user: req.user._id, date: Date.now(), detail: "delete artist: " + deletedArtist}, function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                                else{
+                                    req.flash('success', 'Artist deleted successfully');
+                                    res.redirect('/manager');        
+                                }
+                            })
                         }
                     })
                 }
@@ -170,8 +198,15 @@ router.post('/artist/:artistId/edit', isLoggedIn, uploads.single('cover'), funct
             console.log(err);    
         }
         else{
-            req.flash('success', 'Artist edited successfully');
-            res.redirect('/manager/artist/' + id);
+            Activity.create({user: req.user._id, date: Date.now(), detail: "edit artist: " + searchedArtist}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    req.flash('success', 'Artist edited successfully');
+                    res.redirect('/manager/artist/' + id);        
+                }
+            })
         }
     });
 });
@@ -190,7 +225,14 @@ router.get('/artist/:artistId/album/:albumId', isUser, isLoggedIn, function(req,
                     console.log(err);
                 }
                 else{
-                    res.render('manager/album.ejs',{artist: searchedArtist, album: searchedAlbum})
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "view album: " + searchedAlbum}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            res.render('manager/album.ejs',{artist: searchedArtist, album: searchedAlbum})        
+                        }
+                    })
                 }
             } 
             );
@@ -229,14 +271,28 @@ router.post('/artist/:artistId/album/:albumId/edit', isLoggedIn, uploads.single(
                         console.log(err);
                     }
                     else{
-                        req.flash('success', 'Album edited successfully');
-                        res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);
+                        Activity.create({user: req.user._id, date: Date.now(), detail: "edit album: " + editedAlbum}, function(err){
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                req.flash('success', 'Album edited successfully');
+                                res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);        
+                            }
+                        })
                     }
                 })    
             }
             else{
-                req.flash('success', 'Album edited successfully');
-                res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);    
+                Activity.create({user: req.user._id, date: Date.now(), detail: "edit album: " + editedAlbum}, function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        req.flash('success', 'Album edited successfully');
+                        res.redirect('/manager/artist/' + req.params.artistId + "/album/" + id);        
+                    }
+                })
             }
             
             
@@ -293,8 +349,15 @@ router.post('/artist/:artistId/album/:albumId/add', isLoggedIn, audioUploads.sin
                                     console.log(err);
                                 }
                                 else{
-                                    req.flash('success', 'Song added successfully');
-                                    res.redirect('/manager/artist/' + artistId + "/album/" + albumId);
+                                    Activity.create({user: req.user._id, date: Date.now(), detail: "add new song: " + newlyCreated}, function(err){
+                                        if(err){
+                                            console.log(err);
+                                        }
+                                        else{
+                                            req.flash('success', 'Song added successfully');
+                                            res.redirect('/manager/artist/' + artistId + "/album/" + albumId);        
+                                        }
+                                    })
                                 }
                             })
                             
@@ -310,19 +373,25 @@ router.post('/artist/:artistId/album/:albumId/add', isLoggedIn, audioUploads.sin
 router.post('/artist/:artistId/album/:albumId/delete', isLoggedIn, function(req, res){
     let artistId = req.params.artistId;
     let id =req.params.albumId;
-    Album.findByIdAndDelete(id, function(err, oldContent){
+    Album.findByIdAndDelete(id, function(err, deletedAlbum){
         if(err){
             console.log(err);
         }
         else{
-            console.log(oldContent);
             Song.deleteMany({albumId: id}, function(err, oldContent){
                 if(err){
                     console.log(err);
                 }
                 else{
-                    req.flash('success', 'Album deleted successfully');
-                    res.redirect('/manager/artist/' + artistId);
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "delete song: " + deletedAlbum}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Album deleted successfully');
+                            res.redirect('/manager/artist/' + artistId);        
+                        }
+                    })
                 }
             });
         }
@@ -360,8 +429,15 @@ router.post('/artist/:artistId/album/:albumId/song/:songId/edit', isLoggedIn, au
             console.log(err);
         }
         else{
-            req.flash("success", "Song edited successfully");
-            res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
+            Activity.create({user: req.user._id, date: Date.now(), detail: "edit song: " + updatedSong}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    req.flash("success", "Song edited successfully");
+                    res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);        
+                }
+            })
         }
     })
 })
@@ -373,8 +449,15 @@ router.post('/artist/:artistId/album/:albumId/song/:songId/delete', isLoggedIn, 
             console.log(err);
         }
         else{
-            req.flash("success", "Song deleted successfully!");
-            res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);
+            Activity.create({user: req.user._id, date: Date.now(), detail: "delete song: " + deletedSong}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    req.flash("success", "Song deleted successfully!");
+                    res.redirect('/manager/artist/' + req.params.artistId + '/album/' + req.params.albumId);        
+                }
+            })
         }
     })
 })
@@ -388,7 +471,7 @@ function isLoggedIn(req, res, next){
 }
 function isUser(req, res, next){
     if(req.user){
-        if(req.user.status === "user"){
+        if(req.user.status !== "manager"){
             req.flash('error', "Only user with manager permission can do this. Either register as manager via profile tab or bugger off!");
             res.redirect("/");
         }

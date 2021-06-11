@@ -5,7 +5,8 @@ var express             = require('express'),
     Song                = require('../models/song'),
     User                = require('../models/user'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
-    Favorite            = require('../models/favorite');
+    Favorite            = require('../models/favorite'),
+    Activity            = require('../models/activity');
 
 router.post('/', function(req, res){
     res.redirect('/search/' + req.body.keyword);
@@ -79,7 +80,14 @@ router.get('/:keyword', function(req,res){
                                         console.log(err);
                                     }
                                     else{
-                                        res.render('search/search.ejs',{keyword,topResult: top,topSong: searchedSong,topAlbum: searchedAlbum,topArtist: searchedArtist, fav: fav});
+                                        Activity.create({user: req.user._id, date: Date.now(), detail: "search: " + keyword}, function(err){
+                                            if(err){
+                                                console.log(err);
+                                            }
+                                            else{
+                                                res.render('search/search.ejs',{keyword,topResult: top,topSong: searchedSong,topAlbum: searchedAlbum,topArtist: searchedArtist, fav: fav});
+                                            }
+                                        })
                                     }
                                 })    
                             }
@@ -108,7 +116,14 @@ router.get('/:searchKeyword/song', function(req, res){
                         console.log(err);
                     }
                     else{
-                        res.render('search/song.ejs',{keyword,topSong, fav: fav});
+                        Activity.create({user: req.user._id, date: Date.now(), detail: "view searched song: " + keyword}, function(err){
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                res.render('search/song.ejs',{keyword,topSong, fav: fav});
+                            }
+                        })
                     }
                 })    
             }
@@ -128,7 +143,19 @@ router.get('/:searchKeyword/artist', function(req, res){
             console.log(err);
         }
         else{
-            res.render('search/artist.ejs',{keyword,topArtist});
+            if(req.isAuthenticated()){
+                Activity.create({user: req.user._id, date: Date.now(), detail: "view searched artist: " + keyword}, function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('search/artist.ejs',{keyword,topArtist});
+                    }
+                })
+            }
+            else{
+                res.render('search/artist.ejs',{keyword,topArtist});
+            }
         }
     });
     
@@ -141,7 +168,19 @@ router.get('/:searchKeyword/album', function(req, res){
             console.log(err);
         }
         else{
-            res.render('search/album.ejs',{keyword,topAlbum});
+            if(req.isAuthenticated()){
+                Activity.create({user: req.user._id, date: Date.now(), detail: "view searched album: " + keyword}, function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('search/album.ejs',{keyword,topAlbum});
+                    }
+                })
+            }
+            else{
+                res.render('search/album.ejs',{keyword,topAlbum});
+            }
         }
     });
 });

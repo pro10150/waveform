@@ -12,7 +12,7 @@
     margin-left: 200px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     color: white;
-    margin-top: 5.5%;
+    margin-top: 5.5rem;
 }
 .btn:hover{
     transition: all 0.2s ease-out ;
@@ -153,7 +153,6 @@ p.header{
 .cover-song{
     width: 50px;
     height: 50px;
-    margin-top: -1rem;
 }
 .title{
     display: inline-block;
@@ -207,11 +206,22 @@ p.header{
 #section-top-song{
     padding-left: 1rem;
 }
+.id-song-title{
+    text-align: left;
+    margin-left: 5%;
+}
 .id-song-album{
+    width: 10rem;
     max-width: 10rem;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    margin-left: 40%;
+    text-align: left;
+}
+.id-song-artist{
+    display: inline-block;
+    margin-left: 5%;
 }
 .id-artist-album{
     display: none;
@@ -242,3 +252,15 @@ p.header{
         transform: scale(1);
     }
 }
+.accordion-button{
+    background-color: #e7f1ff;
+    color: royalblue;
+    font-size: large;
+}
+.accordion-item{
+    border-color: white;
+}
+.accordion-collapse{
+    background-color: #587A77;
+}
+

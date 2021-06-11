@@ -1,0 +1,34 @@
+<%-include('../partials/header_search_artist.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+<%-include('../partials/header_sidenav.ejs') %>
+    <section class="main container d-none d-lg-block">
+        <a  id="back" class="material-icons back-button">arrow_back</a>
+
+        <h2 id="title-head" style="font-size: 550%;">All artists</h2>
+        
+        <section class="container artist">
+            <% artist.forEach(function(ta){ %>
+                <% let artistLink = "/artist/" + ta._id %>
+                <button type="button" class="btn artist-btn" id= <%= artistLink %>> 
+                    <img src= <%= ta.cover %> alt="" class="cover"> <br>
+                    <h3 class="title"><%=ta.name%></h3> 
+                </button>
+            <% }); %>
+        </section>
+    </section>
+    <section class="main container d-block d-lg-none" style="margin-left: 0rem;">
+        <a  id="back" class="material-icons back-button">arrow_back</a>
+        <h2 id="title-head" style="font-size: 550%; margin-top: 5rem;">All artists</h2>
+        
+        <section class="container">
+            <% artist.forEach(function(ta){ %>
+                <% let artistLink = "/artist/" + ta._id %>
+                <button type="button" class="btn artist-btn" id= <%= artistLink %>> 
+                    <img src= <%= ta.cover %> alt="" class="cover"> <br>
+                    <h3 class="title"><%=ta.name%></h3> 
+                </button>
+            <% }); %>
+        </section>
+    </section>
+
+<%-include('../partials/footer.ejs') %>

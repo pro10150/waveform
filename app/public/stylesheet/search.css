@@ -1,39 +1,6 @@
-
-.form-rounded{
-    border: black;
-    border-radius: 20px;
-    font-family: 'Roboto', sans-serif, 'FontAwesome';
-    margin-right: 3em;
+body{
+    overflow-x: hidden;
 }
-#download{
-    display: none;
-}
-
-.user{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-}
-.guest{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-    text-align: center;
-}
-  
-/* When you mouse over the navigation links, change their color */
-.side-nav a:hover {
-    background-color: #83BBB2;
-    transition: 0.3s ease-out all ;
-    color: black;
-}
-  
 /* Style page content */
 .main {
     transition: all 0.2s ease ;
@@ -71,12 +38,14 @@
 h3{
     color: white;
 }
+.top-title{
+    font-size: 350%;
+}
 #top-result{
     transition: all ease 0.2s;
     background-color: rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    width: 70%;
-    float: left;
+    border-radius: 1rem;
 }
 #top-result:hover{
     background-color: rgba(0, 0, 0, 0.3);
@@ -86,14 +55,35 @@ h3{
 }
 #type-top-result{
     background-color: rgba(0, 0, 0, 0.5);
-    width: 10%;
+    width: 7rem;
+    text-align: center;
+    height: 2rem;
+}
+.top-title-2{
+    font-size: 350%;
+}
+#top-result-2{
+    transition: all ease 0.2s;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+#top-result-2:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+    /* transform: scale(1.05); */
+    transition: all ease 0.2s;
+    cursor: pointer;
+}
+#type-top-result-2{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 7rem;
     text-align: center;
     height: 2rem;
 }
 ol{
     margin-left: 40rem;
 }
-li{
+.song-list{
     font-family: 'Roboto', sans-serif, 'FontAwesome';
     font-size: larger;
     border-style: solid;
@@ -102,16 +92,15 @@ li{
     border-left: transparent;
     border-right: transparent;
     height: 80px;
-    width: 200%;
     padding-left: 2rem;
     padding-top: 30px;
 }
-li:hover{
+.song-list:hover{
     background-color: rgba(88, 122, 119, 0.7);
     cursor: default;
     color: white;
 }
-li:hover .meatball-menu{
+.song-list:hover .meatball-menu{
     display: inline;
 }
 .meatball-menu{
@@ -119,7 +108,7 @@ li:hover .meatball-menu{
     height: 40px;
     position: absolute;
     display: none;
-    right: 0;
+    right: 5rem;
     transform: translateY(-50%);
 }
 .meatball-menu span{
@@ -152,7 +141,7 @@ li:hover .meatball-menu{
 .option-bar{
     background-color: #474747;
     width: 40%;
-    margin-left: 13rem;
+    margin-left: 23rem;
     margin-top: -2.1rem;
     z-index: 1;
     position: relative;
@@ -177,7 +166,6 @@ p.header{
 .cover-song{
     width: 50px;
     height: 50px;
-    margin-top: -1rem;
 }
 .title{
     display: inline-block;
@@ -187,9 +175,6 @@ p.header{
 }
 .hidden{
     display: none;
-}
-.song{
-    height: 30rem;
 }
 .album-top-song{
     display: inline-block;
@@ -225,18 +210,6 @@ p.header{
     color: black;
     text-decoration: underline;
 }
-#see-all-song{
-    float: right;
-    position: absolute;
-    margin-top: -2.5rem;
-    margin-left: 42rem;
-}
-.see-all-long{
-    display: inline-block;
-    position: absolute;
-    margin-left: 80rem;
-    margin-top: -3rem;
-}
 #section-top-song{
     padding-left: 1rem;
 }
@@ -256,4 +229,28 @@ p.header{
     to{
         transform: scale(1);
     }
+}
+.accordion-button{
+    background-color: #e7f1ff;
+    color: royalblue;
+    font-size: large;
+    margin-left: -7rem;
+    
+}
+.accordion-item{
+    border-color: white;
+}
+.accordion-collapse{
+    background-color: #587A77;
+    margin-left: -7rem;
+    width: 26.4rem;
+}
+.id-song-album{
+    margin-left: 30rem;
+}
+.id-song-artist{
+    margin-left: 10rem;
+}
+.header{
+    font-size: 250%;
 }

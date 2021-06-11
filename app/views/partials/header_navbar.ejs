@@ -20,6 +20,9 @@
                         <li class="nav-item">
                         <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/logout" class="user" id="logout-btn"><span class="material-icons" id="logout-logo">logout</span>Logout</a>
+                        </li>
                     <% } else if(!currentUser){ %>
                         <li class="nav-item nav-transparent">
                             <i class="guest">Guest</i>
@@ -36,7 +39,7 @@
                     </form>    
                 </li> 
             <% } %>
-            <% if(currentUser && currentUser.status === "manager") {%>
+            <% if(currentUser && currentUser.status === "manager" || currentUser && currentUser.status === "admin") {%>
         <li class="nav-item">
             <form class="form-inline">
                 <a href="/logout" class="rounded-pill" style="text-align: center;" id="logout-btn">logout</a>

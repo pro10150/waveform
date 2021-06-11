@@ -5,7 +5,8 @@ var express             = require('express'),
     Song                = require('../models/song'),
     User                = require('../models/user'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
-    Favorite            = require('../models/favorite');
+    Favorite            = require('../models/favorite'),
+    Activity            = require('../models/activity');
 
 router.get('/', isManager, isLoggedIn, function(req, res){
     songIdArray = []
@@ -53,8 +54,15 @@ router.post('/:id/:songId/add', isLoggedIn, isManager, function(req, res){
                     console.log(err);
                 }
                 else{
-                    req.flash('success', "Successfully added this song favorite list");
-                    res.redirect(req.get('referer'));
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "add song to favorite: " + addedfavorite}, function(err, newActivity){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', "Successfully added this song favorite list");
+                            res.redirect(req.get('referer'));
+                        }
+                    })
                 }
             })
         }
@@ -72,8 +80,16 @@ router.post('/:id/:songId/delete', isLoggedIn, function(req, res){
                     console.log(err);
                 }
                 else{
-                    req.flash('success', "Successfully removed this song from favorite list!");
-                    res.redirect(req.get('referer'));
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "delete song from favorite: " + deletedFavorite}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', "Successfully removed this song from favorite list!");
+                            res.redirect(req.get('referer'));
+                        }
+                    })
+                    
                 }
             })
         }
@@ -92,6 +108,10 @@ function isManager(req, res, next){
         if(req.user.status === "manager"){
             req.flash('error', "You are not a user. You are not allowed to go to the user side. Please login with different user")
             res.redirect("/manager");
+        }
+        else if(req.user.status === "admin"){
+            req.flash('error', "You are not a user. You are not allowed to go to the user side. Please login with different user")
+            res.redirect("/admin");
         }
         else{
             return next();

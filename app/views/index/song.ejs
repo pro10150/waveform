@@ -2,7 +2,84 @@
 <%-include('../partials/header_navbar.ejs') %>
 <%-include('../partials/header_sidenav.ejs') %>
 
-  <section class="main container">
+  <section class="main container d-none d-lg-block">
+    <section class="container-fluid banner">
+        <a id="back" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+        <section class="text">
+            <div style="display: inline">
+                <div>
+                    <i id= <%= song.albumId %> class="id-album" >Song</i>
+                    <br>
+                    <i class="album-name" class="id-artist" id= <%= song.albumId %>> <%= song.title %> </i>
+                    <br>        
+                </div>
+                <img src= <%= song.cover %> alt="" class="album-cover">    
+            </div>
+            
+            
+            <br>
+            <br>
+            <% if(currentUser){ %>
+                <% if(currentUser.subscribe === true){ %>
+                    <audio controls>
+                        <source src="<%=song.audio%>" preload="auto">
+                        Your browser does not support the audio tag.
+                    </audio>
+                <% } else { %>
+                    <audio controls controlsList="nodownload" preload="auto">
+                        <source src="<%=song.audio%>">
+                        Your browser does not support the audio tag.
+                    </audio>
+                <% } %>
+                    <% let flag = false %>
+                    <% for(let i = 0; i< fav.length; i++){ %>
+                        <% if(song._id == fav[i].songId){ %>
+                            <% flag = true; %>
+                            <% break; %> 
+                        <% } %> 
+                    <% } %>
+                    <% if(flag === true){ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=song._id%>/delete" style="display: inline; margin-top: -10%;" method="post">
+                            <button class="rounded-pill btn btn-primary" type="submit">
+                                Delete from Favorite
+                            </button>
+                        </form>   
+                    <% } else { %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=song._id%>/add" style="display: inline; margin-top: -10%;" method="post">
+                            <button class="rounded-pill btn btn-primary" type="submit">
+                                Add to Favorite
+                            </button>
+                        </form>   
+                    <% } %>
+                         
+                
+            <% } else{ %>
+                <audio controls controlsList="nodownload">
+                    <source src="<%=song.audio%>">
+                    Your browser does not support the audio tag.
+                </audio>
+            <% } %>
+            
+            
+        </section>
+        
+    </section>
+    <section class="container artist" style="text-align: center;">
+        <h1 style="font-size: 5rem;">Lyrics</h1>
+        <h3 style="white-space: pre-wrap;">
+            <% if(!song.lyrics){ %>
+                <h2> The lyrics has not been added to this song yet </h3>
+            <% } %>
+            <%=song.lyrics%>
+        </h3>
+
+    </ol>
+    
+    </section>
+  </section>
+  <section class="main container d-block d-lg-none" style="margin-left: 0%; overflow-x: hidden;">
     <section class="container-fluid banner">
         <a id="back" class="material-icons back-button">arrow_back</a>
         

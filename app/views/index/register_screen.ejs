@@ -6,7 +6,7 @@
     <a href="/login" class="material-icons back-button">arrow_back</a>
         
         <br>
-    <section class="register">
+    <section class="register d-none d-lg-block">
         <h1>Sign up with us!</h1>
         <section id="main-article">
             <form action="/register" method="post">
@@ -24,18 +24,45 @@
                 </div>
                 <h4>Password <span class="important">*</span></h4>
                 <div class="form-inline">
-                    <input type="password" name="password" class="form-control mr-sm-5 register-form" id="input-password" placeholder="password" required>
+                    <input type="password" name="password" class="form-control mr-sm-5 register-form" minlength="6" id="input-password" placeholder="password" required>
                 </div>
                 <h4>Confirm password <span class="important">*</span></h4>
                 <div class="form-inline">
-                    <input type="password" class="form-control mr-sm-5 register-form" id="input-confirm-password" placeholder="confirm password" required>
+                    <input type="password" class="form-control mr-sm-5 register-form" minlength="6" id="input-confirm-password" placeholder="confirm password" required>
                 </div>
                 <button type="submit" class="btn-primary" id="register-btn">Register</button>
             </form>
-            
         </section>
-        
-        
+    </section>
+    <section class="login d-block d-lg-none" style="color:whitesmoke; margin: 0 auto; margin-top: 10%;">
+        <h1 style="font-size: 350%;">
+            Sign up with us!
+        </h1>
+        <form action="/register" method="get" style="padding-left: 3%;">
+            <div class="mb-3">
+                <label for="input-name"> First name <span class="important">*</span></label>
+                <input type="name" name="name" class="form-control mr-sm-5 register-form" id="input-name" placeholder="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="input-name"> Last name <span class="important">*</span></label>
+                <input type="last-name" name="lastName" class="form-control mr-sm-5 register-form" id="input-last-name" placeholder="Last name" required>
+            </div>
+            <div class="mb-3">
+                <label for="input-name"> Email <span class="important">*</span></label>
+                <input id="input-email" name="username" type="email" class="form-control mr-sm-2 login-form" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="input-name"> Password <span class="important">*</span></label>
+                <input type="password" name="password" class="form-control mr-sm-5 register-form" id="input-password" placeholder="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="input-name"> Confirm password <span class="important">*</span></label>
+                <input type="password" class="form-control mr-sm-5 register-form" id="input-confirm-password" placeholder="confirm password" required>
+            </div>
+            <button type="submit" id="register-btn" class="btn-primary btn-lg">
+                Register
+            </button>   
+        </form>
     </section>
 </section>
 

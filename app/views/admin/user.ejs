@@ -1,0 +1,40 @@
+<%-include('../partials/header_manager_home.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+
+<section class="main">
+    <section class="main-article">
+        <br>
+        <h1 style="font-size: 550%; color: white;">User</h1>
+        <section class="container artist">
+            <% user.forEach(function(user){ %>
+                <% if(user.status !== "admin"){ %>
+                    <form action="/admin/user/<%=user._id%>" method="GET">
+                        <button type="submit" class="btn artist-btn" style="background-color: rgba(0, 0, 0, 0.1); width: 40rem;">
+                            <% if(!user.profilePicture){ %>
+                                <img src="/src/home.png" alt="" class="cover">
+                            <% } else{ %>
+                                <img src="<%=user.profilePicture%>" alt="" class="cover">
+                            <% } %>
+                            <h1 style="text-align: left;">
+                                <%= user.name + " " + user.lastName %>
+                            </h1>
+                            <h2 style="text-align: left;">
+                                <%= user.username %>
+                            </h2>
+                            <h3 style="text-align: left;">
+                                <%= user.status %>
+                            </h3>
+                        </button>
+                    </form>
+                    <br>
+                <% } %>
+            <% }) %>
+        </section>
+        
+    </section>
+    
+
+
+</section>
+
+<%-include('../partials/footer.ejs') %>

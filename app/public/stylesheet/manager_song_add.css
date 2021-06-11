@@ -54,6 +54,8 @@ body{
     float: left;
     margin-left: 40rem;
 }
+#album-name{
+}
 .upload{
     width: 246px;
     height: 246px;
@@ -64,8 +66,15 @@ body{
     overflow: hidden;
     margin-left: -25rem;
 }
+
+#form-song-small{
+    overflow: hidden;
+}
 #input-title{
     width: 100%;
+}
+#input-title-small{
+    width: 400%;
 }
 .title{
     float: left;

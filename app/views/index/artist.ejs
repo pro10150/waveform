@@ -2,7 +2,34 @@
 <%-include('../partials/header_navbar.ejs') %>
 <%-include('../partials/header_sidenav.ejs') %>
 
-  <section class="main container">
+  <section class="main container d-none d-lg-block">
+    <section class="container-fluid banner">
+        <a id="back" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+        <img src= <%= artist.cover %> alt="" class="artist-cover">
+        <section class="text">
+            <i>Artist</i>
+            <br>
+            <i class="artist-name" id= <%= artist._id %> > <%= artist.name %></i>
+        </section>
+        
+    </section>
+    <section class="container artist">
+
+        <% artist.albums.forEach(function(alb){ %>
+            <button type="button" class="btn artist-btn" id= <%= alb.id %> > 
+                <img src= <%= alb.cover %> alt="" class="cover"> <br>
+                <%= alb.name %>
+            </button>
+        <% }); %>
+        <% if(artist.albums.length === 0){ %>
+            <h3 style="text-align: center;">This artist has not added any albums yet</h3>
+        <% } %>
+    </section>
+    <h1 class="no-album">This artist has not published any album yet</h1>
+  </section>
+  <section class="main container d-block d-lg-none" style="margin-left: 0rem; overflow-x: hidden;">
     <section class="container-fluid banner">
         <a id="back" class="material-icons back-button">arrow_back</a>
         

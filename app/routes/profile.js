@@ -22,7 +22,8 @@ var express             = require('express'),
     Song                = require('../models/song'),
     User                = require('../models/user'),
     SubscriptionDetail  = require('../models/subscriptionDetail'),
-    Favorite            = require('../models/favorite');
+    Favorite            = require('../models/favorite'),
+    Activity            = require('../models/activity');
 
 
     
@@ -48,9 +49,15 @@ router.post('/subscribe', function(req, res){
                     console.log(err);
                 }
                 else{
-                    console.log(newSubscription);
-                    req.flash('success', 'Subscribed. Welcome!');
-                    res.redirect('/profile');
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "user subscribe: " + newSubscription}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Subscribed. Welcome!');
+                            res.redirect('/profile');        
+                        }
+                    })
                 }
             });        
         }
@@ -68,8 +75,15 @@ router.post('/unsubscribe', function(req, res){
                     console.log(err);
                 }
                 else{
-                    req.flash('success', 'Unsubscribed!');
-                    res.redirect('/profile');
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "user unsubscribe: " + subscribe}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Unsubscribed!');
+                            res.redirect('/profile');        
+                        }
+                    })
                 }
             })
         }
@@ -92,10 +106,15 @@ router.post('/edit', isLoggedIn, uploads.single('profilePicture'), function(req,
             req.flash('error', err.message);
         }
         else{
-            console.log(user);
-            console.log(req.body.id);
-            req.flash('success', 'Profile updated');
-            res.redirect('/profile');
+            Activity.create({user: req.user._id, date: Date.now(), detail: "user update profile: " + user}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    req.flash('success', 'Profile updated');
+                    res.redirect('/profile');        
+                }
+            })
         }
     });
 });
@@ -116,8 +135,15 @@ router.post('/change-password', isLoggedIn, isLoggedIn, function(req, res){
                     res.redirect('/profile/change-password',);
                 }
                 else{
-                    req.flash('success', 'Password has changed');
-                    res.redirect('/profile');
+                    Activity.create({user: req.user._id, date: Date.now(), detail: "user change password"}, function(err){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash('success', 'Password has changed');
+                            res.redirect('/profile');        
+                        }
+                    })
                 }
             });        
         }
@@ -136,8 +162,15 @@ router.post('/manager-register', isLoggedIn, function(req, res){
             console.log(err);
         }
         else{
-            req.flash('success', 'Congratulations! You are now a manager!');
-            res.redirect('/manager');
+            Activity.create({user: req.user._id, date: Date.now(), detail: "user register as manager"}, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    req.flash('success', 'Congratulations! You are now a manager!');
+                    res.redirect('/manager');        
+                }
+            })
         }
     })
     
@@ -155,6 +188,10 @@ function isManager(req, res, next){
         if(req.user.status === "manager"){
             req.flash('error', "You are not a user. You are not allowed to go to the user side. Please login with different user")
             res.redirect("/manager");
+        }
+        else if(req.user.status === "admin"){
+            req.flash('error', "You are not a user. You are not allowed to go to the user side. Please login with different user")
+            res.redirect("/admin");
         }
         else{
             return next();

@@ -250,3 +250,36 @@ p.header{
     color: black;
     margin-top: -3%;
 }
+.accordion-button{
+    background-color: #e7f1ff;
+    color: royalblue;
+    font-size: large;
+}
+.accordion-item{
+    border-color: white;
+}
+.accordion-collapse{
+    background-color: #587A77;
+}
+.id-song-title{
+    text-align: left;
+    margin-left: 5%;
+}
+.id-song-album{
+    width: 10rem;
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    margin-left: 40%;
+    text-align: left;
+}
+.id-song-artist{
+    display: inline-block;
+    margin-left: 5%;
+}
+.cover-song{
+    width: 50px;
+    height: 50px;
+    margin-left: 0.1%;
+}

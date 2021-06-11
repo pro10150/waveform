@@ -1,0 +1,122 @@
+<%-include('../partials/header_search_artist.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+<%-include('../partials/header_sidenav.ejs') %>
+    <section class="main container d-none d-lg-block">
+
+        <h2 id="title-head" style="font-size: 550%;">All songs</h2>
+        
+        <p class="header">
+            <h3 class="header d-none d-lg-inline-block" id="title" style="margin-left: 15rem;">TITLE</h3>
+            <h3 class="header d-none d-lg-inline-block" id="album" style="margin-left: 14rem;">ALBUM</h3>
+            <h3 class="header d-none d-lg-inline-block" id="artist" style="margin-left: 18rem;">ARTIST</h3>
+        </p>
+            <div class="accordion">
+              <% song.forEach(function(sng){ %>
+                  <% let albumId = "/album/" + sng.albumId; %>
+                  <% let artistId = "/artist/" + sng.artistId; %>
+                  <div class="accordion-item" id="accordionSong">
+                      <h2 class="accordion-header" id="heading<%=sng._id%>">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=sng._id%>" aria-expanded="true" aria-controls="collapse<%=sng._id%>">
+                              <img src= <%= sng.cover %> alt="" class="cover cover-song d-none d-lg-block">
+                              <h5 class="title id-song-title" style="width: 20rem; max-width: 20rem;" id= <%= sng._id %> > <%= sng.title %></h5>
+                              <h5 class="id-song-album d-none d-lg-block" style="width: 20rem; max-width: 20rem;" id= <%= sng._id %> > <%= sng.albumName %> </h5>
+                              <h5 class="id-song-artist d-none d-lg-block" style="width: 20rem; max-width: 20rem;" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
+                          </button>
+                      </h2>
+                  </div>
+                  <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
+                      <div class="accordion-body">
+                          <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                          <a href="/artist/<%=sng.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                          <a href="<%=albumId%>" class="artist-option option rounded-pill">Go to album</a>
+                      <% if(currentUser){ %>
+                          <% let flag = false %>
+                          <% for(let i = 0; i< fav.length; i++){ %>
+                              <% if(sng._id == fav[i].songId){ %>
+                                  <% flag = true; %>
+                                  <% break; %> 
+                              <% } %> 
+                          <% } %>
+                          <% if(flag === true){ %>
+                              <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                              </form>   
+                          <% } else{ %>
+                              <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                              </form>      
+                          <% } %>
+                          
+                      <% } %>
+                      <% if(currentUser){ %>
+                          <% if(currentUser.subscribe === true) { %>
+                              <form action="/song/<%=sng._id%>/download" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                              </form>
+                              
+                          <% } %>
+                      <% } %>
+                      </div>
+                  </div>
+              <% }); %>
+          
+              </div>
+    </section>
+    <section class="main container d-block d-lg-none" style="margin-left: 0rem;">
+
+        <h2 id="title-head" style="font-size: 550%; margin-top: 5rem;">All songs</h2>
+        
+            <div class="accordion">
+              <% song.forEach(function(sng){ %>
+                  <% let albumId = "/album/" + sng.albumId; %>
+                  <% let artistId = "/artist/" + sng.artistId; %>
+                  <div class="accordion-item" id="accordionSong">
+                      <h2 class="accordion-header" id="heading<%=sng._id%>">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=sng._id%>" aria-expanded="true" aria-controls="collapse<%=sng._id%>">
+                              <img src= <%= sng.cover %> alt="" class="cover cover-song d-none d-lg-block">
+                              <h5 class="title id-song-title" id= <%= sng._id %> > <%= sng.title %></h5>
+                              <h5 class="id-song-album d-none d-lg-block" id= <%= sng._id %> > <%= sng.albumName %> </h5>
+                              <h5 class="id-song-artist d-none d-lg-block" id= <%= sng.artistId %> > <%= sng.artistName %> </h5>
+                          </button>
+                      </h2>
+                  </div>
+                  <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
+                      <div class="accordion-body">
+                          <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                          <a href="/artist/<%=sng.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                          <a href="<%=albumId%>" class="artist-option option rounded-pill">Go to album</a>
+                      <% if(currentUser){ %>
+                          <% let flag = false %>
+                          <% for(let i = 0; i< fav.length; i++){ %>
+                              <% if(sng._id == fav[i].songId){ %>
+                                  <% flag = true; %>
+                                  <% break; %> 
+                              <% } %> 
+                          <% } %>
+                          <% if(flag === true){ %>
+                              <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                              </form>   
+                          <% } else{ %>
+                              <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                              </form>      
+                          <% } %>
+                          
+                      <% } %>
+                      <% if(currentUser){ %>
+                          <% if(currentUser.subscribe === true) { %>
+                              <form action="/song/<%=sng._id%>/download" method="post">
+                                  <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                              </form>
+                              
+                          <% } %>
+                      <% } %>
+                      </div>
+                  </div>
+              <% }); %>
+          
+              </div>
+    </section>
+
+<%-include('../partials/footer.ejs') %>

@@ -1,7 +1,7 @@
 <%-include('../partials/header_album.ejs') %>
 <%-include('../partials/header_navbar.ejs') %>
 <%-include('../partials/header_sidenav.ejs') %>
-  <section class="main container">
+  <section class="main container d-none d-lg-block">
     <section class="container-fluid banner">
         <a  id="back" class="material-icons back-button">arrow_back</a>
         
@@ -15,102 +15,118 @@
         
     </section>
     <section class="container artist">
-        <div class="accordian">
+        <div class="accordion">
         <% album.songs.forEach(function(sng){ %>
 
-
-                <li class="song">
-                    <a href="/song/<%=sng._id%>" class="song-list"><%= sng.title %></a>
-                    <div class="meatball-menu d-none d-lg-block">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <div class="option-bar">
-                        <a href="/artist/<%=album.artistId%>" class="artist-option option">Go to artist</a>
-                        <% if(currentUser){ %>
-                            <% let flag = false %>
-                            <% for(let i = 0; i< fav.length; i++){ %>
-                                <% if(sng._id == fav[i].songId){ %>
-                                    <% flag = true; %>
-                                    <% break; %> 
-                                <% } %> 
-                            <% } %>
-                            <% if(flag === true){ %>
-                                <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
-                                    <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Delete from favourite</a>
-                                </form>   
-                            <% } else{ %>
-                                <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
-                                    <a href="#" onclick="this.parentNode.submit()" class="favorite-option option">Add to favourite</a>
-                                </form>      
-                            <% } %>
-                            
-                        <% } %>
-                        <% if(currentUser){ %>
-                            <% if(currentUser.subscribe === true) { %>
-                                <form action="/song/<%=sng._id%>/download" method="post">
-                                    <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
-                                </form>
-                                
-                            <% } %>
-                        <% } %>
-                    </div>
-                    <button class="navbar-toggler d-block d-lg-none navbar-dark bg-inverse song-toggler" type="button" data-bs-toggle="collapse" style="float: right;" data-bs-target="#collapse<%=sng._id%>" aria-controls="<%=sng._id%>" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon bg-inverse"></span>
+            <div class="accordion-item" id="accordionSong">
+                <h2 class="accordion-header" id="heading<%=sng._id%>">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=sng._id%>" aria-expanded="true" aria-controls="collapse<%=sng._id%>">
+                        <%= sng.title%>
                     </button>
-                </li>
-                    <div class="collapse navbar-collapse song-menu" id="collapse<%=sng._id%>" style="float: right;">
-                    <ul class="navbar-nav" >
-                        <div class="d-block d-lg-none card card-body">
-                            <li class="nav-item">
-                                <a href="/artist/<%=album.artistId%>" class="artist-option option">Go to artist</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/artist/<%=album._id%>" class="artist-option option">Go to artist</a>
-                            </li>
-                            <% if(currentUser){ %>
-                                <% let flag = false %>
-                                <% for(let i = 0; i< fav.length; i++){ %>
-                                    <% if(sng._id == fav[i].songId){ %>
-                                        <% flag = true; %>
-                                        <% break; %> 
-                                    <% } %> 
-                                <% } %>
-                                <% if(flag === true){ %>
-                                    <li class="nav-item">
-                                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
-                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Delete from favourite</a>
-                                        </form>  
-                                    </li>
-                                <% } else{ %>
-                                    <li class="nav-item">
-                                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
-                                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option dropdown-item">Add to favourite</a>
-                                        </form>  
-                                    </li>    
-                                <% } %>
-                                
-                            <% } %>
-                            <% if(currentUser){ %>
-                                <% if(currentUser.subscribe === true) { %>
-                                    <li class="nav-item">
-                                        <form action="/song/<%=sng._id%>/download" method="post">
-                                            <a href="#" onclick="this.parentNode.submit()" class="download-option option">Download</a>
-                                        </form>
-                                    </li>
-                                <% } %>
-                            <% } %>
-                        </div>
-                    </div>
-
-
+                </h2>
+            </div>
+            <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
+                <div class="accordion-body">
+                    <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <a href="/artist/<%=album.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                <% if(currentUser){ %>
+                    <% let flag = false %>
+                    <% for(let i = 0; i< fav.length; i++){ %>
+                        <% if(sng._id == fav[i].songId){ %>
+                            <% flag = true; %>
+                            <% break; %> 
+                        <% } %> 
+                    <% } %>
+                    <% if(flag === true){ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                        </form>   
+                    <% } else{ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                        </form>      
+                    <% } %>
+                    
+                <% } %>
+                <% if(currentUser){ %>
+                    <% if(currentUser.subscribe === true) { %>
+                        <form action="/song/<%=sng._id%>/download" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                        </form>
+                        
+                    <% } %>
+                <% } %>
+                </div>
+            </div>
             <% }); %>
         </div>
         
+    <% if(album.songs.length === 0){ %>
+        <h1 style="text-align: center;">This album has no song</h1>
+    <% } %>
+    
+    </section>
+  </section>
+  <section class="main container d-block d-lg-none" style="margin-left: 0rem; overflow-x: hidden;">
+    <section class="container-fluid banner">
+        <a  id="back" class="material-icons back-button">arrow_back</a>
+        
+        <br>
+        <img src= <%= album.cover %> alt="" class="album-cover">
+        <section class="text">
+            <i id= <%= album._id %> class="id-album" >Album</i>
+            <br>
+            <i class="album-name" class="id-artist" id= <%= id %>> <%= album.name %> </i>
+        </section>
+        
+    </section>
+    <section class="container artist">
+        <div class="accordion">
+        <% album.songs.forEach(function(sng){ %>
 
-
-    </ol>
+            <div class="accordion-item" id="accordionSong">
+                <h2 class="accordion-header" id="heading<%=sng._id%>">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=sng._id%>" aria-expanded="true" aria-controls="collapse<%=sng._id%>">
+                        <%= sng.title%>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
+                <div class="accordion-body">
+                    <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <a href="/artist/<%=album.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
+                <% if(currentUser){ %>
+                    <% let flag = false %>
+                    <% for(let i = 0; i< fav.length; i++){ %>
+                        <% if(sng._id == fav[i].songId){ %>
+                            <% flag = true; %>
+                            <% break; %> 
+                        <% } %> 
+                    <% } %>
+                    <% if(flag === true){ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/delete" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Delete from favourite</a>
+                        </form>   
+                    <% } else{ %>
+                        <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>/add" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="favorite-option option rounded-pill">Add to favourite</a>
+                        </form>      
+                    <% } %>
+                    
+                <% } %>
+                <% if(currentUser){ %>
+                    <% if(currentUser.subscribe === true) { %>
+                        <form action="/song/<%=sng._id%>/download" method="post">
+                            <a href="#" onclick="this.parentNode.submit()" class="download-option option rounded-pill">Download</a>
+                        </form>
+                        
+                    <% } %>
+                <% } %>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+        
     <% if(album.songs.length === 0){ %>
         <h1 style="text-align: center;">This album has no song</h1>
     <% } %>

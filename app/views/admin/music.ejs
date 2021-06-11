@@ -1,0 +1,23 @@
+<%-include('../partials/header_manager_home.ejs') %>
+<%-include('../partials/header_navbar.ejs') %>
+
+<section class="main">
+    <section class="main-article">
+        <h1 style="font-size: 550%; color: white;">All artist</h1>
+        <section class="container artist">
+
+            <section class="container material-icons-outlined">
+                <button type="button" class="btn" id="btn-add-more-artist" style="display: none;">Add More Artist <span class="material-icons">add_circle_outline</span></button>
+            </section>
+            <% artists.forEach(function(at){ %>
+                <% let artistLink = "/admin/music/artist/" + at._id %>
+                <button type="button" class="btn artist-btn" id= <%=artistLink%>> 
+                    <img src= <%= at.cover %> alt="" class="cover"> <br>
+                    <%= at.name %>
+                </button>
+            <% }) %>
+        </section>
+    </section>
+</section>
+
+<%-include('../partials/footer.ejs') %>

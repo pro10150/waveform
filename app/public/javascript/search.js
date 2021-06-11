@@ -7,12 +7,16 @@ const download = document.querySelectorAll(".download-option");
 const artist = document.getElementsByClassName("btn-artist");
 const album = document.getElementsByClassName("btn-album");
 const topResult = document.getElementById("top-result");
+const topResult2 = document.getElementById("top-result-2");
 const topType = document.getElementById("type-top-result");
+const topType2 = document.getElementById("type-top-result-2");
 const topResultId = document.getElementsByClassName('id-top-result');
+const topResultId2 = document.getElementsByClassName('id-top-result-2');
 const keyword = document.getElementsByClassName('hidden'); 
 let flag = true;
 
 topResult.addEventListener("click",function(){onClickTopResult()});
+topResult2.addEventListener("click",function(){onClickTopResult()});
 body.addEventListener("click", function(){onClickCloseOption()});
 search.addEventListener("keypress",function(){searchEnter(event)});
 for(let i = 0; i < meatball.length; i++){
@@ -36,6 +40,9 @@ function onClickTopResult(){
     if(topType.innerText === "SONG") window.location.href = "/album/" + topResultId[0].id;
     else if(topType.innerText === "ALBUM") window.location.href = "/album/" + topResultId[1].id;
     else window.location.href = "/artist/" + topResultId[1].id;
+    if(topType2.innerText === "SONG") window.location.href = "/album/" + topResultId2[0].id;
+    else if(topType2.innerText === "ALBUM") window.location.href = "/album/" + topResultId2[1].id;
+    else window.location.href = "/artist/" + topResultId2[1].id;
 }
 function onClickArtist(i){
     window.location.href = artist[i].id;

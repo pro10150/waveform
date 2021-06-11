@@ -20,6 +20,7 @@ var     managerRoutes   = require('./routes/manager'),
         searchRoutes    = require('./routes/search'),
         favoriteRoutes  = require('./routes/favorite'),
         indexRoutes     = require('./routes/index');
+        adminRoutes     = require('./routes/admin');
 
 // seedDB();
 mongoose.connect('mongodb://localhost/waveform');
@@ -51,6 +52,7 @@ app.use('/manager', managerRoutes);
 app.use('/profile', profileRoutes);
 app.use('/search', searchRoutes);
 app.use('/favorite', favoriteRoutes);
+app.use('/admin', adminRoutes);
 
 
 

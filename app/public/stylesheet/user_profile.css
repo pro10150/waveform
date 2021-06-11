@@ -1,65 +1,4 @@
-body{
-    background-color: #67948D;
-}
-.navbar{
-    background-color: #2A4556;
-    font-family: 'Pacifico';
-    font-size: 64px;
-    position: fixed;
-    top: 0%;
-}
-.navbar-brand{
-    color: #F5CE63;
-    font-size: 30px;
-}
-.navbar-brand:hover{
-    color: white;
-}
-.form-rounded{
-    border: black;
-    border-radius: 20px;
-    font-family: 'Roboto', sans-serif, 'FontAwesome';
-    margin-right: 3em;
 
-}
-.side-nav {
-    display: block;
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 200px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    left: 0;
-    background-color: #3C6760; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 100px;
-    margin-top: -5%;
-}
-
-.user{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-}
-.guest{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: 'Pacifico', sans-serif, 'FontAwesome';
-    color: white;
-    display: block;
-    text-align: center;
-    display: none;
-}
-  
-/* When you mouse over the navigation links, change their color */
-.side-nav a:hover {
-    background-color: #83BBB2;
-    transition: 0.3s ease-out all ;
-    color: black;
-}
-  
 /* Style page content */
 .main {
     margin-left: 200px; /* Same as the width of the sidebar */
@@ -87,19 +26,11 @@ body{
 .head{
     z-index: 1000;
 }
-#download{
-    display: none;
-}
 #profile{
     background-color: #83BBB2;
 }
 #logout-logo{
     display: inline;
-    font-size: xx-large;
-}
-#logout-btn{
-    margin-left: 120%;
-    color: black;
     font-size: xx-large;
 }
 #logout-btn:hover{
@@ -108,7 +39,6 @@ body{
 #profile-img{
     width: 246px;
     height: 246px;
-    margin-left: 55%;
     border-radius: 100%;
 }
 #subscribe-status{

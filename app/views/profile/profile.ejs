@@ -2,13 +2,12 @@
 <%-include('../partials/header_navbar.ejs') %>
 <%-include('../partials/header_sidenav.ejs') %>
 
-<section class="main container">
-    <a href="/logout" id="logout-btn">Logout<span class="material-icons" id="logout-logo">logout</span></a>
+<section class="main container d-none d-lg-block">
     <section id="profile-main">
         <% if(!currentUser.profilePicture){ %>
-            <img src="/src/upload-pic.png" alt="" id="profile-img">
+            <img src="/src/upload-pic.png" alt="" id="profile-img" style="margin-left: 55%;">
         <% } else {%>
-        <img src=" <%= currentUser.profilePicture %>" alt="" id="profile-img">
+        <img src=" <%= currentUser.profilePicture %>" alt="" id="profile-img" style="margin-left: 55%;">
         <% } %>
         <% var subscribe = ''; %>
         <% if(currentUser.subscribe === true) { %>
@@ -46,6 +45,77 @@
             <button type="submit" class="rounded-pill" id="edit-btn">Register as Manager</button>
         </form>
         
+    </section>
+</section>
+<section class="contianer main d-block d-lg-none">
+    <section >
+        <% if(!currentUser.profilePicture){ %>
+            <img src="/src/upload-pic.png" alt="" id="profile-img" style="margin-top: 5rem; margin-left: -4rem;">
+        <% } else {%>
+            <img src=" <%= currentUser.profilePicture %>" alt="" id="profile-img"style=" margin-top: 5rem; margin-left: -6rem;">
+        <% } %>
+        <% var subscribe = ''; %>
+        <% if(currentUser.subscribe === true) { %>
+            <% subscribe = "subscribed"; %>
+        <% }else{ %>
+            <% subscribe = "unsubscribed"; %>
+        <% } %>
+        <h4 style="margin-left: -2rem;"><%=subscribe%></h4>
+        <% if(currentUser.subscribe === true) { %>
+            <form action="/profile/unsubscribe" method="post">
+                <input type="text" name="userId" style="display: none;" value="<%=currentUser.id%>">
+                <button type="submit" class="rounded-pill" style="
+                width: 10rem;
+                height: 3rem;
+                font-size: larger;
+                background-color: #FFF58E;
+                border-color: transparent;
+                margin-left: -3rem;">
+                Unsubscribe</button>
+            </form>
+        <% }else{ %>
+            <form action="/profile/subscribe-protal" method="get">
+                <button type="submit" class="rounded-pill" style="
+                width: 10rem;
+                height: 3rem;
+                font-size: larger;
+                background-color: #FFF58E;
+                border-color: transparent;
+                margin-left: -3rem;">Subscribe</button>
+            </form>
+        <% } %>
+            <h3 style="margin-left: -5rem;"><%=currentUser.name%> <%=currentUser.lastName%></h3>
+            <form action="/profile/edit" method="get">
+                <button type="submit" class="rounded-pill" style="
+                width: 15rem;
+                height: 3rem;
+                font-size: larger;
+                background-color: #FFF58E;
+                border-color: transparent;
+                margin-left: -5rem;
+                margin-bottom: 1rem;">Edit</button>
+            </form>
+            
+            <form action="/profile/change-password" method="get">
+                <button type="submit" class="rounded-pill" style="
+                width: 15rem;
+                height: 3rem;
+                font-size: larger;
+                background-color: #FFF58E;
+                border-color: transparent;
+                margin-left: -5rem;
+                margin-bottom: 1rem;">Change Password</button>
+            </form>
+            <form action="/profile/manager-register" method="get">
+                <button type="submit" class="rounded-pill" style="
+                width: 15rem;
+                height: 3rem;
+                font-size: larger;
+                background-color: #FFF58E;
+                border-color: transparent;
+                margin-left: -5rem;
+                margin-bottom: 1rem;">Register as Manager</button>
+            </form>
     </section>
 </section>
   

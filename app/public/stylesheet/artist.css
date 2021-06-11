@@ -98,3 +98,14 @@
         transform: scale(1);
     }
 }
+.accordion-button{
+    background-color: #e7f1ff;
+    color: royalblue;
+    font-size: large;
+}
+.accordion-item{
+    border-color: white;
+}
+.accordion-collapse{
+    background-color: #587A77;
+}

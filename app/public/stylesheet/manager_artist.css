@@ -85,6 +85,16 @@
     margin-left: 95rem;
     margin-top: -6rem;
 }
+.btn-delete-small{
+    display: block;
+    font-size: larger;
+    width: 10rem;
+    height: 3rem;
+    border-style: none;
+    background-color: #ff7d66;
+    color: black;
+    margin-top: 1rem;
+}
 .btn-delete:hover{
     color: white;
     background-color: #FA6262;
