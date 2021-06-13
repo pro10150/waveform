@@ -63,7 +63,6 @@
     transition: all 0.2s ease-out ;
     background-color: rgba(0, 0, 0, 0.3);
     color: white;
-    transform: scale(1.2);
 }
 .cover{
     width: 246px;

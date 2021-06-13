@@ -62,7 +62,15 @@ router.get('/music/artist/:id', isLoggedIn, isUser, function(req, res){
             console.log(err);
         }
         else{
-            res.render('admin/artist.ejs', {artist: searchedArtist});
+            User.findById(searchedArtist[0].manager).exec(function(err,user){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(user);
+                    res.render('admin/artist.ejs', {artist: searchedArtist, user: user});
+                }
+            })
         }
     })
 })

@@ -27,7 +27,22 @@
             </div>
             <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
                 <div class="accordion-body">
-                    <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <% if(currentUser){ %>
+                        <% let flag = false %>
+                        <% for(let i = 0; i< fav.length; i++){ %>
+                            <% if(sng._id == fav[i].songId){ %>
+                                <% flag = true; %>
+                                <% break; %> 
+                            <% } %> 
+                        <% } %>
+                        <% if(flag === true){ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>" method="POST">
+                                <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                            </form>
+                        <% }%>
+                    <% } else{ %>
+                        <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <% } %>
                     <a href="/artist/<%=album.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                 <% if(currentUser){ %>
                     <% let flag = false %>
@@ -93,7 +108,22 @@
             </div>
             <div id="collapse<%=sng._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=sng._id%>" data-bs-parent="#accordionSong">
                 <div class="accordion-body">
-                    <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <% if(currentUser){ %>
+                        <% let flag = false %>
+                        <% for(let i = 0; i< fav.length; i++){ %>
+                            <% if(sng._id == fav[i].songId){ %>
+                                <% flag = true; %>
+                                <% break; %> 
+                            <% } %> 
+                        <% } %>
+                        <% if(flag === true){ %>
+                            <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>" method="POST">
+                                <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                            </form>
+                        <% }%>
+                    <% } else{ %>
+                        <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <% } %>
                     <a href="/artist/<%=album.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                 <% if(currentUser){ %>
                     <% let flag = false %>

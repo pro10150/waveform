@@ -104,7 +104,24 @@
                             </div>
                             <div id="collapse<%=ts._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=ts._id%>" data-bs-parent="#accordionSong" style="width: 78.8rem;">
                                 <div class="accordion-body">
-                                    <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <% if(currentUser){ %>
+                                        <% let flag = false %>
+                                        <% for(let i = 0; i< fav.length; i++){ %>
+                                            <% if(ts._id == fav[i].songId){ %>
+                                                <% flag = true; %>
+                                                <% break; %> 
+                                            <% } %> 
+                                        <% } %>
+                                        <% if(flag === true){ %>
+                                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>" method="POST">
+                                                <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                                            </form>
+                                        <% } else{ %>
+                                            <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                        <% } %>
+                                    <% } else{ %>
+                                        <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <% } %>
                                     <a href="/artist/<%=ts.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                                     <a href="/album/<%=ts.albumId%>" class="artist-option option rounded-pill">Go to album</a>
                                 <% if(currentUser){ %>
@@ -243,7 +260,22 @@
                             </div>
                             <div id="collapse<%=ts._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=ts._id%>" data-bs-parent="#accordionSong">
                                 <div class="accordion-body">
-                                    <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <% if(currentUser){ %>
+                                        <% let flag = false %>
+                                        <% for(let i = 0; i< fav.length; i++){ %>
+                                            <% if(ts._id == fav[i].songId){ %>
+                                                <% flag = true; %>
+                                                <% break; %> 
+                                            <% } %> 
+                                        <% } %>
+                                        <% if(flag === true){ %>
+                                            <form action="/favorite/<%=currentUser._id%>/<%=ts._id%>" method="POST">
+                                                <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                                            </form>
+                                        <% }%>
+                                    <% } else{ %>
+                                        <a href="/song/<%=ts._id%>" class="artist-option option rounded-pill">Go to song</a>
+                                    <% } %>
                                     <a href="/artist/<%=ts.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                                     <a href="/album/<%=ts.albumId%>" class="artist-option option rounded-pill">Go to album</a>
                                 <% if(currentUser){ %>

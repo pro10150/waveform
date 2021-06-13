@@ -1,5 +1,6 @@
 var express             = require('express'),
     router              = express.Router(),
+    lodash               = require('lodash');
     Artist              = require('../models/artist'),
     Album               = require('../models/album'),
     Song                = require('../models/song'),
@@ -10,7 +11,7 @@ var express             = require('express'),
 
 router.get('/', isManager, isLoggedIn, function(req, res){
     songIdArray = []
-    Favorite.find({id: req.user._id}, function(err, searchedFavorite){
+    Favorite.find({id: req.user._id}).sort({viewCount: -1}).exec( function(err, searchedFavorite){
         if(err){
             console.log(err);
         }
@@ -24,18 +25,33 @@ router.get('/', isManager, isLoggedIn, function(req, res){
                         console.log(err);
                     }
                     else{
+                        searchedFavorite.forEach(function(sf){
+                            sf._id = sf.songId;
+                        });
+                        let merged = []
+
+                        // result.forEach(function(aitem){
+                        //     searchedFavorite.forEach(function(bitem){
+                        //         if(aitem._id === bitem._id){
+                        //             lodash.assign(result, searchedFavorite)
+                        //         }
+                        //     })
+                        // })
+                        merged = result;
+                        // merged = lodash.values(merged);
+                        // console.log(merged);
                         if(req.isAuthenticated()){
                             Favorite.find({id: req.user._id}, function(err, fav){
                                 if(err){
                                     console.log(err);
                                 }
                                 else{
-                                    res.render('favorite/favorite.ejs',{result, fav: fav});
+                                    res.render('favorite/favorite.ejs',{result: merged, fav: fav});
                                 }
                             })    
                         }
                         else{
-                            res.render('favorite/favorite.ejs',{result});
+                            res.render('favorite/favorite.ejs',{result: merged});
                         }
                     }
                 })
@@ -68,6 +84,17 @@ router.post('/:id/:songId/add', isLoggedIn, isManager, function(req, res){
         }
     })
 });
+
+router.post('/:id/:songId', isLoggedIn, isManager, function(req, res){
+    Favorite.findOneAndUpdate({id: req.params.id, songId: req.params.songId}, {$inc: {'viewCount' : 1}}).exec(function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.redirect('/song/' + req.params.songId);
+        }
+    })
+})
 
 router.post('/:id/:songId/delete', isLoggedIn, function(req, res){
     Favorite.findOneAndDelete({id:req.params.id, songId: req.params.songId}, function(err, deletedFavorite){

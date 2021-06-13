@@ -24,7 +24,9 @@
             </div>
             <div id="collapse<%=fv._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=fv._id%>" data-bs-parent="#accordionSong">
                 <div class="accordion-body">
-                    <a href="/song/<%=fv._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <form action="/favorite/<%=currentUser._id%>/<%=fv._id%>" method="POST">
+                        <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                    </form>
                     <a href="/artist/<%=fv.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                     <a href="/album/<%=fv.albumId%>" class="artist-option option rounded-pill">Go to album</a>
                 <% if(currentUser){ %>
@@ -180,7 +182,9 @@
             </div>
             <div id="collapse<%=fv._id%>" class="accordion-collapse collapse" aria-labelledby="heading<%=fv._id%>" data-bs-parent="#accordionSong">
                 <div class="accordion-body">
-                    <a href="/song/<%=fv._id%>" class="artist-option option rounded-pill">Go to song</a>
+                    <form action="/favorite/<%=currentUser._id%>/<%=fv._id%>" method="POST">
+                        <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
+                    </form>
                     <a href="/artist/<%=fv.artistId%>" class="artist-option option rounded-pill">Go to artist</a>
                     <a href="/album/<%=fv.albumId%>" class="artist-option option rounded-pill">Go to album</a>
                 <% if(currentUser){ %>

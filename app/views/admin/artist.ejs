@@ -12,7 +12,9 @@
                 <i>Artist</i>
                 <br>
                 <i class="artist-name"><%=at.name %></i>
-                <br>
+                <h5>
+                    by <a href="/admin/user/<%=at.manager%>" style="color: lightblue;"><%=user.name%> <%= user.lastName%></a>
+                </h5>
                 <br>
                 <button type="button" class="btn material-icons-outlined" id="btn-add-more-artist" style="display: none;">Add More Album <span class="material-icons">add_circle_outline</span></button> 
                 <% let backLink = "/admin/music/" + "artist/" + at._id; %>
