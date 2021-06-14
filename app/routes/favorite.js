@@ -59,6 +59,34 @@ router.get('/', isManager, isLoggedIn, function(req, res){
     })
 });
 
+router.post('/', isManager, isLoggedIn, function(req, res){
+    res.redirect('/favorite/search/' + req.body.favoriteKeyword);
+})
+
+router.get('/search/:keyword', isManager, isLoggedIn, function(req, res){
+    let songIdArray = [];
+    let keyword = req.params.keyword;
+    console.log('yey');
+    Favorite.find({id: req.user._id}).exec(function(err, fav){
+        if(err){
+            console.log(err);
+        }
+        else{
+            fav.forEach(function(sf){
+                songIdArray.push(sf.songId)
+            })
+            Song.find({$and: [{_id: {$in: songIdArray}}, {$or: [{title: {$regex: new RegExp("^" + keyword, "i")}}, {albumName: {$regex: new RegExp("^" + keyword, "i")}}, {artistName: {$regex: new RegExp("^" + keyword, "i")}}]}]}).exec(function(err, result){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.render('favorite/favorite.ejs', {result: result, fav: fav});
+                }
+            });
+        }
+    })
+})
+
 router.post('/:id/:songId/add', isLoggedIn, isManager, function(req, res){
     Favorite.create({id: req.params.id,songId: req.params.songId}, function(err, addedfavorite){
         if(err){

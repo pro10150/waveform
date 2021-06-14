@@ -304,10 +304,10 @@ router.get('/user/:id',isLoggedIn, isUser, function(req, res){
 });
 
 router.post('/user', function(req, res){
-    res.redirect('/admin/user/' + req.body.userKeyword + '/search');
+    res.redirect('/admin/user/search/' + req.body.userKeyword);
 })
 
-router.get('/user/:keyword/search', isLoggedIn, isUser, function(req, res){
+router.get('/user/search/:keyword', isLoggedIn, isUser, function(req, res){
     let keyword = req.params.keyword;
     User.find({$or:[{name: { $regex: new RegExp("^" + keyword, "i")}}, {lastName: { $regex: new RegExp("^" + keyword, "i")}}, {username: { $regex: new RegExp("^" + keyword, "i")}}]}).exec(function(err, user){
         if(err){
