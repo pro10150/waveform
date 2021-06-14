@@ -2,8 +2,16 @@
     <nav class="side-nav d-none d-lg-block">
         <% if(currentUser){ %>
             <a href="/" class="user" id="home"><span ><i class="fas fa-home"></i></span> Home</a>
-            <a href="/profile" class="user" id="profile"><span class="material-icons">person</span> Profile</a>
             <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
+            <a href="/profile" class="user" id="profile">
+                <span >
+                    <% if(currentUser.profilePicture){ %>
+                        <img src="<%=currentUser.profilePicture%>" style="width: 2rem; height: 2rem;" alt="">
+                    <% } else{ %>
+                        <img src="/src/home.png" style="width: 2rem; height: 2rem;" alt="">
+                    <% } %>
+                </span> 
+                    <%=currentUser.name%></a>
             <a href="/logout" class="user" id="logout-btn"><span class="material-icons" id="logout-logo">logout</span>Logout</a>
         <% } else { %>
             <i class="guest">Guest</i>

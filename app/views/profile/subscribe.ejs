@@ -3,7 +3,13 @@
 <%-include('../partials/header_sidenav.ejs') %>
 <section class="main container d-none d-lg-block">
     <div class="header">
-        <h1 id="price-name">Subscription</h1>
+        <h1 style="font-size: 500%;">Subscription</h1>
+        <h1 style="font-size: 300%;">What you get</h1>
+        <ul>
+            <li>Download our high quality songs</li>
+            <li>Upcoming premium features just for you!</li>
+        </ul>
+        <h1 id="price-name">Card information</h1>
         <h5 id="ppm">$6.99/month</h5>
         <form action="/profile/subscribe" method="post">
         <div class="form-inline" id="form-ccn">
@@ -40,6 +46,7 @@
 </section>
 <section class="container d-block d-lg-none" style="color: white;">
     <div style="margin-top: 6rem;">
+        <h1>What you get.</h1>
         <h1 id="price-name">Subscription</h1>
         <h5 >$6.99/month</h5>
         <form action="/profile/subscribe" method="post">

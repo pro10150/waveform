@@ -55,6 +55,20 @@ router.get('/music',isLoggedIn, isUser, function(req, res){
         }
     })
 });
+router.post('/music', isLoggedIn, isUser, function(req, res){
+    res.redirect('/admin/music/search/' + req.body.artistKeyword);
+})
+router.get('/music/search/:keyword', isLoggedIn, isUser, function(req, res){
+    let keyword = req.params.keyword;
+    Artist.find({name: { $regex : new RegExp("^" + keyword, "i")}}).sort({popularity: -1}).exec(function(err, artist){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render('admin/music.ejs', {artists: artist})
+        }
+    })
+})
 router.get('/music/artist/:id', isLoggedIn, isUser, function(req, res){
     let artistId = req.params.id;
     Artist.find({_id: artistId}).populate('albums').exec(function(err, searchedArtist){
@@ -270,6 +284,7 @@ router.get('/user',isLoggedIn, isUser, function(req, res){
     })
     
 });
+
 router.get('/user/:id',isLoggedIn, isUser, function(req, res){
     User.findById(req.params.id).exec(function(err, searchedUser){
         if(err){
@@ -287,6 +302,23 @@ router.get('/user/:id',isLoggedIn, isUser, function(req, res){
         }
     })
 });
+
+router.post('/user', function(req, res){
+    res.redirect('/admin/user/' + req.body.userKeyword + '/search');
+})
+
+router.get('/user/:keyword/search', isLoggedIn, isUser, function(req, res){
+    let keyword = req.params.keyword;
+    User.find({$or:[{name: { $regex: new RegExp("^" + keyword, "i")}}, {lastName: { $regex: new RegExp("^" + keyword, "i")}}, {username: { $regex: new RegExp("^" + keyword, "i")}}]}).exec(function(err, user){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render('admin/user.ejs', {user: user});
+        }
+    })
+})
+
 router.get('/user/:id/edit', isLoggedIn, isUser, function(req, res){
     User.findById(req.params.id).exec(function(err, searchedUser){
         if(err){

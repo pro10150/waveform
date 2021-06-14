@@ -12,6 +12,7 @@
                     <i>Album</i>
                     <br>
                     <i class="artist-name"><%=al.name%></i>
+                    <i style="color: lightgrey;">Poplarity: <%=al.popularity%></i>
                     <button type="button" class="btn material-icons-outlined" id="btn-add-more-album">Add More Song <span class="material-icons">add_circle_outline</span></button> 
                     <button type="button" class="btn-edit rounded-pill" id="btn-edit">Edit</button>
                     <form action="/manager/artist/<%=at._id%>/album/<%=al._id%>/delete" method="post">
@@ -30,7 +31,7 @@
                     <div class="accordion-item" id="accordionSong">
                         <h2 class="accordion-header" id="heading<%=sn._id%>">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=sn._id%>" aria-expanded="true" aria-controls="collapse<%=sn._id%>">
-                                <h5 class="title id-song-title" id= <%= sn._id %> > <%= sn.title %></h5>
+                                <h5 class="title id-song-title" id= <%= sn._id %> > <%= sn.title %> <span><i style="color:rgb(72, 160, 214);">popularity: <%=sn.popularity%></i></span></h5>
                             </button>
                         </h2>
                     </div>

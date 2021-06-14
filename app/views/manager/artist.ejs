@@ -12,6 +12,7 @@
                 <i>Artist</i>
                 <br>
                 <i class="artist-name"><%=at.name %></i>
+                <i style="color: lightgrey;">Poplarity: <%=at.popularity%></i>
                 <button type="button" class="btn material-icons-outlined" id="btn-add-more-artist">Add More Album <span class="material-icons">add_circle_outline</span></button> 
                 <% let backLink = "/manager/" + "artist/" + at._id; %>
                 <i class="backLink" id=<%=backLink %>></i>

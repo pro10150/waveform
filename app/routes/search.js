@@ -24,7 +24,7 @@ router.get('/:keyword', function(req,res){
                     console.log(err);
                 }
                 else{
-                    Song.find({title: {$regex: new RegExp("^" + keyword, "i")}}).sort({popularity: -1}).limit(5).exec(function(err, searchedSong){
+                    Song.find({$or: [{title: {$regex: new RegExp("^" + keyword, "i")}}, {albumName: {$regex: new RegExp("^" + keyword, "i")}}, {artistName: {$regex: new RegExp("^" + keyword, "i")}}]}).sort({popularity: -1}).limit(5).exec(function(err, searchedSong){
                         if(err){
                             console.log(err);
                         }
