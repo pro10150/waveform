@@ -84,7 +84,7 @@ router.get('/artist/:artistId', isManager, function(req, res){
 }); 
 
 router.get('/artist', isManager, function(req, res){
-    Artist.find().exec(function(err, artist){
+    Artist.find().sort({popularity: -1}).exec(function(err, artist){
         if(err){
             console.log(err);
         }
@@ -95,7 +95,7 @@ router.get('/artist', isManager, function(req, res){
 })
 
 router.get('/album', isManager, function(req, res){
-    Album.find().exec(function(err, album){
+    Album.find().sort({popularity: -1}).exec(function(err, album){
         if(err){
             console.log(err);
         }
@@ -106,7 +106,7 @@ router.get('/album', isManager, function(req, res){
 })
 
 router.get('/song', isManager, function(req, res){
-    Song.find().exec(function(err, song){
+    Song.find().sort({popularity: -1}).exec(function(err, song){
         if(err){
             console.log(err);
         }
