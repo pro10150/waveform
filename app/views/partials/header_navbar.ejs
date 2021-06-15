@@ -7,6 +7,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav" >
           <div class="d-block d-lg-none">
@@ -18,7 +19,16 @@
                         <a href="/favorite" class="user" id="favourite"><span class="material-icons">favorite</span>    Favourite</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/profile" class="user" id="profile"><span ><img src="<%=currentUser.profilePicture%>" style="width: 2rem; height: 2rem;" alt=""></span> <%=currentUser.name%></a>  
+                            <a href="/profile" class="user" id="profile">
+                                <span >
+                                    <% if(currentUser.profilePicture){ %>
+                                        <img src="<%=currentUser.profilePicture%>" style="width: 2rem; height: 2rem;" alt="">
+                                    <% } else{ %>
+                                        <img src="/src/home.png" style="width: 2rem; height: 2rem;" alt="">
+                                    <% } %>
+                                </span> 
+                                    <%=currentUser.name%>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="/logout" class="user" id="logout-btn"><span class="material-icons" id="logout-logo">logout</span>Logout</a>
@@ -33,11 +43,36 @@
                     <% } %>
                 </div>
             <% if(currentUser && currentUser.status === "user" || !currentUser) {%>
+                <% if(currentUser){ %>
+                <li class="nav-item nav-transparent">
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                        
+                            <span >
+                                <% if(currentUser.profilePicture){ %>
+                                    <img src="<%=currentUser.profilePicture%>" style="width: 2rem; height: 2rem;" alt="">
+                                <% } else{ %>
+                                    <img src="/src/home.png" style="width: 2rem; height: 2rem;" alt="">
+                                <% } %>
+                            </span> 
+                                <%=currentUser.name%>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/favorite">Favorite</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" id="logout-btn" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>   
+
+                </li>
+                <% } %>
                 <li class="nav-item nav-transparent">
                     <form class="form-inline " action="/search" method="post">
                         <input class="form-control mr-sm-2 form-rounded" id="search" name="keyword" type="search" placeholder= "&#xF002; Search for songs and artists" aria-label="Search">
-                    </form>    
+                    </form>   
                 </li> 
+
             <% } %>
             <% if(currentUser && currentUser.status === "manager" || currentUser && currentUser.status === "admin") {%>
         <li class="nav-item">

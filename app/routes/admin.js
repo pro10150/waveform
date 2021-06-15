@@ -340,8 +340,42 @@ router.post('/user/:id/delete', isLoggedIn, isUser, function(req, res){
                     console.log(err);
                 }
                 else{
-                    req.flash('success', 'User deleted successfully');
-                    res.redirect('/admin/user');
+                    Artist.find({manager: req.params.id}).exec(function(err, searchedArtist){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            Artist.deleteMany({manager: req.params.id}).exec(function(err, deletedArtist){
+                                if(err){
+                                    console.log(err);
+                                }
+                                else{
+                                    let artistIdArray = [];
+                                    console.log(searchedArtist)
+                                    searchedArtist.forEach(function(da){
+                                        artistIdArray.push(da._id);
+                                    });
+                                    Album.deleteMany({artistId: {$in: artistIdArray}}).exec(function(err, deletedAlbum){
+                                        if(err){
+                                            console.log(err);
+                                        }
+                                        else{
+                                            Song.deleteMany({artistId: {$in: artistIdArray}}).exec(function(err, deletedSong){
+                                                if(err){
+                                                    console.log(err);
+                                                }
+                                                else{
+                                                    req.flash('success', 'User deleted successfully');
+                                                    res.redirect('/admin/user');        
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })        
+                        }
+                    })
+                    
                 }
             })
         }

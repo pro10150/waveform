@@ -39,6 +39,8 @@
                             <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>" method="POST">
                                 <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
                             </form>
+                        <% } else { %>
+                            <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
                         <% }%>
                     <% } else{ %>
                         <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
@@ -120,6 +122,8 @@
                             <form action="/favorite/<%=currentUser._id%>/<%=sng._id%>" method="POST">
                                 <a href="#" onclick="this.parentNode.submit()" class="artist-option option rounded-pill">Go to song</a>
                             </form>
+                        <% } else { %>
+                            <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>
                         <% }%>
                     <% } else{ %>
                         <a href="/song/<%=sng._id%>" class="artist-option option rounded-pill">Go to song</a>

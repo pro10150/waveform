@@ -5,7 +5,7 @@
     margin-left: 200px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     color: white;
-    margin-top: 5.5%;
+    margin-top: 6rem;
 }
 .btn:hover{
     transition: all 0.2s ease-out ;

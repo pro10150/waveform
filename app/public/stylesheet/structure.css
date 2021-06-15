@@ -5,7 +5,6 @@ body{
     background-color: #2A4556;
     font-family: 'Pacifico';
     position: fixed;
-    font-size: 64px;
     z-index: 9;
 }
 .navbar-brand{
